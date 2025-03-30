@@ -1,0 +1,373 @@
+---
+p: &p # 机场订阅配置的引用
+  type: http
+  interval: 1800 # 自动更新订阅时间间隔 单位为s
+  health-check:
+    enable: true
+    url: https://cp.cloudflare.com/generate_204 # 节点连通检测地址
+    interval: 300 # 节点连通检测时间间隔 单位为ms
+    timeout: 1000 # 节点超时延迟 单位为ms
+    tolerance: 50 # 节点自动切换差值 单位为ms
+
+# 机场订阅,名称不能重复
+proxy-providers: # 代理集合
+  常用:
+    <<: *p
+    proxy: 🇨🇳 中国大陆
+    url: "https://dash.pqjc.site/api/v1/client/subscribe?token=accf825de1df21b640fbd90ada8db738"
+    override:
+      additional-prefix: "[赔钱] " # 添加前缀
+  备用:
+    <<: *p
+    proxy: 🇨🇳 中国大陆
+    url: "https://52pokemon.xz61.cn/api/v1/client/subscribe?token=bf9a6c09ac3fd26ac23c226d3f02a401"
+    override:
+      additional-prefix: "[宝可梦] " # 添加前缀
+
+#  补充:
+#    <<: *p
+#    proxy: 🇨🇳 中国大陆
+#    url: "https://huahua.fnadate.link/hhuaicucu/ai?token=77726da4b5bb9e3bd6338031e4b6aae4"
+#    override:
+#      additional-prefix: "[花呀] "  # 添加前缀
+
+use_p: &use { use: [常用, 备用] } # 补充 引入机场节点的引用
+
+# 全局配置
+port: 7890 # http(s) 代理端口
+socks-port: 7891 # socks4/4a/5 代理端口
+redir-port: 7892 # redirect 透明代理端口,仅能代理 TCP 流量
+mixed-port: 7893 # HTTP(S) 和 SOCKS5混合端口
+tproxy-port: 7894 # tproxy 透明代理端口,可代理 TCP 与 UDP 流量
+ipv6: true # 是否允许内核接受 IPv6 流量
+allow-lan: true # 允许局域网连接
+bind-address: "*"
+unified-delay: true # 统一延迟 更换延迟计算方式,去除握手等额外延迟
+tcp-concurrent: true # TCP 并发 同时对所有ip进行连接,返回延迟最低的地址
+log-level: warning # 日志等级
+find-process-mode: off # 匹配进程 always/strict/off
+global-client-fingerprint: chrome # 全局 TLS 指纹
+hosts: # host设置
+  "+.lan": 192.168.1.8
+profile: # 缓存历史选择和fakeip
+  store-selected: true # 储存 API 对策略组的选择,以供下次启动时使用
+  store-fake-ip: true # 储存 fakeip 映射表,域名再次发生连接时,使用原有映射地址
+
+# 外部控制
+secret: "MHqy5518@" # 外部控制密钥
+external-controller: 0.0.0.0:9090 # 面板端口
+external-ui: "./ui" # web面板路径
+external-ui-name: Zashboard # 面板名称,更新时会更新到指定文件夹,不配置则直接更新到 external-ui 目录
+external-ui-url: "https://ghfast.top/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip" # 面板下载地址 使用代理 (https://ghfast.top/)
+
+# GEO数据库
+geodata-mode: false # GEO数据库模式 false使用MMDB格式
+# geodata-loader: standard # 大内存使用标准模式,默认memconservative(小内存)
+geox-url: # GEO 数据库下载地址 使用代理 (https://ghfast.top/)
+  geosite: https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
+  mmdb: https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.metadb
+  geoip: https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat
+  asn: https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb
+geo-auto-update: true # 自动更新GEO
+geo-update-interval: 12 # 更新间隔 单位h
+
+# 缓解移动设备耗电问题
+disable-keep-alive: true # 启用 TCP Keep Alive
+keep-alive-idle: 600 # TCP Keep Alive 包的间隔,单位为秒
+keep-alive-interval: 15 # TCP Keep Alive 的最大空闲时间
+
+# 流量嗅探
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
+    - "+.apple.com"
+# tun代理模式
+tun:
+  enable: true
+  stack: mixed
+  mtu: 9000
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+# DNS模块
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  use-host: true
+  use-system-host: true
+  # 模式切换 redir-host / fake-ip
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  # 模式切换 whitelist/blacklist
+  # 黑名单模式表示如果匹配成功则不返回 Fake-IP, 白名单模式时只有匹配成功才返回 Fake-IP
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    # LAN
+    - "+.lan"
+    - "+.local"
+    - "*.localdomain"
+    - "*.example"
+    - "*.invalid"
+    - "*.localhost"
+    - "*.test"
+    - "*.home.arpa"
+    # GEOSITE(Meta core)
+    - geosite:cn
+    # 放行NTP服务
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time-ios.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - "*.time.edu.cn"
+    - "*.ntp.org.cn"
+    - "+.pool.ntp.org"
+    - time1.cloud.tencent.com
+    # 放行网易云音乐
+    - music.163.com
+    - "*.music.163.com"
+    - "*.126.net"
+    # 百度音乐
+    - musicapi.taihe.com
+    - music.taihe.com
+    # 酷狗音乐
+    - songsearch.kugou.com
+    - trackercdn.kugou.com
+    # 酷我音乐
+    - "*.kuwo.cn"
+    - api-jooxtt.sanook.com
+    - api.joox.com
+    # JOOX音乐
+    - joox.com
+    # QQ音乐
+    - y.qq.com
+    - "*.y.qq.com"
+    - streamoc.music.tc.qq.com
+    - mobileoc.music.tc.qq.com
+    - isure.stream.qqmusic.qq.com
+    - dl.stream.qqmusic.qq.com
+    - aqqmusic.tc.qq.com
+    - amobile.music.tc.qq.com
+    # 虾米音乐
+    - "*.xiami.com"
+    # 咪咕音乐
+    - "*.music.migu.cn"
+    - music.migu.cn
+    # win10本地连接检测
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    # QQ登录
+    - localhost.ptlogin2.qq.com
+    - localhost.sec.qq.com
+    - "+.qq.com"
+    - "+.tencent.com"
+    # Game
+    # Nintendo Switch
+    - "+.srv.nintendo.net"
+    - "*.n.n.srv.nintendo.net"
+    - "+.cdn.nintendo.net"
+    # Sony PlayStation
+    - "+.stun.playstation.net"
+    # Microsoft Xbox
+    - xbox.*.*.microsoft.com
+    - "*.*.xboxlive.com"
+    - xbox.*.microsoft.com
+    - xnotify.xboxlive.com
+    # Wotgame
+    - "+.battlenet.com.cn"
+    - "+.wotgame.cn"
+    - "+.wggames.cn"
+    - "+.wowsgame.cn"
+    - "+.wargaming.net"
+    # Golang
+    - proxy.golang.org
+    # STUN
+    - stun.*.*
+    - stun.*.*.*
+    - "+.stun.*.*"
+    - "+.stun.*.*.*"
+    - "+.stun.*.*.*.*"
+    - "+.stun.*.*.*.*.*"
+    # Linksys Router
+    - heartbeat.belkin.com
+    - "*.linksys.com"
+    - "*.linksyssmartwifi.com"
+    # ASUS Router
+    - "*.router.asus.com"
+    # Apple Software Update Service
+    - mesu.apple.com
+    - swscan.apple.com
+    - swquery.apple.com
+    - swdownload.apple.com
+    - swcdn.apple.com
+    - swdist.apple.com
+    # Google
+    - lens.l.google.com
+    - stun.l.google.com
+    - na.b.g-tun.com
+    # Netflix
+    - "+.nflxvideo.net"
+    # FinalFantasy XIV Worldwide Server & CN Server
+    - "*.square-enix.com"
+    - "*.finalfantasyxiv.com"
+    - "*.ffxiv.com"
+    - "*.ff14.sdo.com"
+    - ff.dorado.sdo.com
+    # Bilibili
+    - "*.mcdn.bilivideo.cn"
+    # Disney Plus
+    - "+.media.dssott.com"
+    # shark007 Codecs
+    - shark007.net
+    # Mijia
+    - Mijia Cloud
+    # 招商银行
+    - "+.cmbchina.com"
+    - "+.cmbimg.com"
+    # AdGuard
+    - local.adguard.org
+    # 迅雷
+    - "+.sandai.net"
+    - "+.n0808.com"
+    # UU Plugin
+    - "+.uu.163.com"
+    - ps.res.netease.com
+    # Wifi Calling
+    - "+.pub.3gppnetwork.org"
+  default-nameserver:
+    - 223.5.5.5
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+  # 默认域名解析服务器,namesever尽量用运营商提供的DNS
+  nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+
+# 设置直连出站代理(代理节点)
+proxies:
+  - {name: "🇨🇳 中国大陆", type: direct, udp: true}
+# 代理组的引用
+pr: &pr { type: select, proxies: [🚀 节点选择, ♻️ 自动选择, 🇭🇰♻️ 香港自动, 🇹🇼♻️ 台湾自动, 🇸🇬♻️ 新加坡自动, 🇯🇵♻️ 日本自动, 🇺🇲♻️ 美国自动, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇨🇦 加拿大节点, 🇰🇷 韩国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点, 🇳🇱 荷兰节点, 🇹🇷 土耳其节点, 🇻🇳 越南节点, 🌎 其它地区, 🌐 全部节点, 🎯 全球直连]} # 默认🚀 节点选择
+pr_auto: &pr_auto {type: select, proxies: []} # 默认♻️ 自动选择
+pr_dir: &pr_dir {type: select, proxies:[]} # 默认🎯 全球直连
+pr_cn: &pr_cn {type: select, proxies:[]} # 默认🇨🇳 中国大陆
+pr_sg: &pr_sg {type: select, proxies:[]} # 默认🇸🇬♻️ 新加坡自动
+pr_us: &pr_us {type: select, proxies:[]} # 默认🇺🇲♻️ 美国自动
+pr_tw: &pr_tw {type: select, proxies:[]} # 默认🇹🇼♻️ 台湾自动
+pr_hk: &pr_hk {type: select, proxies:[]} # 默认🇭🇰♻️ 香港自动
+proxy-groups: # 代理组
+  - {name: 🚀 节点选择, type: select, proxies:[🇭🇰♻️ 香港自动, 🇹🇼♻️ 台湾自动, 🇸🇬♻️ 新加坡自动, 🇯🇵♻️ 日本自动, 🇺🇲♻️ 美国自动, ♻️ 自动选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇨🇦 加拿大节点, 🇰🇷 韩国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点, 🇳🇱 荷兰节点, 🇹🇷 土耳其节点, 🇻🇳 越南节点, 🌎 其它地区, 🌐 全部节点, 🇨🇳 中国大陆]}
+  - {name: ♻️ 自动选择, type: url-test, <<: *use, tolerance: 50, interval: 300, filter: "^((?!(直连|官网|套餐|重置|剩余|建议|8x|10x)).)*$"}
+  - {name: 👨🏿‍💻 GitHub, <<: *pr}
+  - {name: 📲 Telegram, <<: *pr_sg}
+  - {name: 🕊️ Twitter, <<: *pr} # 🕊️ Twitter(X) -> 🕊️ Twitter
+  - {name: 🎮 Steam, <<: *pr_dir}
+  - {name: 🎮 游戏平台, <<: *pr_dir}
+  - {name: 🤖 AI服务, <<: *pr_us}
+  - {name: 💬 ChatGPT, <<: *pr_us}
+  - {name: 💬 Copilot, <<: *pr_us}
+  - {name: 🎶 TikTok, <<: *pr_sg}
+  - {name: 📹 YouTube, <<: *pr}
+  - {name: 🎥 Netflix, <<: *pr_sg}
+  - {name: 🎥 DisneyPlus, <<: *pr_sg}
+  - {name: 🎥 HBO, <<: *pr_sg}
+  - {name: 🎥 PrimeVideo, <<: *pr_sg}
+  - {name: 🎥 AppleTV+, <<: *pr_sg}
+  - {name: 🎥 Emby, <<: *pr_sg}
+  - {name: 🎻 Spotify, <<: *pr}
+  - {name: 📺 Bahamut, <<: *pr_tw}
+  - {name: 📺 Bilibili, <<: *pr_dir}
+  - {name: 🌎 国外媒体, <<: *pr_sg}
+  - {name: 🛒 国外电商, <<: *pr}
+  - {name: 📢 谷歌FCM, <<: *pr}
+  - {name: 🇬 谷歌服务, <<: *pr}
+  - {name: 🪟 微软服务, <<: *pr_dir} # Ⓜ️ 微软服务 -> 🪟 微软服务
+  - {name: 🍎 苹果服务, <<: *pr_dir}
+  - {name: 🚀 测速工具, <<: *pr_dir}
+  # - {name: 💶 PayPal, <<: *pr}
+  # - {name: ✈️ Speedtest, <<: *pr_dir}
+  # - {name: 🐬 OneDrive, <<: *pr}
+  - {name: 🎯 全球直连, <<: *pr_dir}
+  - {name: 🐟 漏网之鱼, <<: *pr}
+  - {name: ❌ 广告拦截, type: select, proxies: [REJECT, 🇨🇳 中国大陆, 🚀 节点选择]}
+  - {name: 🇭🇰♻️ 香港自动, type: url-test, <<: *use, tolerance: 50, interval: 300, filter: "(?=.*(港|HK|(?i)Hong))^((?!(台|日|韩|新|深|美|8x|10x)).)*$"}
+  - {name: 🇹🇼♻️ 台湾自动, type: url-test, <<: *use, tolerance: 50, interval: 300, filter: "(?=.*(台|tw|taiwan))^((?!(香|日|韩|新|深|美|8x|10x)).)*$"}
+  - {name: 🇸🇬♻️ 新加坡自动, type: url-test, <<: *use, tolerance: 50, interval: 300, filter: "(?=.*(新|sg|singapore))^((?!(香|台|日|美|深|美|8x|10x)).)*$"}
+  - {name: 🇯🇵♻️ 日本自动, type: url-test, <<: *use, tolerance: 50, interval: 300, filter: "(?=.*(日|JP|(?i)Japan))^((?!(港|台|韩|新|美|尼|8x|10x)).)*$"}
+  - {name: 🇺🇲♻️ 美国自动, type: url-test, <<: *use, tolerance: 50, interval: 300, filter: "(?=.*(美|US|(?i)States|America))^((?!(港|台|日|韩|新|巴|廷|加|6x|8x|10x)).)*$"}
+  - {name: 🇭🇰 香港节点, type: select, <<: *use, filter: "🇭🇰|(?i)港|hk|hongkong|hong kong"}
+  - {name: 🇹🇼 台湾节点, type: select, <<: *use, filter: "🇹🇼|(?i)台|tw|taiwan" }
+  - {name: 🇸🇬 新加坡节点, type: select, <<: *use, filter: "🇸🇬|(?i)新|sg|singapore"}
+  - {name: 🇯🇵 日本节点, type: select, <<: *use, filter: "🇯🇵|(?i)日|jp|japan" }
+  - {name: 🇺🇲 美国节点, type: select, <<: *use, filter: "🇺🇲|(?i)美|us|(?i)States|America"}
+  - {name: 🇨🇦 加拿大节点, type: select, <<: *use, filter: "🇨🇦|(?i)加|ca|Canada"}
+  - {name: 🇰🇷 韩国节点, type: select, <<: *use, filter: "🇰🇷|(?i)韩|kr|Korea" }
+  - {name: 🇬🇧 英国节点, type: select, <<: *use, filter: "🇬🇧|(?i)英|gb|(?i)Kiongdom|United Kiongdom"}
+  - {name: 🇫🇷 法国节点, type: select, <<: *use, filter: "🇫🇷|(?i)法|fr|France" }
+  - {name: 🇩🇪 德国节点, type: select, <<: *use, filter: "🇩🇪|(?i)德|de|Germany"}
+  - {name: 🇳🇱 荷兰节点, type: select, <<: *use, filter: "🇳🇱|(?i)荷|nl|Netherlands"}
+  - {name: 🇹🇷 土耳其节点, type: select, <<: *use, filter: "🇹🇷|(?i)土|tr|Turkey"}
+  - {name: 🇻🇳 越南节点, type: select, <<: *use, filter: "🇻🇳|(?i)越|vn|Vietnam"}
+  - {name: 🌎 其它地区, type: select, <<: *use, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|🇨🇦|🇰🇷|🇬🇧|🇫🇷|🇩🇪|🇳🇱|🇹🇷|🇻🇳|香港|hk|hongkong|台湾|tw|taiwan|日本|jp|japan|新加坡|sg|singapore|美国|us|unitedstates|加拿大|ca|canada|韩国|kr|korea|英国|gb|unitedkiongdom|法国|fr|france|德国|de|germany|荷兰|nl|netherlands|土耳其|tr|turkey|越南|vn|vietnam)(?!(直连|官网|套餐|重置|剩余|建议))).*"}
+  - {name: 🌐 全部节点, type: select, <<: *use}
+rules: # 路由规则,按照从上往下的顺序遍历,优先命中上位规则,修改顺序会影响分流效果,规则重复无影响
+  - RULE-SET, AWAvenue-Ads, ❌ 广告拦截
+
+  # 🐟 漏网之鱼捕捉
+  - DOMAIN-SUFFIX,ghostship.dk,🇭🇰♻️ 香港自动
+  - DOMAIN-SUFFIX,qichiyu.com,🚀 节点选择
+  - DOMAIN-SUFFIX,rfc-editor.org,🎯 全球直连
+  - MATCH,🐟 漏网之鱼
+rule-anchor: # 规则集合的引用
+  ip: &ip { type: http, interval: 43200, behavior: ipcidr, format: mrs } # ip类规则,mrs格式
+  domain: &domain { type: http, interval: 43200, behavior: domain } # 域名类规则,默认yaml格式
+  domainMrs: &domainMrs {
+      type: http,
+      interval: 43200,
+      behavior: domain,
+      format: mrs,
+    } # 域名类规则,mrs格式
+  class: &class { type: http, interval: 43200, behavior: classical } # 混合规则,默认yaml格式
+  classText: &classText {
+      type: http,
+      interval: 43200,
+      behavior: classical,
+      format: text,
+    } # 混合规则,text格式
+rule-providers: # 规则集合
+  AWAvenue-Ads:
+    <<: *domain
+    url: https://ghfast.top/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-classical.yaml
+    path: ./providers/rule-provider_AWAvenue-Ads.yaml
