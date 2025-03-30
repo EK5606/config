@@ -8,7 +8,7 @@ p: &p # 机场订阅配置的引用
     interval: 300 # 节点连通检测时间间隔 单位为ms
     timeout: 1000 # 节点超时延迟 单位为ms
     tolerance: 50 # 节点自动切换差值 单位为ms
-
+    filter: '^(?!.*(群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))' # 过滤
 # 机场订阅,名称不能重复
 proxy-providers: # 代理集合
   常用:
@@ -279,46 +279,39 @@ dns:
 proxies:
   - {name: "🇨🇳 中国大陆", type: direct, udp: true}
 # 代理组的引用
-pr: &pr { type: select, proxies: [🚀 节点选择, ♻️ 自动选择, 🇭🇰♻️ 香港自动, 🇹🇼♻️ 台湾自动, 🇸🇬♻️ 新加坡自动, 🇯🇵♻️ 日本自动, 🇺🇲♻️ 美国自动, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇨🇦 加拿大节点, 🇰🇷 韩国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点, 🇳🇱 荷兰节点, 🇹🇷 土耳其节点, 🇻🇳 越南节点, 🌎 其它地区, 🌐 全部节点, 🎯 全球直连]} # 默认🚀 节点选择
-pr_auto: &pr_auto {type: select, proxies: []} # 默认♻️ 自动选择
+pr: &pr { type: select, proxies: [🚀 节点选择, ♻️ 自动选择, 🇭🇰♻️ 香港自动, 🇹🇼♻️ 台湾自动, 🇸🇬♻️ 新加坡自动, 🇯🇵♻️ 日本自动, 🇺🇲♻️ 美国自动, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点, 🇳🇱 荷兰节点, 🇻🇳 越南节点, 🇨🇦 加拿大节点, 🇹🇷 土耳其节点, 🌎 其它地区, 🌐 全部节点, 🎯 全球直连]} # 默认🚀 节点选择
 pr_dir: &pr_dir {type: select, proxies:[]} # 默认🎯 全球直连
+pr_auto: &pr_auto {type: select, proxies: []} # 默认♻️ 自动选择
 pr_cn: &pr_cn {type: select, proxies:[]} # 默认🇨🇳 中国大陆
-pr_sg: &pr_sg {type: select, proxies:[]} # 默认🇸🇬♻️ 新加坡自动
 pr_us: &pr_us {type: select, proxies:[]} # 默认🇺🇲♻️ 美国自动
+pr_jp: &pr_jp {type: select, proxies:[]} # 默认🇯🇵♻️ 日本自动
+pr_sg: &pr_sg {type: select, proxies:[]} # 默认🇸🇬♻️ 新加坡自动
 pr_tw: &pr_tw {type: select, proxies:[]} # 默认🇹🇼♻️ 台湾自动
 pr_hk: &pr_hk {type: select, proxies:[]} # 默认🇭🇰♻️ 香港自动
 proxy-groups: # 代理组
-  - {name: 🚀 节点选择, type: select, proxies:[🇭🇰♻️ 香港自动, 🇹🇼♻️ 台湾自动, 🇸🇬♻️ 新加坡自动, 🇯🇵♻️ 日本自动, 🇺🇲♻️ 美国自动, ♻️ 自动选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇨🇦 加拿大节点, 🇰🇷 韩国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点, 🇳🇱 荷兰节点, 🇹🇷 土耳其节点, 🇻🇳 越南节点, 🌎 其它地区, 🌐 全部节点, 🇨🇳 中国大陆]}
+  - {name: 🚀 节点选择, type: select, proxies:[🇭🇰♻️ 香港自动, 🇹🇼♻️ 台湾自动, 🇸🇬♻️ 新加坡自动, 🇯🇵♻️ 日本自动, 🇺🇲♻️ 美国自动, ♻️ 自动选择, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 🇨🇦 加拿大节点, 🇰🇷 韩国节点, 🇬🇧 英国节点, 🇫🇷 法国节点, 🇩🇪 德国节点, 🇳🇱 荷兰节点, 🇹🇷 土耳其节点, 🇻🇳 越南节点, 🌎 其它地区]}
   - {name: ♻️ 自动选择, type: url-test, <<: *use, tolerance: 50, interval: 300, filter: "^((?!(直连|官网|套餐|重置|剩余|建议|8x|10x)).)*$"}
-  - {name: 👨🏿‍💻 GitHub, <<: *pr}
-  - {name: 📲 Telegram, <<: *pr_sg}
-  - {name: 🕊️ Twitter, <<: *pr} # 🕊️ Twitter(X) -> 🕊️ Twitter
+  - {name: 👨🏿‍💻 GitHub, <<: *pr, icon: https://git.imee.me/https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/github(1).png}
+  - {name: 📲 Telegram, <<: *pr_sg, icon: https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png}
+  - {name: 🕊️ Twitter, <<: *pr, icon: https://git.imee.me/https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/twitter(2).png} # 🕊️ Twitter(X) -> 🕊️ Twitter
   - {name: 🎮 Steam, <<: *pr_dir}
   - {name: 🎮 游戏平台, <<: *pr_dir}
   - {name: 🤖 AI服务, <<: *pr_us}
-  - {name: 💬 ChatGPT, <<: *pr_us}
+  - {name: 💬 ChatGPT, <<: *pr_us, icon: https://git.imee.me/https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/ChatGPT-green.png}
   - {name: 💬 Copilot, <<: *pr_us}
-  - {name: 🎶 TikTok, <<: *pr_sg}
-  - {name: 📹 YouTube, <<: *pr}
-  - {name: 🎥 Netflix, <<: *pr_sg}
-  - {name: 🎥 DisneyPlus, <<: *pr_sg}
-  - {name: 🎥 HBO, <<: *pr_sg}
-  - {name: 🎥 PrimeVideo, <<: *pr_sg}
-  - {name: 🎥 AppleTV+, <<: *pr_sg}
-  - {name: 🎥 Emby, <<: *pr_sg}
-  - {name: 🎻 Spotify, <<: *pr}
+  - {name: 🎶 TikTok, <<: *pr_sg, icon: https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
+  - {name: 📹 YouTube, <<: *pr, icon: https://git.imee.me/https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/youtube.png}
+  - {name: 🎥 Netflix, <<: *pr_sg, icon: https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png}
+  - {name: 🎻 Spotify, <<: *pr, icon: https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png}
   - {name: 📺 Bahamut, <<: *pr_tw}
   - {name: 📺 Bilibili, <<: *pr_dir}
   - {name: 🌎 国外媒体, <<: *pr_sg}
   - {name: 🛒 国外电商, <<: *pr}
+  - {name: 🚀 测速工具, <<: *pr_dir, icon: https://git.imee.me/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Speedtest.png}
   - {name: 📢 谷歌FCM, <<: *pr}
-  - {name: 🇬 谷歌服务, <<: *pr}
-  - {name: 🪟 微软服务, <<: *pr_dir} # Ⓜ️ 微软服务 -> 🪟 微软服务
-  - {name: 🍎 苹果服务, <<: *pr_dir}
-  - {name: 🚀 测速工具, <<: *pr_dir}
-  # - {name: 💶 PayPal, <<: *pr}
-  # - {name: ✈️ Speedtest, <<: *pr_dir}
-  # - {name: 🐬 OneDrive, <<: *pr}
+  - {name: 🇬 谷歌服务, <<: *pr, icon: https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
+  - {name: 🪟 微软服务, <<: *pr_dir, icon: https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png} # Ⓜ️ 微软服务 -> 🪟 微软服务
+  - {name: 🍎 苹果服务, <<: *pr_dir, icon: https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
   - {name: 🎯 全球直连, <<: *pr_dir}
   - {name: 🐟 漏网之鱼, <<: *pr}
   - {name: ❌ 广告拦截, type: select, proxies: [REJECT, 🇨🇳 中国大陆, 🚀 节点选择]}
@@ -330,18 +323,17 @@ proxy-groups: # 代理组
   - {name: 🇭🇰 香港节点, type: select, <<: *use, filter: "🇭🇰|(?i)港|hk|hongkong|hong kong"}
   - {name: 🇹🇼 台湾节点, type: select, <<: *use, filter: "🇹🇼|(?i)台|tw|taiwan" }
   - {name: 🇸🇬 新加坡节点, type: select, <<: *use, filter: "🇸🇬|(?i)新|sg|singapore"}
-  - {name: 🇯🇵 日本节点, type: select, <<: *use, filter: "🇯🇵|(?i)日|jp|japan" }
+  - {name: 🇯🇵 日本节点, type: select, <<: *use, filter: "🇯🇵|(?i)日|jp|japan"}
   - {name: 🇺🇲 美国节点, type: select, <<: *use, filter: "🇺🇲|(?i)美|us|(?i)States|America"}
-  - {name: 🇨🇦 加拿大节点, type: select, <<: *use, filter: "🇨🇦|(?i)加|ca|Canada"}
-  - {name: 🇰🇷 韩国节点, type: select, <<: *use, filter: "🇰🇷|(?i)韩|kr|Korea" }
+  - {name: 🇰🇷 韩国节点, type: select, <<: *use, filter: "🇰🇷|(?i)韩|kr|Korea"}
   - {name: 🇬🇧 英国节点, type: select, <<: *use, filter: "🇬🇧|(?i)英|gb|(?i)Kiongdom|United Kiongdom"}
   - {name: 🇫🇷 法国节点, type: select, <<: *use, filter: "🇫🇷|(?i)法|fr|France" }
   - {name: 🇩🇪 德国节点, type: select, <<: *use, filter: "🇩🇪|(?i)德|de|Germany"}
   - {name: 🇳🇱 荷兰节点, type: select, <<: *use, filter: "🇳🇱|(?i)荷|nl|Netherlands"}
-  - {name: 🇹🇷 土耳其节点, type: select, <<: *use, filter: "🇹🇷|(?i)土|tr|Turkey"}
   - {name: 🇻🇳 越南节点, type: select, <<: *use, filter: "🇻🇳|(?i)越|vn|Vietnam"}
+  - {name: 🇨🇦 加拿大节点, type: select, <<: *use, filter: "🇨🇦|(?i)加|ca|Canada"}
+  - {name: 🇹🇷 土耳其节点, type: select, <<: *use, filter: "🇹🇷|(?i)土|tr|Turkey"}
   - {name: 🌎 其它地区, type: select, <<: *use, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|🇨🇦|🇰🇷|🇬🇧|🇫🇷|🇩🇪|🇳🇱|🇹🇷|🇻🇳|香港|hk|hongkong|台湾|tw|taiwan|日本|jp|japan|新加坡|sg|singapore|美国|us|unitedstates|加拿大|ca|canada|韩国|kr|korea|英国|gb|unitedkiongdom|法国|fr|france|德国|de|germany|荷兰|nl|netherlands|土耳其|tr|turkey|越南|vn|vietnam)(?!(直连|官网|套餐|重置|剩余|建议))).*"}
-  - {name: 🌐 全部节点, type: select, <<: *use}
 rules: # 路由规则,按照从上往下的顺序遍历,优先命中上位规则,修改顺序会影响分流效果,规则重复无影响
   - RULE-SET, AWAvenue-Ads, ❌ 广告拦截
 
@@ -353,21 +345,11 @@ rules: # 路由规则,按照从上往下的顺序遍历,优先命中上位规则
 rule-anchor: # 规则集合的引用
   ip: &ip { type: http, interval: 43200, behavior: ipcidr, format: mrs } # ip类规则,mrs格式
   domain: &domain { type: http, interval: 43200, behavior: domain } # 域名类规则,默认yaml格式
-  domainMrs: &domainMrs {
-      type: http,
-      interval: 43200,
-      behavior: domain,
-      format: mrs,
-    } # 域名类规则,mrs格式
+  domainMrs: &domainMrs {type: http, interval: 43200, behavior: domain, format: mrs} # 域名类规则,mrs格式
   class: &class { type: http, interval: 43200, behavior: classical } # 混合规则,默认yaml格式
-  classText: &classText {
-      type: http,
-      interval: 43200,
-      behavior: classical,
-      format: text,
-    } # 混合规则,text格式
+  classText: &classText {type: http, interval: 43200, behavior: classical, format: text} # 混合规则,text格式
 rule-providers: # 规则集合
   AWAvenue-Ads:
     <<: *domain
-    url: https://ghfast.top/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-classical.yaml
     path: ./providers/rule-provider_AWAvenue-Ads.yaml
+    url: https://ghfast.top/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-classical.yaml
