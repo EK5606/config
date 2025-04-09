@@ -126,10 +126,10 @@ dns: # DNS模块
   筛选其他: &FilterOther '^(?!.*(直连|港|台|新|日|韩|香港|台湾|新加坡|日本|韩国|美国|🇭🇰|🇼🇸|🇹🇼|🇸🇬|🇯🇵|🇰🇷|🇺🇸|🇬🇧|🇦🇹|🇧🇪|🇨🇿|🇩🇰|🇫🇮|🇫🇷|🇩🇪|🇮🇪|🇮🇹|🇱🇹|🇱🇺|🇳🇱|🇵🇱|🇸🇪|HK|TW|SG|JP|KR|US|GB|CDG|FRA|AMS|MAD|BCN|FCO|MUC|BRU|HKG|TPE|TSA|KHH|SIN|XSP|NRT|HND|KIX|CTS|FUK|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|LHR|LGW|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|建议|重置|套餐|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
   筛选全部: &FilterAll '^(?!.*(直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|建议|重置|套餐|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
 策略组锚点:
-  自动选择: &UrlTest {type: url-test, interval: 60, tolerance: 20, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false, include-all: true, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Auto.png"}
+  自动选择: &UrlTest {type: url-test, interval: 60, tolerance: 20, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false, include-all: true}
   故障转移: &FallBack {type: fallback, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false}
-  负载均衡-散列: &LoadBalanceCH {type: load-balance, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Round_Robin_1.png"}
-  负载均衡-轮询: &LoadBalanceCR {type: load-balance, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, strategy: round-robin, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Round_Robin.png"}
+  负载均衡-散列: &LoadBalanceCH {type: load-balance, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true}
+  负载均衡-轮询: &LoadBalanceCR {type: load-balance, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, strategy: round-robin, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true}
 选择组锚点:
   优先默认: &SelectDefault {type: select, proxies: [默认代理, 香港策略, 台湾策略, 新加坡策略, 日本策略, 韩国策略, 美国策略, 欧盟策略, 冷门自选, 全球手动, 直连]}
   优先香港: &SelectHK {type: select, proxies: [香港策略, 台湾策略, 新加坡策略, 日本策略, 韩国策略, 美国策略, 欧盟策略, 冷门自选, 全球手动, 直连]}
@@ -137,93 +137,93 @@ dns: # DNS模块
   优先新加坡: &SelectSG {type: select, proxies: [新加坡策略, 香港策略, 台湾策略, 日本策略, 韩国策略, 美国策略, 欧盟策略, 冷门自选, 全球手动, 直连]}
   优先美国: &SelectUS {type: select, proxies: [美国策略, 香港策略, 台湾策略, 新加坡策略, 日本策略, 韩国策略, 欧盟策略, 冷门自选, 全球手动, 直连]}
   优先直连: &SelectCN {type: select, proxies: [直连, 香港策略, 台湾策略, 新加坡策略, 日本策略, 韩国策略, 美国策略, 欧盟策略, 冷门自选, 全球手动]}
-proxies: # 重命名直连
-  - {name: "直连", type: direct, udp: true, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Direct.png"}
+# 重命名直连
+proxies:
+  - {name: "直连", type: direct, udp: true}
 proxy-groups: # 代理组
   # 分流代理
-  - {name: 默认代理, <<: *SelectHK, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/DefaultProxy.png"}
-  - {name: 全球手动, type: select, include-all: true, filter: *FilterAll, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/AllProxy.png"}
-  - {name: 冷门自选, type: select, include-all: true, filter: *FilterOther, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/OtherProxy.png"}
+  - {name: 默认代理, <<: *SelectHK, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Static.png"}
+  - {name: 全球手动, type: select, include-all: true, filter: *FilterAll, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Clubhouse.png"}
+  - {name: 冷门自选, type: select, include-all: true, filter: *FilterOther, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Europe_Map.png"}
 ################################
-  - {name: Github,    <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/GitHub.png"}
+  - {name: Github,    <<: *SelectDefault, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/GitHub.png"}
 ################################
-  - {name: 游戏平台,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Game.png"}
-  - {name: Steam,    <<: *SelectCN, icon:  "https://github.com/EK5606/Imgur/raw/main/Icons/Steam.png"}
-  # - {name: Epic,      <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Epic.png"}
+  - {name: 游戏平台,  <<: *SelectDefault, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png"}
+  - {name: Steam,    <<: *SelectCN, icon:  "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/steam.png"}
+  # - {name: Epic,      <<: *SelectCN}
 ################################
-  - {name: 国外社交,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Social.png"}
-  - {name: Telegram, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Telegram.png"}
-  - {name: Twitter,   <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Twitter.png"}
-  - {name: Discord, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Discord.png"}
-  - {name: Bahamut, <<: *SelectTW, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Bahamut.png"}
+  - {name: 国外社交,  <<: *SelectDefault, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/PBS.png"}
+  - {name: Telegram, <<: *SelectDefault, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Telegram_X.png"}
+  - {name: Twitter,   <<: *SelectDefault, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/X.png"}
+  - {name: Discord, <<: *SelectDefault, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/discord.png"}
+  - {name: Bahamut, <<: *SelectTW, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/bahamut.png"}
 ################################
-  - {name: 国外AI, <<: *SelectUS, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Ai.png"}
-  - {name: ChatGPT, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/ChatGPT.png"}
+  - {name: 国外AI, <<: *SelectUS, icon: "https://raw.githubusercontent.com/EK5606/config/blob/master/Icons/Ai.png"}
+  - {name: ChatGPT, <<: *SelectSG, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/ChatGPT.png"}
 ################################
-  - {name: 国外媒体, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/GlobalTv.png"}
-  - {name: YouTube, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/YouTube.png"}
-  - {name: TikTok, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/TikTok.png"}
-  - {name: NetFlix, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Netflix.png"}
+  - {name: 国外媒体, <<: *SelectSG}
+  - {name: YouTube, <<: *SelectSG, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/YouTube.png"}
+  - {name: TikTok, <<: *SelectSG, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/TikTok.png"}
+  - {name: NetFlix, <<: *SelectSG, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Netflix.png"}
 ################################
-  - {name: 国外电商, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/shopping.png"}
-  - {name: PayPal, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/paypal.png"}
-  # - {name: Wise, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/wise.png"}
+  - {name: 国外电商, <<: *SelectDefault, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/shopping.png"}
+  - {name: PayPal, <<: *SelectDefault, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/paypal.png"}
+  # - {name: Wise, <<: *SelectDefault, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/wise.png"}
 ################################
-  - {name: 抖快书定位, <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/IPCustom.png"}
-  - {name: 网速测试,  <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/SpeedTest.png"}
-  - {name: 谷歌推送,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Google_fcm.png"}
+  - {name: 抖快书定位, <<: *SelectCN, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Null_Nation.png"}
+  - {name: 网速测试,  <<: *SelectCN, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Speedtest.png"}
+  - {name: 谷歌推送,  <<: *SelectDefault}
 ################################
-  - {name: 谷歌服务,  <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Google.png"}
-  - {name: 微软服务,  <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Microsoft.png"}
-  - {name: 苹果服务,  <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Apple.png"}
-  - {name: 脸书服务,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Facebook.png"}
+  - {name: 谷歌服务,  <<: *SelectSG, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Google_Search.png"}
+  - {name: 微软服务,  <<: *SelectCN, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Microsoft.png"}
+  - {name: 苹果服务,  <<: *SelectCN, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Apple.png"}
+  - {name: 脸书服务,  <<: *SelectDefault, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Facebook.png"}
 ################################
-  - {name: 广告拦截, type: select, proxies: [REJECT, 默认代理, 直连], icon: "https://github.com/EK5606/Imgur/raw/main/Icons/block.png"}
-  - {name: 国外网站,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Global.png"}
-  - {name: 国内网站,  type: select, proxies: [直连, 默认代理], icon: "https://github.com/EK5606/Imgur/raw/main/Icons/China.png"}
-  - {name: 漏网之鱼, type: select, proxies: [默认代理, 直连], icon: "https://github.com/EK5606/Imgur/raw/main/Icons/FinalFilter.png"}
+  - {name: 广告拦截, type: select, proxies: [REJECT, 默认代理, 直连], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/block.png"}
+  - {name: 国外网站,  <<: *SelectDefault, icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/Global.png"}
+  - {name: 国内网站,  type: select, proxies: [直连, 默认代理], icon: "https://github.com/Koolson/Qure/raw/master/IconSet/Color/China.png"}
+  - {name: 漏网之鱼, type: select, proxies: [默认代理, 直连], icon: ""}
 ################################
   # 地区代理
-  - {name: 香港策略, type: select, proxies: [香港自动, 香港均衡-散列, 香港均衡-轮询], include-all: true, filter: *FilterHK, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Hong_Kong.png"}
-  - {name: 台湾策略, type: select, proxies: [台湾自动, 台湾均衡-散列, 台湾均衡-轮询], include-all: true, filter: *FilterTW, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/TW.png"}
-  - {name: 新加坡策略, type: select, proxies: [新加坡自动, 新加坡均衡-散列, 新加坡均衡-轮询], include-all: true, filter: *FilterSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Singapore.png"}
-  - {name: 日本策略, type: select, proxies: [日本自动, 日本均衡-散列, 日本均衡-轮询], include-all: true, filter: *FilterJP, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Japan.png"}
-  - {name: 韩国策略, type: select, proxies: [韩国自动, 韩国均衡-散列, 韩国均衡-轮询], include-all: true, filter: *FilterKR, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Korea.png"}
-  - {name: 美国策略, type: select, proxies: [美国自动, 美国均衡-散列, 美国均衡-轮询], include-all: true, filter: *FilterUS, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/United_States.png"}
-  - {name: 欧盟策略, type: select, proxies: [欧盟自动, 欧盟均衡-散列, 欧盟均衡-轮询], include-all: true, filter: *FilterEU, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/European_Union.png"}
+  - {name: 香港策略, type: select, proxies: [香港自动, 香港均衡-散列, 香港均衡-轮询], include-all: true, filter: *FilterHK, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"}
+  - {name: 台湾策略, type: select, proxies: [台湾自动, 台湾均衡-散列, 台湾均衡-轮询], include-all: true, filter: *FilterTW, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TW.png"}
+  - {name: 新加坡策略, type: select, proxies: [新加坡自动, 新加坡均衡-散列, 新加坡均衡-轮询], include-all: true, filter: *FilterSG, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"}
+  - {name: 日本策略, type: select, proxies: [日本自动, 日本均衡-散列, 日本均衡-轮询], include-all: true, filter: *FilterJP, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"}
+  - {name: 韩国策略, type: select, proxies: [韩国自动, 韩国均衡-散列, 韩国均衡-轮询], include-all: true, filter: *FilterKR, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png"}
+  - {name: 美国策略, type: select, proxies: [美国自动, 美国均衡-散列, 美国均衡-轮询], include-all: true, filter: *FilterUS, icon: "https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"}
+  - {name: 欧盟策略, type: select, proxies: [欧盟自动, 欧盟均衡-散列, 欧盟均衡-轮询], include-all: true, filter: *FilterEU, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/European_Union.png"}
   # 自动测速代理
-  - {name: 香港自动, <<: *UrlTest, filter: *FilterHKauto}
-  - {name: 台湾自动, <<: *UrlTest, filter: *FilterTWauto}
-  - {name: 新加坡自动, <<: *UrlTest, filter: *FilterSGauto}
-  - {name: 日本自动, <<: *UrlTest, filter: *FilterJPauto}
-  - {name: 韩国自动, <<: *UrlTest, filter: *FilterKRauto}
-  - {name: 美国自动, <<: *UrlTest, filter: *FilterUSauto}
-  - {name: 欧盟自动, <<: *UrlTest, filter: *FilterEUauto}
+  - {name: 香港自动,        <<: *UrlTest, filter: *FilterHKauto, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"}
+  - {name: 台湾自动,        <<: *UrlTest, filter: *FilterTWauto, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"}
+  - {name: 新加坡自动,      <<: *UrlTest, filter: *FilterSGauto, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"}
+  - {name: 日本自动,        <<: *UrlTest, filter: *FilterJPauto, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"}
+  - {name: 韩国自动,        <<: *UrlTest, filter: *FilterKRauto, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"}
+  - {name: 美国自动,        <<: *UrlTest, filter: *FilterUSauto, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"}
+  - {name: 欧盟自动,        <<: *UrlTest, filter: *FilterEUauto, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png"}
   # 负载均衡-散列
-  - {name: 香港均衡-散列, <<: *LoadBalanceCH, filter: *FilterHK}
-  - {name: 台湾均衡-散列, <<: *LoadBalanceCH, filter: *FilterTW}
-  - {name: 新加坡均衡-散列, <<: *LoadBalanceCH, filter: *FilterSG}
-  - {name: 日本均衡-散列, <<: *LoadBalanceCH, filter: *FilterJP}
-  - {name: 韩国均衡-散列, <<: *LoadBalanceCH, filter: *FilterKR}
-  - {name: 美国均衡-散列, <<: *LoadBalanceCH, filter: *FilterUS}
-  - {name: 欧盟均衡-散列, <<: *LoadBalanceCH, filter: *FilterEU}
+  - {name: 香港均衡-散列, <<: *LoadBalanceCH, filter: *FilterHK, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin_1.png"}
+  - {name: 台湾均衡-散列, <<: *LoadBalanceCH, filter: *FilterTW, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin_1.png"}
+  - {name: 新加坡均衡-散列, <<: *LoadBalanceCH, filter: *FilterSG, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin_1.png"}
+  - {name: 日本均衡-散列, <<: *LoadBalanceCH, filter: *FilterJP, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin_1.png"}
+  - {name: 韩国均衡-散列, <<: *LoadBalanceCH, filter: *FilterKR, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin_1.png"}
+  - {name: 美国均衡-散列, <<: *LoadBalanceCH, filter: *FilterUS, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin_1.png"}
+  - {name: 欧盟均衡-散列, <<: *LoadBalanceCH, filter: *FilterEU, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin_1.png"}
   # 负载均衡-轮询
-  - {name: 香港均衡-轮询, <<: *LoadBalanceCR, filter: *FilterHK}
-  - {name: 台湾均衡-轮询, <<: *LoadBalanceCR, filter: *FilterTW}
-  - {name: 新加坡均衡-轮询, <<: *LoadBalanceCR, filter: *FilterSG}
-  - {name: 日本均衡-轮询, <<: *LoadBalanceCR, filter: *FilterJP}
-  - {name: 韩国均衡-轮询, <<: *LoadBalanceCR, filter: *FilterKR}
-  - {name: 美国均衡-轮询, <<: *LoadBalanceCR, filter: *FilterUS}
-  - {name: 欧盟均衡-轮询, <<: *LoadBalanceCR, filter: *FilterEU}
-rules: # 路由规则
+  - {name: 香港均衡-轮询, <<: *LoadBalanceCR, filter: *FilterHK, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png"}
+  - {name: 台湾均衡-轮询, <<: *LoadBalanceCR, filter: *FilterTW, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png"}
+  - {name: 新加坡均衡-轮询, <<: *LoadBalanceCR, filter: *FilterSG, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png"}
+  - {name: 日本均衡-轮询, <<: *LoadBalanceCR, filter: *FilterJP, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png"}
+  - {name: 韩国均衡-轮询, <<: *LoadBalanceCR, filter: *FilterKR, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png"}
+  - {name: 美国均衡-轮询, <<: *LoadBalanceCR, filter: *FilterUS, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png"}
+  - {name: 欧盟均衡-轮询, <<: *LoadBalanceCR, filter: *FilterEU, icon: "https://git.imee.me/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png"}
+rules: # 路由规则,按照从上往下的顺序遍历,优先命中上位规则,修改顺序会影响分流效果,规则重复无影响
   # 域名路由
   - RULE-SET,private,直连
   - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,AWAvenue-Ads,广告拦截
-  - RULE-SET,Steam_CDN,直连
-  - RULE-SET,Game_Download_CDN,直连
   - RULE-SET,github,Github
   - RULE-SET,telegram,Telegram
+  - RULE-SET,youtube,YouTube
   - RULE-SET,twitter,Twitter
   - RULE-SET,discord,Discord
   - RULE-SET,openai,ChatGPT
@@ -231,11 +231,12 @@ rules: # 路由规则
   - RULE-SET,tiktok,TikTok
   - RULE-SET,netflix,NetFlix
   - RULE-SET,steam,Steam
+  - RULE-SET,Steam_CDN,直连
+  - RULE-SET,Game_Download_CDN,直连
   - RULE-SET,speedtest,网速测试
   - RULE-SET,location_ip,抖快书定位
-  - RULE-SET,google,谷歌服务
   - RULE-SET,googlefcm,谷歌推送
-  - RULE-SET,youtube,YouTube
+  - RULE-SET,google,谷歌服务
   - RULE-SET,paypal,PayPal
   - RULE-SET,apple,苹果服务
   - RULE-SET,facebook,脸书服务
