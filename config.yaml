@@ -27,6 +27,7 @@ unified-delay: true # 统一延迟 更换延迟计算方式,去除握手等额�
 tcp-concurrent: true # TCP 并发 同时对所有ip进行连接,返回延迟最低的地址
 log-level: info # 日志等级
 find-process-mode: off # 匹配进程 always/strict/off
+global-ua: clash.meta # 自定义外部资源下载时使用的的 UA，默认为 clash.meta
 global-client-fingerprint: chrome # 全局 TLS 指纹
 disable-keep-alive: true # 启用 TCP Keep Alive
 keep-alive-idle: 600 # TCP Keep Alive 包的间隔,单位为秒
@@ -96,11 +97,19 @@ dns: # DNS模块
   # 模式切换 whitelist/blacklist
   # 黑名单模式表示如果匹配成功则不返回 Fake-IP, 白名单模式时只有匹配成功才返回 Fake-IP
   fake-ip-filter-mode: blacklist
-  fake-ip-filter: ['rule-set:cn,private', '*.lan', '*.local', '*.home.arpa', '+.gitv.tv', '+.docker.io', '+.miwifi.com', '+.safebrowsing.apple', 'Mijia Cloud', 'time.*.com', 'time.*.gov', 'time.*.edu.cn', 'time.*.apple.com', 'time-ios.apple.com', 'time1.*.com', 'time2.*.com', 'time3.*.com', 'time4.*.com', 'time5.*.com', 'time6.*.com', 'time7.*.com', 'ntp.*.com', 'ntp1.*.com', 'ntp2.*.com', 'ntp3.*.com', 'ntp4.*.com', 'ntp5.*.com', 'ntp6.*.com', 'ntp7.*.com', '*.time.edu.cn', '*.ntp.org.cn', '+.pool.ntp.org', 'time1.cloud.tencent.com']
+  fake-ip-filter: ['rule-set:cn,private', '*.lan', '*.local', '*.home.arpa', '+.gitv.tv', '+.docker.io', '+.miwifi.com', '+.safebrowsing.apple', 'Mijia Cloud', 'time.*.com', 'time.*.gov', 'time.*.edu.cn', 'time.*.apple.com', 'time-ios.apple.com', 'time1.*.com', 'time2.*.com', 'time3.*.com', 'time4.*.com', 'time5.*.com', 'time6.*.com', 'time7.*.com', 'ntp.*.com', 'ntp1.*.com', 'ntp2.*.com', 'ntp3.*.com', 'ntp4.*.com', 'ntp5.*.com', 'ntp6.*.com', 'ntp7.*.com', '*.time.edu.cn', '*.ntp.org.cn', '+.pool.ntp.org', 'time1.cloud.tencent.com', 'ping.archlinux.org']
   default-nameserver: ["223.5.5.5","223.6.6.6", "180.184.1.1", "119.29.29.29"]
   proxy-server-nameserver: ["https://223.5.5.5/dns-query"]
   nameserver: ["223.5.5.5", "223.6.6.6", "https://doh.pub/dns-query", "https://dns.alidns.com/dns-query"]
   nameserver-policy: {"*": 127.0.0.1, "+.lan": 127.0.0.1, "+.local": 127.0.0.1, "+.ts.net": 127.0.0.1}
+规则集锚点:
+  ipMrs: &ipMrs { type: http, interval: 43200, behavior: ipcidr, format: mrs} # ip类规则,默认mrs格式
+  ipText: &iPText {type: http, interval: 86400, behavior: ipcidr, format: text} # ip类规则,txt格式
+  domainYaml: &domainYaml { type: http, interval: 43200, behavior: domain} # 域名类规则,默认yaml格式
+  domainMrs: &domainMrs {type: http, interval: 43200, behavior: domain, format: mrs} # 域名类规则,mrs格式
+  classicalYaml: &classicalYaml { type: http, interval: 43200, behavior: classical} # 混合规则,默认yaml格式
+  classicalText: &classicalText {type: http, interval: 43200, behavior: classical, format: text} # 混合规则,txt格式
+
 筛选组锚点:
   筛选香港: &FilterHK '(?i)港|香港|🇭🇰|HK|Hong|HKG'
   筛选香港并排除高速率: &FilterHKauto '^(?i)(?=.*(港|香港|🇭🇰|HK|Hong|HKG))(?!.*(3x|6x|8x|10x)).+$'
@@ -119,10 +128,10 @@ dns: # DNS模块
   筛选其他: &FilterOther '^(?!.*(直连|港|台|新|日|韩|香港|台湾|新加坡|日本|韩国|美国|🇭🇰|🇼🇸|🇹🇼|🇸🇬|🇯🇵|🇰🇷|🇺🇸|🇬🇧|🇦🇹|🇧🇪|🇨🇿|🇩🇰|🇫🇮|🇫🇷|🇩🇪|🇮🇪|🇮🇹|🇱🇹|🇱🇺|🇳🇱|🇵🇱|🇸🇪|HK|TW|SG|JP|KR|US|GB|CDG|FRA|AMS|MAD|BCN|FCO|MUC|BRU|HKG|TPE|TSA|KHH|SIN|XSP|NRT|HND|KIX|CTS|FUK|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|LHR|LGW|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|建议|重置|套餐|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
   筛选全部: &FilterAll '^(?!.*(直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|建议|重置|套餐|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
 策略组锚点:
-  自动选择: &UrlTest {type: url-test, interval: 60, tolerance: 20, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false, include-all: true, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Auto.png"}
+  自动选择: &UrlTest {type: url-test, interval: 60, tolerance: 20, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Auto.png"}
   故障转移: &FallBack {type: fallback, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false}
-  负载均衡-散列: &LoadBalanceCH {type: load-balance, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Round_Robin_1.png"}
-  负载均衡-轮询: &LoadBalanceCR {type: load-balance, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, strategy: round-robin, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Round_Robin.png"}
+  负载均衡-散列: &LoadBalanceCH {type: load-balance, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Round_Robin_1.png"}
+  负载均衡-轮询: &LoadBalanceCR {type: load-balance, interval: 60, lazy: true, url: 'https://www.gstatic.com/generate_204', disable-udp: false, strategy: round-robin, timeout: 2000, max-failed-times: 3, hidden: true, include-all: true, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Round_Robin.png"}
 选择组锚点:
   优先默认: &SelectDefault {type: select, proxies: [默认代理, 香港策略, 台湾策略, 新加坡策略, 日本策略, 韩国策略, 美国策略, 欧盟策略, 冷门自选, 全球手动, 直连]}
   优先香港: &SelectHK {type: select, proxies: [香港策略, 台湾策略, 新加坡策略, 日本策略, 韩国策略, 美国策略, 欧盟策略, 冷门自选, 全球手动, 直连]}
@@ -134,57 +143,56 @@ proxies: # 重命名直连
   - {name: "直连", type: direct, udp: true, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Direct.png"}
 proxy-groups: # 代理组
   # 分流代理
-  - {name: 默认代理, <<: *SelectHK, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/DefaultProxy.png"}
-  - {name: 全球手动, type: select, include-all: true, filter: *FilterAll, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/AllProxy.png"}
-  - {name: 冷门自选, type: select, include-all: true, filter: *FilterOther, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/OtherProxy.png"}
+  - {name: 默认代理, <<: *SelectUS, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/DefaultProxy.png"}
+  - {name: 全球手动, type: select, include-all: true, filter: *FilterAll, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/AllProxy.png"}
+  - {name: 冷门自选, type: select, include-all: true, filter: *FilterOther, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/OtherProxy.png"}
 ################################
-  - {name: Github,    <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/GitHub.png"}
-  - {name: BiliBili,    <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/BiliBili.png"}
+  - {name: Github,    <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/GitHub.png"}
+  - {name: BiliBili,    <<: *SelectCN, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/BiliBili.png"}
 ################################
-  - {name: 游戏平台,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Game.png"}
-  - {name: Steam,    <<: *SelectCN, icon:  "https://github.com/EK5606/Imgur/raw/main/Icons/Steam.png"}
-  # - {name: Epic,      <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Epic.png"}
+  - {name: 游戏平台,  <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Game.png"}
+  - {name: Steam,    <<: *SelectHK, icon:  "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Steam.png"}
+  # - {name: Epic,      <<: *SelectCN, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Epic.png"}
 ################################
-  - {name: 国外社交,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Social.png"}
-  - {name: Telegram, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Telegram.png"}
-  - {name: Twitter,   <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Twitter.png"}
-  - {name: Discord, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Discord.png"}
-  - {name: Bahamut, <<: *SelectTW, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Bahamut.png"}
+  - {name: 国外社交,  <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Social.png"}
+  - {name: Telegram, <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Telegram.png"}
+  - {name: Twitter,   <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Twitter.png"}
+  - {name: Discord, <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Discord.png"}
+  - {name: Bahamut, <<: *SelectTW, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Bahamut.png"}
 ################################
-  - {name: 国外AI, <<: *SelectUS, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Ai.png"}
-  - {name: ChatGPT, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/ChatGPT.png"}
+  - {name: 国外AI, <<: *SelectUS, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Ai.png"}
+  - {name: ChatGPT, <<: *SelectUS, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/ChatGPT.png"}
 ################################
-  - {name: 国外媒体, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/GlobalTv.png"}
-  - {name: YouTube, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/YouTube.png"}
-  - {name: TikTok, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/TikTok.png"}
-  - {name: NetFlix, <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Netflix.png"}
+  - {name: 国外媒体, <<: *SelectSG, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/GlobalTv.png"}
+  - {name: YouTube, <<: *SelectSG, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/YouTube.png"}
+  - {name: TikTok, <<: *SelectSG, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/TikTok.png"}
+  - {name: NetFlix, <<: *SelectSG, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Netflix.png"}
 ################################
-  - {name: 国外电商, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Shopping.png"}
-  - {name: PayPal, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/PayPal.png"}
-  # - {name: Wise, <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Wise.png"}
+  - {name: 国外电商, <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Shopping.png"}
+  - {name: PayPal, <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/PayPal.png"}
+  # - {name: Wise, <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Wise.png"}
 ################################
-  - {name: 抖快书定位, <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/IPCustom.png"}
-  - {name: 网速测试,  <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/SpeedTest.png"}
-  - {name: 谷歌推送,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Google_fcm.png"}
+  - {name: 抖快书定位, <<: *SelectCN, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/IPCustom.png"}
+  - {name: 网速测试,  <<: *SelectCN, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/SpeedTest.png"}
+  - {name: 谷歌推送,  <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Google_fcm.png"}
 ################################
-  - {name: 谷歌服务,  <<: *SelectSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Google.png"}
-  - {name: 微软服务,  <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Microsoft.png"}
-  - {name: 苹果服务,  <<: *SelectCN, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Apple.png"}
-  - {name: 脸书服务,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Facebook.png"}
+  - {name: 谷歌服务,  <<: *SelectSG, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Google.png"}
+  - {name: 微软服务,  <<: *SelectCN, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Microsoft.png"}
+  - {name: 苹果服务,  <<: *SelectCN, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Apple.png"}
 ################################
-  - {name: 广告拦截, type: select, proxies: [REJECT, 默认代理, 直连], icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Block.png"}
-  - {name: 国外网站,  <<: *SelectDefault, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Global.png"}
-  - {name: 国内网站,  type: select, proxies: [直连, 默认代理], icon: "https://github.com/EK5606/Imgur/raw/main/Icons/China.png"}
-  - {name: 漏网之鱼, type: select, proxies: [默认代理, 直连], icon: "https://github.com/EK5606/Imgur/raw/main/Icons/FinalFilter.png"}
+  - {name: 广告拦截, type: select, proxies: [REJECT, 默认代理, 直连], icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Block.png"}
+  - {name: 国外网站,  <<: *SelectDefault, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Global.png"}
+  - {name: 国内网站,  type: select, proxies: [直连, 默认代理], icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/China.png"}
+  - {name: 漏网之鱼, type: select, proxies: [默认代理, 直连], icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/FinalFilter.png"}
 ################################
   # 地区代理
-  - {name: 香港策略, type: select, proxies: [香港自动, 香港均衡-散列, 香港均衡-轮询], include-all: true, filter: *FilterHK, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Hong_Kong.png"}
-  - {name: 台湾策略, type: select, proxies: [台湾自动, 台湾均衡-散列, 台湾均衡-轮询], include-all: true, filter: *FilterTW, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/TW.png"}
-  - {name: 新加坡策略, type: select, proxies: [新加坡自动, 新加坡均衡-散列, 新加坡均衡-轮询], include-all: true, filter: *FilterSG, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Singapore.png"}
-  - {name: 日本策略, type: select, proxies: [日本自动, 日本均衡-散列, 日本均衡-轮询], include-all: true, filter: *FilterJP, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Japan.png"}
-  - {name: 韩国策略, type: select, proxies: [韩国自动, 韩国均衡-散列, 韩国均衡-轮询], include-all: true, filter: *FilterKR, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/Korea.png"}
-  - {name: 美国策略, type: select, proxies: [美国自动, 美国均衡-散列, 美国均衡-轮询], include-all: true, filter: *FilterUS, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/United_States.png"}
-  - {name: 欧盟策略, type: select, proxies: [欧盟自动, 欧盟均衡-散列, 欧盟均衡-轮询], include-all: true, filter: *FilterEU, icon: "https://github.com/EK5606/Imgur/raw/main/Icons/European_Union.png"}
+  - {name: 香港策略, type: select, proxies: [香港自动, 香港优选,香港均衡-散列, 香港均衡-轮询], include-all: true, filter: *FilterHK, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Hong_Kong.png"}
+  - {name: 台湾策略, type: select, proxies: [台湾自动, 台湾均衡-散列, 台湾均衡-轮询], include-all: true, filter: *FilterTW, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/TW.png"}
+  - {name: 新加坡策略, type: select, proxies: [新加坡自动, 新加坡均衡-散列, 新加坡均衡-轮询], include-all: true, filter: *FilterSG, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Singapore.png"}
+  - {name: 日本策略, type: select, proxies: [日本自动, 日本均衡-散列, 日本均衡-轮询], include-all: true, filter: *FilterJP, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Japan.png"}
+  - {name: 韩国策略, type: select, proxies: [韩国自动, 韩国均衡-散列, 韩国均衡-轮询], include-all: true, filter: *FilterKR, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/Korea.png"}
+  - {name: 美国策略, type: select, proxies: [美国自动, 美国均衡-散列, 美国均衡-轮询], include-all: true, filter: *FilterUS, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/United_States.png"}
+  - {name: 欧盟策略, type: select, proxies: [欧盟自动, 欧盟均衡-散列, 欧盟均衡-轮询], include-all: true, filter: *FilterEU, icon: "https://ghfast.top/https://github.com/EK5606/Imgur/raw/main/Icons/European_Union.png"}
   # 自动测速代理
   - {name: 香港自动, <<: *UrlTest, filter: *FilterHKauto}
   - {name: 台湾自动, <<: *UrlTest, filter: *FilterTWauto}
@@ -193,6 +201,8 @@ proxy-groups: # 代理组
   - {name: 韩国自动, <<: *UrlTest, filter: *FilterKRauto}
   - {name: 美国自动, <<: *UrlTest, filter: *FilterUSauto}
   - {name: 欧盟自动, <<: *UrlTest, filter: *FilterEUauto}
+  # 优选代理
+  - {name: 香港优选, <<: *UrlTest, filter: *FilterHK}
   # 负载均衡-散列
   - {name: 香港均衡-散列, <<: *LoadBalanceCH, filter: *FilterHK}
   - {name: 台湾均衡-散列, <<: *LoadBalanceCH, filter: *FilterTW}
@@ -215,54 +225,46 @@ rules: # 路由规则
   - DST-PORT,3478/19302,直连
   # 域名路由
   - RULE-SET,AWAvenue-Ads,广告拦截
+
   - RULE-SET,private,直连
+  - RULE-SET,private_ip,直连,no-resolve
+  - RULE-SET,custom_direct,直连
+  - RULE-SET,custom_proxy,香港优选
   - RULE-SET,Custom_Direct,直连
   - RULE-SET,Custom_Proxy,默认代理
-  - GEOSITE,google-cn,直连
-  - RULE-SET,category-games@cn,直连
   - RULE-SET,Steam_CDN,直连
   - RULE-SET,Game_Download_CDN,直连
+  - RULE-SET,category-games@cn,直连
   - RULE-SET,bilibili,BiliBili
   - RULE-SET,github,Github
   - RULE-SET,telegram,Telegram
+  - RULE-SET,telegram_ip,Telegram,no-resolve
   - RULE-SET,twitter,Twitter
+  - RULE-SET,twitter_ip,Twitter,no-resolve
   - RULE-SET,discord,Discord
   - RULE-SET,openai,ChatGPT
   - RULE-SET,bahamut,Bahamut
   - RULE-SET,youtube,YouTube
   - RULE-SET,tiktok,TikTok
   - RULE-SET,netflix,NetFlix
+  - RULE-SET,netflix_ip,NetFlix,no-resolve
   - RULE-SET,steam,Steam
   - RULE-SET,paypal,PayPal
   - RULE-SET,speedtest,网速测试
   - RULE-SET,location_ip,抖快书定位
   - RULE-SET,google,谷歌服务
+  - RULE-SET,google_ip,谷歌服务,no-resolve
   - RULE-SET,googlefcm,谷歌推送
   - RULE-SET,microsoft,微软服务
   - RULE-SET,apple,苹果服务
-  - RULE-SET,facebook,脸书服务
   - RULE-SET,c-games,游戏平台
   - RULE-SET,c-communication,国外社交
   - RULE-SET,c-ai-!cn,国外AI
   - RULE-SET,c-ecommerce,国外电商
   - RULE-SET,gfw,国外网站
   - RULE-SET,cn,国内网站
-  # IP路由
-  - RULE-SET,private_ip,直连,no-resolve
-  - RULE-SET,facebook_ip,脸书服务,no-resolve
-  - RULE-SET,google_ip,谷歌服务,no-resolve
-  - RULE-SET,netflix_ip,NetFlix,no-resolve
-  - RULE-SET,twitter_ip,Twitter,no-resolve
-  - RULE-SET,telegram_ip,Telegram,no-resolve
   - RULE-SET,cn_ip,国内网站,no-resolve
   - MATCH,漏网之鱼
-规则集锚点:
-  ipMrs: &ipMrs { type: http, interval: 43200, behavior: ipcidr, format: mrs} # ip类规则,默认mrs格式
-  ipText: &iPText {type: http, interval: 86400, behavior: ipcidr, format: text} # ip类规则,txt格式
-  domainYaml: &domainYaml { type: http, interval: 43200, behavior: domain} # 域名类规则,默认yaml格式
-  domainMrs: &domainMrs {type: http, interval: 43200, behavior: domain, format: mrs} # 域名类规则,mrs格式
-  classicalYaml: &classicalYaml { type: http, interval: 43200, behavior: classical} # 混合规则,默认yaml格式
-  classicalText: &classicalText {type: http, interval: 43200, behavior: classical, format: text} # 混合规则,txt格式
 rule-providers:
 ###########功能分流代理##############
   private: { <<: *domainMrs, 
@@ -275,8 +277,8 @@ rule-providers:
     url: "https://api.asailor.org/getruleset?type=6&url=aHR0cHM6Ly9naC1wcm94eS5jb20vaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FldGhlcnNhaWxvci9DdXN0b21fT3BlbkNsYXNoX1J1bGVzL21haW4vcnVsZS9DdXN0b21fRGlyZWN0Lmxpc3Q"} # 
   Custom_Proxy: { <<: *classicalYaml, 
     url: "https://api.asailor.org/getruleset?type=6&url=aHR0cHM6Ly9naC1wcm94eS5jb20vaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FldGhlcnNhaWxvci9DdXN0b21fT3BlbkNsYXNoX1J1bGVzL21haW4vcnVsZS9DdXN0b21fUHJveHkubGlzdA"} # 
-  category-games@cn: { <<: *domainMrs, 
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"} # 国内游戏直连
+  
+   # 国内游戏直连
   Steam_CDN: {<<: *classicalYaml, 
     url: "https://api.asailor.org/getruleset?type=6&url=aHR0cHM6Ly9naC1wcm94eS5jb20vaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0FldGhlcnNhaWxvci9DdXN0b21fT3BlbkNsYXNoX1J1bGVzL21haW4vcnVsZS9TdGVhbV9DRE4ubGlzdA"} # 直连
   Game_Download_CDN: {<<: *classicalYaml, 
@@ -289,6 +291,8 @@ rule-providers:
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bilibili.mrs" } # BiliBili
   steam:             { <<: *domainMrs, 
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"} # Steam
+  category-games@cn: { <<: *domainMrs, 
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"}
   c-games:           { <<: *domainMrs, 
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"} # 游戏平台
   telegram:           { <<: *domainMrs, 
@@ -323,14 +327,14 @@ rule-providers:
     url: "https://api.asailor.org/getruleset?type=6&url=aHR0cHM6Ly9naC1wcm94eS5jb20vaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2JsYWNrbWF0cml4Ny9pb3NfcnVsZV9zY3JpcHQvbWFzdGVyL3J1bGUvQ2xhc2gvU3BlZWR0ZXN0L1NwZWVkdGVzdC5saXN0"} # 网速测试
   googlefcm:         { <<: *domainMrs, 
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/googlefcm.mrs"} # 谷歌推送
+#  google-cn: { <<: *domainMrs,
+#    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-cn.mrs"}
   google:            { <<: *domainMrs, 
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
   microsoft:         { <<: *domainMrs, 
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"} # 微软服务
   apple:             { <<: *domainMrs, 
     url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"} # 苹果服务
-  facebook:          { <<: *domainMrs, 
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/facebook.mrs"} # 脸书服务
   AWAvenue-Ads:    {<<: *domainYaml, 
     url: "https://ghfast.top/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash-classical.yaml", path: ./providers/rule-provider_AWAvenue-Ads.yaml} # 广告拦截
   gfw:                { <<: *domainMrs, 
@@ -346,8 +350,6 @@ rule-providers:
     url: "https://git.imee.me/https://github.com/666OS/YYDS/raw/main/mihomo/rules/netflix_ip.mrs"} # NetFlix
   google_ip:         {<<: *ipMrs, 
     url: "https://git.imee.me/https://github.com/666OS/YYDS/raw/main/mihomo/rules/google_ip.mrs"} # 谷歌服务
-  facebook_ip:       {<<: *ipMrs, 
-    url: "https://git.imee.me/https://github.com/666OS/YYDS/raw/main/mihomo/rules/facebook_ip.mrs"} # 脸书服务
   cn_ip:             {<<: *ipMrs, 
     url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"} # 国内ip
 ###########fake-ip-filter##############
