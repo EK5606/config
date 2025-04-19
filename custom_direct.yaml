@@ -1,8 +1,8 @@
 payload:
-  - DOMAIN-SUFFIX,ping.archlinux.org
+  - DOMAIN-SUFFIX,archlinux.org
   - DOMAIN-SUFFIX,royqh
   - DOMAIN-SUFFIX,msftconnecttest.com
   - DOMAIN-SUFFIX,msftncsi.com
   - DOMAIN-SUFFIX,royqh.net.com
-  - DOMAIN-SUFFIX,simtoco.com.
+  - DOMAIN-SUFFIX,simtoco.com
   
