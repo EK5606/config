@@ -39,6 +39,7 @@ const ruleOptions = {
   telegram: true, // Telegram通讯软件
   line: true, // Line通讯软件
   whatsapp: true, // Whatsapp
+  steam: true, // steam
   games: true, // 游戏策略组
   japan: true, // 日本网站策略组
   // tracker: true, // 网络分析和跟踪服务
@@ -644,6 +645,18 @@ function main(config) {
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://line.me/page-data/app-data.json',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Line.png',
+    })
+  }
+
+  if (ruleOptions.steam) {
+    rules.push('GEOSITE,steam,Steam')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'Steam',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'https://line.me/page-data/app-data.json',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
     })
   }
 
