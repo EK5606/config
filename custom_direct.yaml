@@ -1,3 +1,14 @@
 payload:
-  - DOMAIN-SUFFIX,ping.archlinux.org
-  - DOMAIN-SUFFIX,royqh
+  - DOMAIN,ping.archlinux.org
+  - DOMAIN-SUFFIX,msftconnecttest.com
+  - DOMAIN-SUFFIX,msftncsi.com
+  - DOMAIN-SUFFIX,simtoco.com
+  - DOMAIN-SUFFIX,metaauth.com
+  - DOMAIN-SUFFIX,metaersp.com
+  - DOMAIN-SUFFIX,wust.edu.cn
+  - DOMAIN-SUFFIX,ghfast.top
+  - DOMAIN-SUFFIX,xshbook.com
+  - DOMAIN-SUFFIX,imslr.com
+  - DOMAIN-SUFFIX,yueyued.top
+  - DOMAIN-SUFFIX,423down.com
+  - DOMAIN-KEYWORD,shusa
