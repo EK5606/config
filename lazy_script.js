@@ -795,7 +795,7 @@ function main(config) {
     'GEOSITE,private,DIRECT',
     'GEOIP,private,DIRECT,no-resolve',
     'GEOSITE,cn,国内网站',
-    'GEOIP,cn,国内网站',
+    'GEOIP,cn,国内网站,no-resolve',
     'MATCH,其他外网'
   )
   config['proxy-groups'].push(
