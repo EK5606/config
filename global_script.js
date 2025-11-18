@@ -408,7 +408,7 @@ function main(config) {
       name: '默认节点',
       type: 'select',
       proxies: [...proxyGroupsRegionNames, '直连'],
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/NodeGroup/Proxy.png',
     },
   ]
 
