@@ -810,7 +810,7 @@ function main(config) {
       name: '其他节点',
       type: 'select',
       proxies: otherProxyGroups,
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/OtherCountry.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/OtherCountry.png',
     })
   }
 
