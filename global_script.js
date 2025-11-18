@@ -83,79 +83,79 @@ const regionOptions = {
       name: 'HK香港',
       regex: /港|🇭🇰|hk|hongkong|hong kong/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Hongkong.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Hongkong.png',
     },
     {
       name: 'US美国',
       regex: /(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/UnitedStates.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/UnitedStates.png',
     },
     {
       name: 'JP日本',
       regex: /日本|🇯🇵|jp|japan/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Japan.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Japan.png',
     },
     {
       name: 'KR韩国',
       regex: /韩|🇰🇷|kr|korea/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Korea.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Korea.png',
     },
     {
       name: 'SG新加坡',
       regex: /新加坡|🇸🇬|sg|singapore/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Singapore.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Singapore.png',
     },
     {
       name: 'CN中国大陆',
       regex: /中国|🇨🇳|cn|china/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/China.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/China.png',
     },
     {
       name: 'TW台湾省',
       regex: /台湾|🇹🇼|tw|taiwan|tai wan/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/TW.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/TW.png',
     },
     {
       name: 'GB英国',
       regex: /英|🇬🇧|uk|united kingdom|great britain/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/UnitedKingdom.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/UnitedKingdom.png',
     },
     {
       name: 'DE德国',
       regex: /德国|🇩🇪|de|germany/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Germany.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Germany.png',
     },
     {
       name: 'MY马来西亚',
       regex: /马来|🇲🇾|my|malaysia/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Malaysia.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Malaysia.png',
     },
     {
       name: 'TK土耳其',
       regex: /土耳其|🇹🇷|tk|turkey/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Turkey.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Turkey.png',
     },
     {
       name: 'CA加拿大',
       regex: /加拿大|🇨🇦|ca|canada/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Canada.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Canada.png',
     },
     {
       name: 'AU澳大利亚',
       regex: /澳大利亚|🇦🇺|au|australia|sydney/i,
       ratioLimit: 2,
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Country/Australia.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Australia.png',
     },
   ],
 }
@@ -408,7 +408,7 @@ function main(config) {
       name: '默认节点',
       type: 'select',
       proxies: [...proxyGroupsRegionNames, '直连'],
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/NodeGroup/Proxy.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Proxy.png',
     },
   ]
 
@@ -438,7 +438,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://chat.openai.com/cdn-cgi/trace',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/ChatGPT.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/ChatGPT.png',
     })
   }
 
@@ -450,7 +450,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://www.youtube.com/s/desktop/494dd881/img/favicon.ico',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/YouTube.png',
     })
   }
 
@@ -462,7 +462,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', '直连', ...proxyGroupsRegionNames],
       url: 'https://www.bilibili.tv/',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/bilibili_3.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/BilibiliSEA.png',
     })
   }
 
@@ -474,7 +474,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', '直连', ...proxyGroupsRegionNames],
       url: 'https://ani.gamer.com.tw/ajax/getdeviceid.php',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Bahamut.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Bahamut.png',
     })
   }
 
@@ -486,7 +486,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://disney.api.edge.bamgrid.com/devices',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Disney+.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Disney+.png',
     })
   }
 
@@ -498,7 +498,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://api.fast.com/netflix/speedtest/v2?https=true',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Netflix.png',
     })
   }
 
@@ -510,7 +510,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://www.tiktok.com/',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TikTok.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TikTok.png',
     })
   }
 
@@ -522,7 +522,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Spotify.png',
     })
   }
 
@@ -534,7 +534,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
-      icon: 'https://play-lh.googleusercontent.com/8pFuLOHF62ADcN0ISUAyEueA5G8IF49mX_6Az6pQNtokNVHxIVbS1L2NM62H-k02rLM=w240-h480-rw',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Pixiv.png',
     })
   }
 
@@ -546,7 +546,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://www.hbo.com/favicon.ico',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/HBO.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/HBO.png',
     })
   }
 
@@ -558,7 +558,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://www.tvb.com/logo_b.svg',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/TVB.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TVB.png',
     })
   }
 
@@ -570,7 +570,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://m.media-amazon.com/images/G/01/digital/video/web/logo-min-remaster.png',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Prime_Video.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Prime_Video.png',
     })
   }
 
@@ -582,7 +582,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://auth.hulu.com/v4/web/password/authenticate',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hulu.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Hulu.png',
     })
   }
 
@@ -594,7 +594,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://www.paypal.com/favicon.ico',
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Paypal.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Paypal.png',
     })
   }
 
@@ -606,7 +606,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://www.patreon.com/favicon.ico',
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Patreon.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Patreon.png',
     })
   }
 
@@ -618,7 +618,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.telegram.org/img/website_icon.svg',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Telegram.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Telegram.png',
     })
   }
 
@@ -630,7 +630,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://web.whatsapp.com/data/manifest.json',
-      icon: 'https://static.whatsapp.net/rsrc.php/v3/yP/r/rYZqPCBaG70.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Whatapp.png',
     })
   }
 
@@ -642,7 +642,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://line.me/page-data/app-data.json',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Line.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Line.png',
     })
   }
 
@@ -656,7 +656,7 @@ function main(config) {
       name: '游戏专用',
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Game.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Game.png',
     })
   }
 
@@ -686,7 +686,7 @@ function main(config) {
       name: '广告过滤',
       type: 'select',
       proxies: ['REJECT', '直连', '默认节点'],
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Advertising.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/AdBlock.png',
     })
   }
 
@@ -698,7 +698,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.apple.com/library/test/success.html',
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Apple.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
     })
   }
 
@@ -710,7 +710,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.google.com/generate_204',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Google_Search.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Google.png',
     })
   }
 
@@ -722,7 +722,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://github.com/robots.txt',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/GitHub.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/GitHub.png',
     })
   }
 
@@ -734,7 +734,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.msftconnecttest.com/connecttest.txt',
-      icon: 'https://github.com/EK5606/config/raw/main/Icons/Microsoft.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Microsoft.png',
     })
   }
 
@@ -756,7 +756,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://r.r10s.jp/com/img/home/logo/touch.png',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/JP.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/JP.png',
     })
   }
 
@@ -779,14 +779,14 @@ function main(config) {
         '国内网站',
         ...proxyGroupsRegionNames,
       ],
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Download.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Download.png',
     },
     {
       ...groupBaseOption,
       name: '其他外网',
       type: 'select',
       proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Streaming!CN.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Streaming!CN.png',
     },
     {
       ...groupBaseOption,
@@ -794,7 +794,7 @@ function main(config) {
       type: 'select',
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       url: 'http://wifi.vivo.com.cn/generate_204',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/StreamingCN.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/StreamingCN.png',
     }
   )
 
@@ -810,7 +810,7 @@ function main(config) {
       name: '其他节点',
       type: 'select',
       proxies: otherProxyGroups,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/OtherCountry.png',
     })
   }
 
