@@ -400,6 +400,20 @@ function main(config) {
     return value.name
   })
 
+  const proxyGroupsRegionNamesUS = regionProxyGroups.map((value) => {
+    return value.name
+  })
+  if (proxyGroupsRegionNamesUS.length >= 2) {
+  [proxyGroupsRegionNamesUS[0], proxyGroupsRegionNamesUS[1]] = [proxyGroupsRegionNamesUS[1], proxyGroupsRegionNamesUS[0]];
+  } // 美国优先
+
+  const proxyGroupsRegionNamesTW = regionProxyGroups.map((value) => {
+    return value.name
+  })
+  if (proxyGroupsRegionNamesTW.length >= 2) {
+  [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[1]] = [proxyGroupsRegionNamesTW[1], proxyGroupsRegionNamesTW[0]];
+  } // 台湾优先
+
   if (otherProxyGroups.length > 0) {
     proxyGroupsRegionNames.push('其他节点')
   }
@@ -474,7 +488,7 @@ function main(config) {
       ...groupBaseOption,
       name: '巴哈姆特',
       type: 'select',
-      proxies: ['默认节点', '直连', ...proxyGroupsRegionNames],
+      proxies: [...proxyGroupsRegionNamesTW, '默认节点' ,'直连'],
       url: 'https://ani.gamer.com.tw/ajax/getdeviceid.php',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Bahamut.png',
     })
@@ -594,7 +608,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'Paypal',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesUS, '默认节点', '直连'],
       url: 'https://www.paypal.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Paypal.png',
     })
@@ -649,7 +663,10 @@ function main(config) {
   }
 
   if (ruleOptions.steam) {
-    rules.push('GEOSITE,steam,Steam')
+    rules.push(
+      'GEOSITE,steam@cn,国内网站',
+      'GEOSITE,steam,Steam'
+    )
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Steam',
