@@ -654,8 +654,8 @@ function main(config) {
       ...groupBaseOption,
       name: 'Steam',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'https://line.me/page-data/app-data.json',
+      proxies: [proxyGroupsRegionNames, ...'默认节点', '直连'],
+      url: 'https://steamcommunity.com//favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
     })
   }
