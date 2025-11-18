@@ -398,7 +398,7 @@ function main(config) {
 
   const proxyGroupsRegionNames = regionProxyGroups.map((value) => {
     return value.name
-  })
+  }) // 香港优先
 
   const proxyGroupsRegionNamesUS = regionProxyGroups.map((value) => {
     return value.name
@@ -411,7 +411,7 @@ function main(config) {
     return value.name
   })
   if (proxyGroupsRegionNamesTW.length >= 2) {
-  [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[1]] = [proxyGroupsRegionNamesTW[1], proxyGroupsRegionNamesTW[0]];
+  [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[6]] = [proxyGroupsRegionNamesTW[6], proxyGroupsRegionNamesTW[0]];
   } // 台湾优先
 
   if (otherProxyGroups.length > 0) {
@@ -620,7 +620,7 @@ function main(config) {
       ...groupBaseOption,
       name: 'Patreon',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesUS, '默认节点', '直连'],
       url: 'https://www.patreon.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Patreon.png',
     })
