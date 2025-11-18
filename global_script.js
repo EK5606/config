@@ -22,18 +22,20 @@ const ruleOptions = {
   github: true, // Github服务
   google: true, // Google服务
   openai: true, // 国外AI和GPT
-  spotify: true, // Spotify
+  spotify: false, // Spotify
   youtube: true, // YouTube
   bahamut: true, // 巴哈姆特/动画疯
-  netflix: true, // Netflix网飞
-  tiktok: true, // 国际版抖音
-  disney: true, // 迪士尼
+  netflix: false, // Netflix网飞
+  tiktok: false, // 国际版抖音
+  disney: false, // 迪士尼
   pixiv: true, // Pixiv
-  hbo: true, // HBO
+  hbo: false, // HBO
   biliintl: true, // 哔哩哔哩东南亚
-  tvb: true, // TVB
-  hulu: true, // Hulu
-  primevideo: true, // 亚马逊prime video
+  tvb: false, // TVB
+  hulu: false, // Hulu
+  primevideo: false, // 亚马逊prime video
+  paypal: true, // paypal支付
+  patreon: true, // patreon
   telegram: true, // Telegram通讯软件
   line: true, // Line通讯软件
   whatsapp: true, // Whatsapp
@@ -81,79 +83,79 @@ const regionOptions = {
       name: 'HK香港',
       regex: /港|🇭🇰|hk|hongkong|hong kong/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Hongkong.png',
     },
     {
       name: 'US美国',
       regex: /(?!.*aus)(?=.*(美|🇺🇸|us(?!t)|usa|american|united states)).*/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/UnitedStates.png',
     },
     {
       name: 'JP日本',
       regex: /日本|🇯🇵|jp|japan/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Japan.png',
     },
     {
       name: 'KR韩国',
       regex: /韩|🇰🇷|kr|korea/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Korea.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Korea.png',
     },
     {
       name: 'SG新加坡',
       regex: /新加坡|🇸🇬|sg|singapore/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Singapore.png',
     },
     {
       name: 'CN中国大陆',
       regex: /中国|🇨🇳|cn|china/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China_Map.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/China.png',
     },
     {
       name: 'TW台湾省',
       regex: /台湾|🇹🇼|tw|taiwan|tai wan/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/China.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/TW.png',
     },
     {
       name: 'GB英国',
       regex: /英|🇬🇧|uk|united kingdom|great britain/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_Kingdom.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/UnitedKingdom.png',
     },
     {
       name: 'DE德国',
       regex: /德国|🇩🇪|de|germany/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Germany.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Germany.png',
     },
     {
       name: 'MY马来西亚',
       regex: /马来|🇲🇾|my|malaysia/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Malaysia.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Malaysia.png',
     },
     {
       name: 'TK土耳其',
       regex: /土耳其|🇹🇷|tk|turkey/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Turkey.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Turkey.png',
     },
     {
       name: 'CA加拿大',
       regex: /加拿大|🇨🇦|ca|canada/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Canada.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Canada.png',
     },
     {
       name: 'AU澳大利亚',
       regex: /澳大利亚|🇦🇺|au|australia|sydney/i,
       ratioLimit: 2,
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Australia.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Australia.png',
     },
   ],
 }
@@ -584,6 +586,30 @@ function main(config) {
     })
   }
 
+  if (ruleOptions.paypal) {
+    rules.push('GEOSITE,paypal,Paypal')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'Paypal',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'https://www.paypal.com/favicon.ico',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Paypal.png',
+    })
+  }
+
+  if (ruleOptions.patreon) {
+    rules.push('GEOSITE,patreon,Patreon')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'Patreon',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'https://www.patreon.com/favicon.ico',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Patreon.png',
+    })
+  }
+
   if (ruleOptions.telegram) {
     rules.push('GEOIP,telegram,Telegram')
     config['proxy-groups'].push({
@@ -672,7 +698,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.apple.com/library/test/success.html',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Apple_2.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Apple.png',
     })
   }
 
@@ -708,7 +734,7 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://www.msftconnecttest.com/connecttest.txt',
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Microsoft.png',
+      icon: 'https://github.com/EK5606/config/raw/main/Icons/Microsoft.png',
     })
   }
 
