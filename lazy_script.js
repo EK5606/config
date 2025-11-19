@@ -51,6 +51,8 @@ const ruleOptions = {
  * 如果有需要前置的自定义规则，可以自行修改
  */
 const rules = [
+  'GEOSITE,private,DIRECT',
+  'GEOIP,private,DIRECT,no-resolve',
   'RULE-SET,applications,下载软件',
   'PROCESS-NAME,SunloginClient,DIRECT',
   'PROCESS-NAME,SunloginClient.exe,DIRECT',
@@ -793,8 +795,6 @@ function main(config) {
   }
 
   rules.push(
-    'GEOSITE,private,DIRECT',
-    'GEOIP,private,DIRECT,no-resolve',
     'GEOSITE,cn,国内网站',
     'GEOIP,cn,国内网站,no-resolve',
     'MATCH,其他外网'
