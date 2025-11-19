@@ -440,6 +440,7 @@ function main(config) {
       'DOMAIN-SUFFIX,grazie.ai,国外AI',
       'DOMAIN-SUFFIX,grazie.aws.intellij.net,国外AI',
       'RULE-SET,ai,国外AI',
+      'GEOSITE,category-ai-!cn,国外AI',
     )
     ruleProviders.set('ai', {
       ...ruleProviderCommon,
