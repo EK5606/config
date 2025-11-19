@@ -797,7 +797,7 @@ function main(config) {
   rules.push(
     'GEOSITE,cn,国内网站',
     'GEOIP,cn,国内网站,no-resolve',
-    'MATCH,其他外网'
+    'MATCH,漏网之鱼'
   )
   config['proxy-groups'].push(
     {
@@ -827,6 +827,13 @@ function main(config) {
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       url: 'http://wifi.vivo.com.cn/generate_204',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/StreamingCN.png',
+    },
+    {
+      ...groupBaseOption,
+      name: '漏网之鱼',
+      type: 'select',
+      proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Final.png',
     }
   )
 
