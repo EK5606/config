@@ -288,7 +288,7 @@ function main(config) {
   config['sniffer'] = {
     enable: true,
     'force-dns-mapping': true,
-    'parse-pure-ip': false,
+    'parse-pure-ip': true,
     'override-destination': true,
     sniff: {
       TLS: {
@@ -317,7 +317,7 @@ function main(config) {
       '+.fbcdn.net',
       'fbcdn-a.akamaihd.net',
     ],
-    'skip-domain': ['geosite:cn,private', 'Mijia Cloud', '+.oray.com'],
+    'skip-domain': ['Mijia Cloud', '+.oray.com'],
   }
 
   /**
