@@ -289,13 +289,13 @@ function main(config) {
     enable: true,
     'force-dns-mapping': true,
     'parse-pure-ip': true,
-    'override-destination': true,
     sniff: {
       TLS: {
         ports: [443, 8443],
       },
       HTTP: {
         ports: [80, '8080-8880'],
+        'override-destination': true,
       },
       QUIC: {
         ports: [443, 8443],
