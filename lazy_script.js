@@ -317,7 +317,7 @@ function main(config) {
       '+.fbcdn.net',
       'fbcdn-a.akamaihd.net',
     ],
-    'skip-domain': ['Mijia Cloud', '+.oray.com'],
+    'skip-domain': ['geosite:cn,private', 'Mijia Cloud', '+.oray.com'],
   }
 
   /**
