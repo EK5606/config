@@ -461,16 +461,8 @@ function main(config) {
     rules.push(
       'DOMAIN-SUFFIX,grazie.ai,国外AI',
       'DOMAIN-SUFFIX,grazie.aws.intellij.net,国外AI',
-      'RULE-SET,ai,国外AI',
       'GEOSITE,category-ai-!cn,国外AI',
     )
-    ruleProviders.set('ai', {
-      ...ruleProviderCommon,
-      behavior: 'classical',
-      format: 'text',
-      url: 'https://github.com/dahaha-365/YaNet/raw/refs/heads/dist/rulesets/mihomo/ai.list',
-      path: './ruleset/YaNet/ai.list',
-    })
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '国外AI',
