@@ -764,7 +764,10 @@ function main(config) {
     })
   } // apple
   if (ruleOptions.google) {
-    rules.push('GEOSITE,google,谷歌服务')
+    rules.push(
+      'GEOSITE,google@cn,国内网站',
+      'GEOSITE,google,谷歌服务',
+    )
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '谷歌服务',
