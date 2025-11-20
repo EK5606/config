@@ -855,7 +855,7 @@ function main(config) {
       type: 'select',
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       url: 'http://wifi.vivo.com.cn/generate_204',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/StreamingCN.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/China_Map.png',
     },
     {
       ...groupBaseOption,
