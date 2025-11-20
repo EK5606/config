@@ -432,7 +432,7 @@ function main(config) {
   if (proxyGroupsRegionNamesTW.length >= 2) {
   [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[6]] = [proxyGroupsRegionNamesTW[6], proxyGroupsRegionNamesTW[0]];
   } // 台湾优先
-  
+
   if (otherProxyGroups.length > 0) {
     proxyGroupsRegionNames.push('其他节点')
   } // 其他节点
@@ -801,7 +801,7 @@ function main(config) {
     'GEOSITE,gfw,其他外网',
     'GEOSITE,cn,国内网站',
     'GEOIP,cn,国内网站',
-    'RULE-SET,Custom_Port_Direct,DIRECT',
+    'RULE-SET,Custom_Port_Direct,非标端口',
     'MATCH,漏网之鱼'
   )
   config['proxy-groups'].push(
@@ -838,7 +838,7 @@ function main(config) {
       name: '非标端口',
       type: 'select',
       proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Final.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Bypass.png',
       hidden: true,
     },
     {
