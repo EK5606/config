@@ -54,7 +54,6 @@ const rules = [
   'GEOSITE,private,DIRECT',
   'GEOIP,private,DIRECT,no-resolve',
   'RULE-SET,Custom_Direct,国内网站',
-  'RULE-SET,Custom_Port_Direct,DIRECT',
   'RULE-SET,applications,下载软件',
   'PROCESS-NAME,SunloginClient,DIRECT',
   'PROCESS-NAME,SunloginClient.exe,DIRECT',
@@ -807,6 +806,7 @@ function main(config) {
     'GEOSITE,gfw,其他外网',
     'GEOSITE,cn,国内网站',
     'GEOIP,cn,国内网站',
+    'RULE-SET,Custom_Port_Direct,DIRECT',
     'MATCH,漏网之鱼'
   )
   config['proxy-groups'].push(
@@ -837,6 +837,14 @@ function main(config) {
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       url: 'http://wifi.vivo.com.cn/generate_204',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/China_Map.png',
+    },
+    {
+      ...groupBaseOption,
+      name: '非标端口',
+      type: 'select',
+      proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Final.png',
+      hidden: true,
     },
     {
       ...groupBaseOption,
