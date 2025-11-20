@@ -235,8 +235,18 @@ ruleProviders.set('Custom_Direct',{
   behavior: 'classical',
   format: 'yaml',
   url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Classical.yaml',
-  path: './ruleset/Aethersailor/Custom_Direct_Classical.yaml'
+  path: './ruleset/Aethersailor/Custom_Direct.yaml',
+  proxy: DIRECT
 }) // Custom_Direct
+
+ruleProviders.set('Custom_Port_Direct',{
+  ...ruleProviderCommon,
+  behavior: 'classical',
+  format: 'yaml',
+  url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Port_Direct.yaml',
+  path: './ruleset/Aethersailor/Custom_Port_Direct.yaml',
+  proxy: DIRECT
+}) // Custom_Port_Direct
 
 
 // 程序入口
