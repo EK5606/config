@@ -634,7 +634,7 @@ function main(config) {
       type: 'select',
       proxies: [...proxyGroupsRegionNamesUS, '默认节点', '直连'],
       url: 'https://www.paypal.com/favicon.ico',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Paypal.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/PayPal.png',
     })
   }
 
