@@ -42,7 +42,7 @@ const ruleOptions = {
   steam: true, // steam
   games: true, // 游戏策略组
   japan: true, // 日本网站策略组
-  // tracker: true, // 网络分析和跟踪服务
+  tracker: false, // 网络分析和跟踪服务
   ads: true, // 常见的网络广告
 }
 
@@ -723,16 +723,16 @@ function main(config) {
     })
   }
 
-  // if (ruleOptions.tracker) {
-  //   rules.push('GEOSITE,tracker,跟踪分析')
-  //   config['proxy-groups'].push({
-  //     ...groupBaseOption,
-  //     name: '跟踪分析',
-  //     type: 'select',
-  //     proxies: ['REJECT', '直连', '默认节点'],
-  //     icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Reject.png',
-  //   })
-  // }
+  if (ruleOptions.tracker) {
+    rules.push('GEOSITE,tracker,跟踪分析')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '跟踪分析',
+      type: 'select',
+      proxies: ['REJECT', '直连', '默认节点'],
+      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Reject.png',
+    })
+  }
 
   if (ruleOptions.ads) {
     rules.push('GEOSITE,category-ads-all,广告过滤')
