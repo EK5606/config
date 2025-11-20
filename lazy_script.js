@@ -493,7 +493,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/YouTube.png',
     })
   } // youtube
-
   if (ruleOptions.biliintl) {
     rules.push('GEOSITE,biliintl,哔哩哔哩东南亚')
     config['proxy-groups'].push({
@@ -505,7 +504,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/BilibiliSEA.png',
     })
   } // biliintl
-
   if (ruleOptions.bahamut) {
     rules.push('GEOSITE,bahamut,巴哈姆特')
     config['proxy-groups'].push({
@@ -517,7 +515,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Bahamut.png',
     })
   } // bahamut
-
   if (ruleOptions.disney) {
     rules.push('GEOSITE,disney,Disney+')
     config['proxy-groups'].push({
@@ -529,7 +526,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Disney+.png',
     })
   } // disney
-
   if (ruleOptions.netflix) {
     rules.push('GEOSITE,netflix,NETFLIX')
     config['proxy-groups'].push({
@@ -541,7 +537,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Netflix.png',
     })
   } // netflix
-
   if (ruleOptions.tiktok) {
     rules.push('GEOSITE,tiktok,Tiktok')
     config['proxy-groups'].push({
@@ -553,31 +548,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TikTok.png',
     })
   } // tiktok
-
-  if (ruleOptions.spotify) {
-    rules.push('GEOSITE,spotify,Spotify')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: 'Spotify',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Spotify.png',
-    })
-  } // spotify
-
-  if (ruleOptions.pixiv) {
-    rules.push('GEOSITE,pixiv,Pixiv')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: 'Pixiv',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Pixiv.png',
-    })
-  } // pixiv
-
   if (ruleOptions.hbo) {
     rules.push('GEOSITE,hbo,HBO')
     config['proxy-groups'].push({
@@ -589,7 +559,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/HBO.png',
     })
   } // hbo
-
   if (ruleOptions.tvb) {
     rules.push('GEOSITE,tvb,TVB')
     config['proxy-groups'].push({
@@ -601,7 +570,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TVB.png',
     })
   } // tvb
-
   if (ruleOptions.primevideo) {
     rules.push('GEOSITE,primevideo,Prime Video')
     config['proxy-groups'].push({
@@ -613,7 +581,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Prime_Video.png',
     })
   } // primevideo
-
   if (ruleOptions.hulu) {
     rules.push('GEOSITE,hulu,Hulu')
     config['proxy-groups'].push({
@@ -626,6 +593,64 @@ function main(config) {
     })
   } // hulu
 
+  if (ruleOptions.pixiv) {
+    rules.push('GEOSITE,pixiv,Pixiv')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'Pixiv',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Pixiv.png',
+    })
+  } // pixiv
+  if (ruleOptions.spotify) {
+    rules.push('GEOSITE,spotify,Spotify')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'Spotify',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Spotify.png',
+    })
+  } // spotify
+
+  if (ruleOptions.telegram) {
+    rules.push('GEOIP,telegram,Telegram')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'Telegram',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'http://www.telegram.org/img/website_icon.svg',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Telegram.png',
+    })
+  } // telegram
+  if (ruleOptions.whatsapp) {
+    rules.push('GEOSITE,whatsapp,WhatsApp')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'WhatsApp',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'https://web.whatsapp.com/data/manifest.json',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Whatapp.png',
+    })
+  } // whatsapp
+  if (ruleOptions.line) {
+    rules.push('GEOSITE,line,Line')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'Line',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'https://line.me/page-data/app-data.json',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Line.png',
+    })
+  } // line
+
+  
   if (ruleOptions.paypal) {
     rules.push('GEOSITE,paypal,Paypal')
     config['proxy-groups'].push({
@@ -650,42 +675,6 @@ function main(config) {
     })
   } // patreon
 
-  if (ruleOptions.telegram) {
-    rules.push('GEOIP,telegram,Telegram')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: 'Telegram',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'http://www.telegram.org/img/website_icon.svg',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Telegram.png',
-    })
-  } // telegram
-
-  if (ruleOptions.whatsapp) {
-    rules.push('GEOSITE,whatsapp,WhatsApp')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: 'WhatsApp',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'https://web.whatsapp.com/data/manifest.json',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Whatapp.png',
-    })
-  } // whatsapp
-
-  if (ruleOptions.line) {
-    rules.push('GEOSITE,line,Line')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: 'Line',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'https://line.me/page-data/app-data.json',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Line.png',
-    })
-  } // line
-
   if (ruleOptions.steam) {
     rules.push(
       'GEOSITE,steam@cn,国内网站',
@@ -708,7 +697,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
     })
   } // steam
-
   if (ruleOptions.games) {
     rules.push(
       'GEOSITE,category-games@cn,国内网站',
