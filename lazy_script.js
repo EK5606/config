@@ -21,7 +21,7 @@ const ruleOptions = {
   microsoft: true, // 微软服务
   github: true, // Github服务
   google: true, // Google服务
-  openai: true, // 国外AI和GPT
+  ai: true, // 国外AI和GPT
   spotify: false, // Spotify
   youtube: true, // YouTube
   bahamut: true, // 巴哈姆特/动画疯
@@ -457,7 +457,7 @@ function main(config) {
     udp: true,
   })
 
-  if (ruleOptions.openai) {
+  if (ruleOptions.ai) {
     rules.push(
       'DOMAIN-SUFFIX,grazie.ai,国外AI',
       'DOMAIN-SUFFIX,grazie.aws.intellij.net,国外AI',
