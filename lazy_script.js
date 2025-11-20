@@ -847,7 +847,7 @@ function main(config) {
       name: '其他外网',
       type: 'select',
       proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Streaming!CN.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Global.png',
     },
     {
       ...groupBaseOption,
