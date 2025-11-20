@@ -689,8 +689,16 @@ function main(config) {
   if (ruleOptions.steam) {
     rules.push(
       'GEOSITE,steam@cn,国内网站',
+      'RULE-SET,Steam_CDN,国内网站',
       'GEOSITE,steam,Steam'
     )
+    ruleProviders.set('Steam_CDN', {
+      ...ruleProviderCommon,
+      behavior: 'classical',
+      format: 'yaml',
+      url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Steam_CDN_Classical.yaml',
+      path: './ruleset/Aethersailor/Steam_CDN.yaml'
+    }) // Steam_CDN
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Steam',
@@ -704,16 +712,8 @@ function main(config) {
   if (ruleOptions.games) {
     rules.push(
       'GEOSITE,category-games@cn,国内网站',
-      'RULE-SET,Steam_CDN,国内网站',
       'GEOSITE,category-games,游戏专用'
     )
-    ruleProviders.set('Steam_CDN', {
-      ...ruleProviderCommon,
-      behavior: 'classical',
-      format: 'yaml',
-      url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Steam_CDN_Classical.yaml',
-      path: './ruleset/Aethersailor/Steam_CDN.yaml'
-    }) // Steam_CDN
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '游戏专用',
