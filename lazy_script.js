@@ -28,7 +28,7 @@ const ruleOptions = {
   netflix: false, // Netflix网飞
   tiktok: false, // 国际版抖音
   disney: false, // 迪士尼
-  pixiv: true, // Pixiv
+  pixiv: false, // Pixiv
   hbo: false, // HBO
   biliintl: true, // 哔哩哔哩东南亚
   tvb: false, // TVB
@@ -37,8 +37,8 @@ const ruleOptions = {
   paypal: true, // paypal支付
   patreon: true, // patreon
   telegram: true, // Telegram通讯软件
-  line: true, // Line通讯软件
-  whatsapp: true, // Whatsapp
+  line: false, // Line通讯软件
+  whatsapp: false, // Whatsapp
   steam: true, // steam
   games: true, // 游戏策略组
   japan: true, // 日本网站策略组
