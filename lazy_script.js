@@ -704,6 +704,7 @@ function main(config) {
   if (ruleOptions.games) {
     rules.push(
       'GEOSITE,category-games@cn,国内网站',
+      'RULE-SET,Steam_CDN,国内网站',
       'GEOSITE,category-games,游戏专用'
     )
     ruleProviders.set('Steam_CDN', {
