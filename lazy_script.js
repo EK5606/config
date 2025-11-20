@@ -826,7 +826,7 @@ function main(config) {
   rules.push(
     'GEOSITE,gfw,其他外网',
     'GEOSITE,cn,国内网站',
-    'GEOIP,cn,国内网站,no-resolve',
+    'GEOIP,cn,国内网站',
     'MATCH,漏网之鱼'
   )
   config['proxy-groups'].push(
