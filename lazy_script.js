@@ -53,6 +53,7 @@ const ruleOptions = {
 const rules = [
   'GEOSITE,private,DIRECT',
   'GEOIP,private,DIRECT,no-resolve',
+  'RELU-SET,Custom_Direct,DIRECT',
   'RULE-SET,applications,下载软件',
   'PROCESS-NAME,SunloginClient,DIRECT',
   'PROCESS-NAME,SunloginClient.exe,DIRECT',
@@ -220,13 +221,23 @@ const groupBaseOption = {
 }
 
 const ruleProviders = new Map()
+
 ruleProviders.set('applications', {
   ...ruleProviderCommon,
   behavior: 'classical',
   format: 'text',
   url: 'https://github.com/DustinWin/ruleset_geodata/raw/refs/heads/mihomo-ruleset/applications.list',
   path: './ruleset/DustinWin/applications.list',
-})
+}) // applications
+
+ruleProviders.set('Custom_Direct',{
+  ...ruleProviderCommon,
+  behavior: 'classical',
+  format: 'yaml',
+  url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Classical.yaml',
+  path: './ruleset/Aethersailor/Custom_Direct_Classical.yaml'
+}) // Custom_Direct
+
 
 // 程序入口
 function main(config) {
@@ -459,6 +470,7 @@ function main(config) {
       url: 'https://chat.openai.com/cdn-cgi/trace',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/ChatGPT.png',
     })
+
   }
 
   if (ruleOptions.youtube) {
