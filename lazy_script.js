@@ -42,6 +42,7 @@ const ruleOptions = {
   steam: true, // steam
   games: true, // 游戏策略组
   japan: true, // 日本网站策略组
+  speedtest: true, //测速网站
   tracker: false, // 网络分析和跟踪服务
   ads: true, // 常见的网络广告
 }
@@ -700,6 +701,16 @@ function main(config) {
     })
   } // games
 
+  if (ruleOptions.speedtest) {
+    rules.push('GEOSITE,category-speedtest,测速网站')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '测速网站',
+      type: 'select',
+      proxies: ['直连', ...proxyGroupsRegionNames, '默认节点'],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Speedtest.png',
+    })
+  } // Speedtest
   if (ruleOptions.tracker) {
     rules.push('GEOSITE,tracker,跟踪分析')
     config['proxy-groups'].push({
@@ -707,10 +718,9 @@ function main(config) {
       name: '跟踪分析',
       type: 'select',
       proxies: ['REJECT', '直连', '默认节点'],
-      icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Reject.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Reject.png',
     })
   } // tracker
-
   if (ruleOptions.ads) {
     rules.push('GEOSITE,category-ads-all,广告过滤')
     rules.push('RULE-SET,adblockmihomo,广告过滤')
