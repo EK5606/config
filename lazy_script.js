@@ -707,7 +707,7 @@ function main(config) {
       ...groupBaseOption,
       name: '测速网站',
       type: 'select',
-      proxies: ['直连', ...proxyGroupsRegionNames, '默认节点'],
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Speedtest.png',
     })
   } // Speedtest
