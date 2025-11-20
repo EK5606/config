@@ -420,21 +420,19 @@ function main(config) {
   const proxyGroupsRegionNames = regionProxyGroups.map((value) => {
     return value.name
   }) // 香港优先
-
   const proxyGroupsRegionNamesUS = regionProxyGroups.map((value) => {
     return value.name
   })
   if (proxyGroupsRegionNamesUS.length >= 2) {
   [proxyGroupsRegionNamesUS[0], proxyGroupsRegionNamesUS[1]] = [proxyGroupsRegionNamesUS[1], proxyGroupsRegionNamesUS[0]];
   } // 美国优先
-
   const proxyGroupsRegionNamesTW = regionProxyGroups.map((value) => {
     return value.name
   })
   if (proxyGroupsRegionNamesTW.length >= 2) {
   [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[6]] = [proxyGroupsRegionNamesTW[6], proxyGroupsRegionNamesTW[0]];
   } // 台湾优先
-
+  
   if (otherProxyGroups.length > 0) {
     proxyGroupsRegionNames.push('其他节点')
   } // 其他节点
@@ -732,30 +730,6 @@ function main(config) {
     })
   } // ads
 
-  if (ruleOptions.apple) {
-    rules.push('GEOSITE,apple-cn,苹果服务')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '苹果服务',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'http://www.apple.com/library/test/success.html',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
-    })
-  } // apple
-
-  if (ruleOptions.google) {
-    rules.push('GEOSITE,google,谷歌服务')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '谷歌服务',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'http://www.google.com/generate_204',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Google.png',
-    })
-  } // google
-
   if (ruleOptions.github) {
     rules.push('GEOSITE,github,Github')
     config['proxy-groups'].push({
@@ -767,7 +741,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/GitHub.png',
     })
   } // github
-
   if (ruleOptions.microsoft) {
     rules.push('GEOSITE,microsoft@cn,国内网站', 'GEOSITE,microsoft,微软服务')
     config['proxy-groups'].push({
@@ -779,6 +752,28 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Microsoft.png',
     })
   } // microsoft
+  if (ruleOptions.apple) {
+    rules.push('GEOSITE,apple-cn,苹果服务')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '苹果服务',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'http://www.apple.com/library/test/success.html',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
+    })
+  } // apple
+  if (ruleOptions.google) {
+    rules.push('GEOSITE,google,谷歌服务')
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '谷歌服务',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'http://www.google.com/generate_204',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Google.png',
+    })
+  } // google
 
   if (ruleOptions.japan) {
     rules.push(
