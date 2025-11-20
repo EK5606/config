@@ -438,7 +438,7 @@ function main(config) {
 
   if (otherProxyGroups.length > 0) {
     proxyGroupsRegionNames.push('其他节点')
-  }
+  } // 其他节点
 
   config['proxy-groups'] = [
     {
@@ -480,7 +480,7 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/ChatGPT.png',
     })
 
-  }
+  } // ai
 
   if (ruleOptions.youtube) {
     rules.push('GEOSITE,youtube,YouTube')
@@ -492,7 +492,7 @@ function main(config) {
       url: 'https://www.youtube.com/s/desktop/494dd881/img/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/YouTube.png',
     })
-  }
+  } // youtube
 
   if (ruleOptions.biliintl) {
     rules.push('GEOSITE,biliintl,哔哩哔哩东南亚')
@@ -504,7 +504,7 @@ function main(config) {
       url: 'https://www.bilibili.tv/',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/BilibiliSEA.png',
     })
-  }
+  } // biliintl
 
   if (ruleOptions.bahamut) {
     rules.push('GEOSITE,bahamut,巴哈姆特')
@@ -516,7 +516,7 @@ function main(config) {
       url: 'https://ani.gamer.com.tw/ajax/getdeviceid.php',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Bahamut.png',
     })
-  }
+  } // bahamut
 
   if (ruleOptions.disney) {
     rules.push('GEOSITE,disney,Disney+')
@@ -528,7 +528,7 @@ function main(config) {
       url: 'https://disney.api.edge.bamgrid.com/devices',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Disney+.png',
     })
-  }
+  } // disney
 
   if (ruleOptions.netflix) {
     rules.push('GEOSITE,netflix,NETFLIX')
@@ -540,7 +540,7 @@ function main(config) {
       url: 'https://api.fast.com/netflix/speedtest/v2?https=true',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Netflix.png',
     })
-  }
+  } // netflix
 
   if (ruleOptions.tiktok) {
     rules.push('GEOSITE,tiktok,Tiktok')
@@ -552,7 +552,7 @@ function main(config) {
       url: 'https://www.tiktok.com/',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TikTok.png',
     })
-  }
+  } // tiktok
 
   if (ruleOptions.spotify) {
     rules.push('GEOSITE,spotify,Spotify')
@@ -564,7 +564,7 @@ function main(config) {
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Spotify.png',
     })
-  }
+  } // spotify
 
   if (ruleOptions.pixiv) {
     rules.push('GEOSITE,pixiv,Pixiv')
@@ -576,7 +576,7 @@ function main(config) {
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Pixiv.png',
     })
-  }
+  } // pixiv
 
   if (ruleOptions.hbo) {
     rules.push('GEOSITE,hbo,HBO')
@@ -588,7 +588,7 @@ function main(config) {
       url: 'https://www.hbo.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/HBO.png',
     })
-  }
+  } // hbo
 
   if (ruleOptions.tvb) {
     rules.push('GEOSITE,tvb,TVB')
@@ -600,7 +600,7 @@ function main(config) {
       url: 'https://www.tvb.com/logo_b.svg',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TVB.png',
     })
-  }
+  } // tvb
 
   if (ruleOptions.primevideo) {
     rules.push('GEOSITE,primevideo,Prime Video')
@@ -612,7 +612,7 @@ function main(config) {
       url: 'https://m.media-amazon.com/images/G/01/digital/video/web/logo-min-remaster.png',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Prime_Video.png',
     })
-  }
+  } // primevideo
 
   if (ruleOptions.hulu) {
     rules.push('GEOSITE,hulu,Hulu')
@@ -624,7 +624,7 @@ function main(config) {
       url: 'https://auth.hulu.com/v4/web/password/authenticate',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Hulu.png',
     })
-  }
+  } // hulu
 
   if (ruleOptions.paypal) {
     rules.push('GEOSITE,paypal,Paypal')
@@ -636,7 +636,7 @@ function main(config) {
       url: 'https://www.paypal.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/PayPal.png',
     })
-  }
+  } // paypal
 
   if (ruleOptions.patreon) {
     rules.push('GEOSITE,patreon,Patreon')
@@ -648,7 +648,7 @@ function main(config) {
       url: 'https://www.patreon.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Patreon.png',
     })
-  }
+  } // patreon
 
   if (ruleOptions.telegram) {
     rules.push('GEOIP,telegram,Telegram')
@@ -660,7 +660,7 @@ function main(config) {
       url: 'http://www.telegram.org/img/website_icon.svg',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Telegram.png',
     })
-  }
+  } // telegram
 
   if (ruleOptions.whatsapp) {
     rules.push('GEOSITE,whatsapp,WhatsApp')
@@ -672,7 +672,7 @@ function main(config) {
       url: 'https://web.whatsapp.com/data/manifest.json',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Whatapp.png',
     })
-  }
+  } // whatsapp
 
   if (ruleOptions.line) {
     rules.push('GEOSITE,line,Line')
@@ -684,7 +684,7 @@ function main(config) {
       url: 'https://line.me/page-data/app-data.json',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Line.png',
     })
-  }
+  } // line
 
   if (ruleOptions.steam) {
     rules.push(
@@ -707,7 +707,7 @@ function main(config) {
       url: 'https://steamcommunity.com//favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
     })
-  }
+  } // steam
 
   if (ruleOptions.games) {
     rules.push(
@@ -721,7 +721,7 @@ function main(config) {
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Game.png',
     })
-  }
+  } // games
 
   if (ruleOptions.tracker) {
     rules.push('GEOSITE,tracker,跟踪分析')
@@ -732,7 +732,7 @@ function main(config) {
       proxies: ['REJECT', '直连', '默认节点'],
       icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Reject.png',
     })
-  }
+  } // tracker
 
   if (ruleOptions.ads) {
     rules.push('GEOSITE,category-ads-all,广告过滤')
@@ -751,7 +751,7 @@ function main(config) {
       proxies: ['REJECT', '直连', '默认节点'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/AdBlock.png',
     })
-  }
+  } // ads
 
   if (ruleOptions.apple) {
     rules.push('GEOSITE,apple-cn,苹果服务')
@@ -763,7 +763,7 @@ function main(config) {
       url: 'http://www.apple.com/library/test/success.html',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
     })
-  }
+  } // apple
 
   if (ruleOptions.google) {
     rules.push('GEOSITE,google,谷歌服务')
@@ -775,7 +775,7 @@ function main(config) {
       url: 'http://www.google.com/generate_204',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Google.png',
     })
-  }
+  } // google
 
   if (ruleOptions.github) {
     rules.push('GEOSITE,github,Github')
@@ -787,7 +787,7 @@ function main(config) {
       url: 'https://github.com/robots.txt',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/GitHub.png',
     })
-  }
+  } // github
 
   if (ruleOptions.microsoft) {
     rules.push('GEOSITE,microsoft@cn,国内网站', 'GEOSITE,microsoft,微软服务')
@@ -799,7 +799,7 @@ function main(config) {
       url: 'http://www.msftconnecttest.com/connecttest.txt',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Microsoft.png',
     })
-  }
+  } // microsoft
 
   if (ruleOptions.japan) {
     rules.push(
@@ -821,7 +821,7 @@ function main(config) {
       url: 'https://r.r10s.jp/com/img/home/logo/touch.png',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/JP.png',
     })
-  }
+  } // japan
 
   rules.push(
     'GEOSITE,gfw,其他外网',
