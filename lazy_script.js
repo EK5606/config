@@ -753,7 +753,7 @@ function main(config) {
     })
   } // microsoft
   if (ruleOptions.apple) {
-    rules.push('GEOSITE,apple-cn,苹果服务')
+    rules.push('GEOSITE,apple,苹果服务')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '苹果服务',
