@@ -53,7 +53,7 @@ const ruleOptions = {
 const rules = [
   'GEOSITE,private,DIRECT',
   'GEOIP,private,DIRECT,no-resolve',
-  'RULE-SET,Custom_Direct,DIRECT',
+  'RULE-SET,Custom_Direct,国内网站',
   'RULE-SET,Custom_Port_Direct,DIRECT',
   'RULE-SET,applications,下载软件',
   'PROCESS-NAME,SunloginClient,DIRECT',
