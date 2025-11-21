@@ -174,8 +174,8 @@ const dnsConfig = {
    * 由于默认dns是国外的了，只需要把国内ip和域名分流到国内dns
    */
   'nameserver-policy': {
-    'geosite:private': 'system',
-    'geosite:steam@cn,category-games@cn,microsoft@cn,apple@cn': chinaDNS,
+    'rule-set:private': 'system',
+    // 'geosite:steam@cn,category-games@cn,microsoft@cn,apple@cn': chinaDNS,
     'rule-set:cn': chinaDNS,
   },
 }
