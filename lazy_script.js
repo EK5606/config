@@ -813,9 +813,7 @@ function main(config) {
   rules.push(
     'GEOSITE,geolocation-!cn@cn,国内网站',
     'GEOSITE,geolocation-!cn,其他外网',
-    'GEOSITE,geolocation-cn@!cn,其他外网',
-    'GEOSITE,geolocation-cn,国内网站',
-    'GEOSITE,tld-cn,国内网站',
+    'GEOSITE,cn,国内网站',
     'GEOIP,cn,国内网站',
     'RULE-SET,Custom_Port_Direct,非标端口',
     'MATCH,漏网之鱼'
