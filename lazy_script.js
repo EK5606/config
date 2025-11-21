@@ -490,11 +490,6 @@ function main(config) {
     type: 'direct',
     udp: true,
   })
-  config.proxies.push({
-    name: '拒绝',
-    type: 'reject',
-    udp: false,
-  })
 
   if (ruleOptions.ai) {
     config['proxy-groups'].push({
@@ -944,7 +939,7 @@ function main(config) {
       type: 'select',
       proxies: [
         '直连',
-        '拒绝',
+        '拦截',
         '默认节点',
         '国内网站',
         ...proxyGroupsRegionNames,
@@ -1013,6 +1008,22 @@ function main(config) {
       type: 'select',
       proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Bypass.png',
+      hidden: true,
+    },
+    {
+      ...groupBaseOption,
+      name: '拦截',
+      type: 'select',
+      proxies: ['REJECT'],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Reject.png',
+      hidden: true,
+    },
+    {
+      ...groupBaseOption,
+      name: '绕过',
+      type: 'select',
+      proxies: ['PASS'],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Reject.png',
       hidden: true,
     },
     // hidden
