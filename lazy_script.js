@@ -306,6 +306,13 @@ function main(config) {
 
   config['tcp-concurrent'] = true
 
+  config['external-controller'] = '0.0.0.0:9090'
+  config['external-ui'] = 'ui'
+  config['external-ui-name'] = 'Zashboard'
+  config['external-controller-cors'] = {
+    'allow-origins': ["https://board.zash.run.place"],
+  }
+
   /**
    * 这个值设置大点能省电，笔记本和手机需要关注一下
    */
@@ -1015,7 +1022,7 @@ function main(config) {
       name: '非标端口',
       type: 'select',
       proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/RJ45.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/hidden/RJ45.png',
       hidden: true,
     },
     {
