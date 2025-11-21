@@ -158,7 +158,7 @@ const dnsConfig = {
   ipv6: true,
   'prefer-h3': true,
   'use-hosts': false,
-  'use-system-hosts': fasle,
+  'use-system-hosts': false,
   'respect-rules': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
