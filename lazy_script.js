@@ -778,7 +778,7 @@ function main(config) {
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Speedtest.png',
     })
-    ruleProviders.set('anetworktestds', {
+    ruleProviders.set('networktest', {
       ...ruleProviderCommon,
       behavior: 'domain',
       format: 'mrs',
@@ -896,7 +896,7 @@ function main(config) {
     ...(ruleOptions.apple ? ['GEOSITE,apple@!cn,苹果服务'] : []),
     ...(ruleOptions.google ? ['GEOSITE,google@!cn,谷歌服务'] : []),
     ...(ruleOptions.steam ? ['GEOSITE,steam@!cn,Steam'] : []),
-    ...(ruleOptions.games ? ['GEOSITE,category-games-!cn,游戏服务'] : []),
+    ...(ruleOptions.games ? ['GEOSITE,category-games@!cn,游戏服务'] : []),
     ...(ruleOptions.japan ? ['GEOSITE,category-bank-jp,日本网站'] : []),
     ...(ruleOptions.networktest ? ['RULE-SET,networktest,网络测试'] : []),
     'RULE-SET,tld-proxy,其他外网',
