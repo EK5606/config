@@ -256,6 +256,13 @@ ruleProviders.set('cnip', {
   url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/cnip.mrs',
   path: './ruleset/DustinWin/cnip.mrs',
 }) // cnip
+ruleProviders.set('applications', {
+  ...ruleProviderCommon,
+  behavior: 'classical',
+  format: 'text',
+  url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/applications.list',
+  path: './ruleset/DustinWin/applications.list',
+}) // applications
 
 // 程序入口
 function main(config) {
@@ -473,6 +480,16 @@ function main(config) {
   config.proxies.push({
     name: '直连',
     type: 'direct',
+    udp: true,
+  })
+  config.proxies.push({
+    name: '拒绝',
+    type: 'reject',
+    udp: false,
+  })
+  config.proxies.push({
+    name: '绕过',
+    type: 'pass',
     udp: true,
   })
 
@@ -866,6 +883,7 @@ function main(config) {
   rules.push(
     ...(ruleOptions.ads ? ['RULE-SET,ads,广告过滤'] : []),
     ...(ruleOptions.tracker ? ['RULE-SET,trackerlist,跟踪分析'] : []),
+    'RUEL-SET,applications,直连软件',
     ...(ruleOptions.microsoft ? ['RULE-SET,microsoft-cn,国内微软'] : []),
     ...(ruleOptions.apple ? ['RULE-SET,apple-cn,国内苹果'] : []),
     ...(ruleOptions.google ? ['RULE-SET,google-cn,国内谷歌'] : []),
@@ -923,7 +941,7 @@ function main(config) {
       type: 'select',
       proxies: [
         '直连',
-        'REJECT',
+        '拒绝',
         '默认节点',
         '国内网站',
         ...proxyGroupsRegionNames,
@@ -946,6 +964,14 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/China_Map.png',
     },
     // hidden
+    {
+      ...groupBaseOption,
+      name: '直连软件',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Direct.png',
+      hidden: true,
+    },
     {
       ...groupBaseOption,
       name: '国内微软',
