@@ -487,12 +487,7 @@ function main(config) {
     type: 'reject',
     udp: false,
   })
-  config.proxies.push({
-    name: '绕过',
-    type: 'pass',
-    udp: true,
-  })
-
+  
   if (ruleOptions.ai) {
     config['proxy-groups'].push({
       ...groupBaseOption,
@@ -969,7 +964,7 @@ function main(config) {
       name: '直连软件',
       type: 'select',
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Direct.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Static.png',
       hidden: true,
     },
     {
