@@ -49,15 +49,6 @@ const ruleOptions = {
 }
 
 /**
- * 前置规则
- * 如果有需要前置的自定义规则，可以自行修改
- */
-const rules = [
-  'GEOSITE,private,私有网络',
-  'RULE-SET,Custom_Direct,国内网站',
-]
-
-/**
  * 地区配置，通过regex匹配代理节点名称
  * regex会有一定概率误判，自己调整一下吧
  * excludeHighPercentage是排除高倍率节点的开关，只对地区分组有效
@@ -171,7 +162,7 @@ const dnsConfig = {
   'respect-rules': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
-  'fake-ip-filter': ['geosite:cn,private', 'rule-set:Custom_Direct,connectivity-check', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
+  'fake-ip-filter': ['geosite:connectivity-check', 'rule-set:Custom_Direct,cn', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
   // 'default-nameserver': [...defaultDNS],
   nameserver: [...foreignDNS],
   'proxy-server-nameserver': [...foreignDNS],
@@ -205,8 +196,24 @@ const groupBaseOption = {
 const ruleProviders = new Map()
 
 /**
+ * 前置规则
+ * 如果有需要前置的自定义规则，可以自行修改
+ */
+const rules = [
+  'RULE-SET,private,私有网络',
+  'RULE-SET,Custom_Direct,国内网站',
+]
+
+/**
  * RULE-SET规则提供
  */
+ruleProviders.set('private', {
+  ...ruleProviderCommon,
+  behavior: 'domain',
+  format: 'mrs',
+  url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/private.mrs',
+  path: './ruleset/DustinWin/private.mrs',
+}) // private
 ruleProviders.set('Custom_Direct', {
   ...ruleProviderCommon,
   behavior: 'classical',
@@ -214,14 +221,41 @@ ruleProviders.set('Custom_Direct', {
   url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Classical.yaml',
   path: './ruleset/Aethersailor/Custom_Direct.yaml',
 }) // Custom_Direct
-ruleProviders.set('connectivity-check', {
+ruleProviders.set('cn', {
   ...ruleProviderCommon,
   behavior: 'domain',
   format: 'mrs',
-  url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/connectivity-check.mrs',
-  path: './ruleset/MetaCubeX/connectivity-check.mrs',
-})
-
+  url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/cn.mrs',
+  path: './ruleset/DustinWin/cn.mrs',
+}) // cn
+ruleProviders.set('tld-proxy', {
+  ...ruleProviderCommon,
+  behavior: 'domain',
+  format: 'mrs',
+  url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/tld-proxy.mrs',
+  path: './ruleset/DustinWin/tld-proxy.mrs',
+}) // tld-proxy
+ruleProviders.set('proxy', {
+  ...ruleProviderCommon,
+  behavior: 'domain',
+  format: 'mrs',
+  url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/proxy.mrs',
+  path: './ruleset/DustinWin/proxy.mrs',
+}) // proxy
+ruleProviders.set('privateip', {
+  ...ruleProviderCommon,
+  behavior: 'ipcidr',
+  format: 'mrs',
+  url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/privateip.mrs',
+  path: './ruleset/DustinWin/privateip.mrs',
+}) // privateip
+ruleProviders.set('cnip', {
+  ...ruleProviderCommon,
+  behavior: 'ipcidr',
+  format: 'mrs',
+  url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/cnip.mrs',
+  path: './ruleset/DustinWin/cnip.mrs',
+}) // cnip
 
 // 程序入口
 function main(config) {
@@ -451,6 +485,13 @@ function main(config) {
       url: 'https://chat.openai.com/cdn-cgi/trace',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/ChatGPT.png',
     })
+    ruleProviders.set('ai', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/ai.mrs',
+      path: './ruleset/DustinWin/ai.mrs',
+    }) // ai
   } // ai
 
 
@@ -463,13 +504,6 @@ function main(config) {
       url: 'https://www.youtube.com/s/desktop/494dd881/img/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/YouTube.png',
     })
-    ruleProviders.set('youtube', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/youtube.mrs',
-      path: './ruleset/MetaCubeX/youtube.mrs',
-    })
   } // youtube
   if (ruleOptions.biliintl) {
     config['proxy-groups'].push({
@@ -479,13 +513,6 @@ function main(config) {
       proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://www.bilibili.tv/',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/BilibiliSEA.png',
-    })
-    ruleProviders.set('biliintl', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/biliintl.mrs',
-      path: './ruleset/MetaCubeX/biliintl.mrs',
     })
   } // biliintl
   if (ruleOptions.bahamut) {
@@ -497,13 +524,6 @@ function main(config) {
       url: 'https://ani.gamer.com.tw/ajax/getdeviceid.php',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Bahamut.png',
     })
-    ruleProviders.set('bahamut', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/bahamut.mrs',
-      path: './ruleset/MetaCubeX/bahamut.mrs',
-    })
   } // bahamut
   if (ruleOptions.disney) {
     config['proxy-groups'].push({
@@ -513,13 +533,6 @@ function main(config) {
       proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://disney.api.edge.bamgrid.com/devices',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Disney+.png',
-    })
-    ruleProviders.set('disney', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/disney.mrs',
-      path: './ruleset/MetaCubeX/disney.mrs',
     })
   } // disney
   if (ruleOptions.netflix) {
@@ -531,13 +544,6 @@ function main(config) {
       url: 'https://api.fast.com/netflix/speedtest/v2?https=true',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Netflix.png',
     })
-    ruleProviders.set('netflix', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/netflix.mrs',
-      path: './ruleset/MetaCubeX/netflix.mrs',
-    })
   } // netflix
   if (ruleOptions.tiktok) {
     config['proxy-groups'].push({
@@ -547,13 +553,6 @@ function main(config) {
       proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://www.tiktok.com/',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TikTok.png',
-    })
-    ruleProviders.set('tiktok', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tiktok.mrs',
-      path: './ruleset/MetaCubeX/tiktok.mrs',
     })
   } // tiktok
   if (ruleOptions.hbo) {
@@ -565,13 +564,6 @@ function main(config) {
       url: 'https://www.hbo.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/HBO.png',
     })
-    ruleProviders.set('hbo', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/hbo.mrs',
-      path: './ruleset/MetaCubeX/hbo.mrs',
-    })
   } // hbo
   if (ruleOptions.tvb) {
     config['proxy-groups'].push({
@@ -581,13 +573,6 @@ function main(config) {
       proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://www.tvb.com/logo_b.svg',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TVB.png',
-    })
-    ruleProviders.set('tvb', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tvb.mrs',
-      path: './ruleset/MetaCubeX/tvb.mrs',
     })
   } // tvb
   if (ruleOptions.primevideo) {
@@ -599,13 +584,6 @@ function main(config) {
       url: 'https://m.media-amazon.com/images/G/01/digital/video/web/logo-min-remaster.png',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Prime_Video.png',
     })
-    ruleProviders.set('primevideo', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/primevideo.mrs',
-      path: './ruleset/MetaCubeX/primevideo.mrs',
-    })
   } // primevideo
   if (ruleOptions.hulu) {
     config['proxy-groups'].push({
@@ -616,13 +594,6 @@ function main(config) {
       url: 'https://auth.hulu.com/v4/web/password/authenticate',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Hulu.png',
     })
-    ruleProviders.set('hulu', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/hulu.mrs',
-      path: './ruleset/MetaCubeX/hulu.mrs',
-    })
   } // hulu
   if (ruleOptions.media) {
     config['proxy-groups'].push({
@@ -632,6 +603,20 @@ function main(config) {
       proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Media_Global.png',
     })
+      ruleProviders.set('media', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/media.mrs',
+      path: './ruleset/DustinWin/media.mrs',
+    }) // media
+    ruleProviders.set('mediaip', {
+      ...ruleProviderCommon,
+      behavior: 'ipcidr',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/mediaip.mrs',
+      path: './ruleset/DustinWin/mediaip.mrs',
+    }) // mediaip
   } // media
 
 
@@ -644,13 +629,6 @@ function main(config) {
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Pixiv.png',
     })
-    ruleProviders.set('pixiv', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/pixiv.mrs',
-      path: './ruleset/MetaCubeX/pixiv.mrs',
-    })
   } // pixiv
   if (ruleOptions.spotify) {
 
@@ -661,13 +639,6 @@ function main(config) {
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Spotify.png',
-    })
-    ruleProviders.set('spotify', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/spotify.mrs',
-      path: './ruleset/MetaCubeX/spotify.mrs',
     })
   } // spotify
 
@@ -681,13 +652,13 @@ function main(config) {
       url: 'http://www.telegram.org/img/website_icon.svg',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Telegram.png',
     })
-    ruleProviders.set('telegram', {
+    ruleProviders.set('telegramip', {
       ...ruleProviderCommon,
-      behavior: 'domain',
+      behavior: 'ipcidr',
       format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs',
-      path: './ruleset/MetaCubeX/telegram.mrs',
-    })
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/telegramip.mrs',
+      path: './ruleset/DustinWin/telegramip.mrs',
+    }) // telegramip
   } // telegram
   if (ruleOptions.whatsapp) {
     config['proxy-groups'].push({
@@ -698,13 +669,6 @@ function main(config) {
       url: 'https://web.whatsapp.com/data/manifest.json',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Whatapp.png',
     })
-    ruleProviders.set('whatsapp', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/whatsapp.mrs',
-      path: './ruleset/MetaCubeX/whatsapp.mrs',
-    })
   } // whatsapp
   if (ruleOptions.line) {
     config['proxy-groups'].push({
@@ -714,13 +678,6 @@ function main(config) {
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       url: 'https://line.me/page-data/app-data.json',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Line.png',
-    })
-    ruleProviders.set('line', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/line.mrs',
-      path: './ruleset/MetaCubeX/line.mrs',
     })
   } // line
 
@@ -734,13 +691,6 @@ function main(config) {
       url: 'https://www.paypal.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/PayPal.png',
     })
-    ruleProviders.set('paypal', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/paypal.mrs',
-      path: './ruleset/MetaCubeX/paypal.mrs',
-    })
   } // paypal
   if (ruleOptions.patreon) {
     config['proxy-groups'].push({
@@ -750,13 +700,6 @@ function main(config) {
       proxies: [...proxyGroupsRegionNamesUS, '默认节点', '直连'],
       url: 'https://www.patreon.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Patreon.png',
-    })
-    ruleProviders.set('patreon', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/patreon.mrs',
-      path: './ruleset/MetaCubeX/patreon.mrs',
     })
   } // patreon
 
@@ -769,20 +712,6 @@ function main(config) {
       url: 'https://steamcommunity.com//favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
     })
-    ruleProviders.set('steam@cn', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/steam@cn.mrs',
-      path: './ruleset/MetaCubeX/steam@cn.mrs',
-    })
-    ruleProviders.set('steam@!cn', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/steam@!cn.mrs',
-      path: './ruleset/MetaCubeX/steam@!cn.mrs',
-    })
   } // steam
   if (ruleOptions.games) {
     config['proxy-groups'].push({
@@ -792,6 +721,20 @@ function main(config) {
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Game.png',
     })
+    ruleProviders.set('games-cn', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games-cn.mrs',
+      path: './ruleset/DustinWin/games-cn.mrs',
+    }) // games-cn
+    ruleProviders.set('gamesip', {
+      ...ruleProviderCommon,
+      behavior: 'ipcidr',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/gamesip.mrs',
+      path: './ruleset/DustinWin/gamesip.mrs',
+    }) // gamesip
   } // games
 
   
@@ -803,6 +746,13 @@ function main(config) {
       proxies: ['REJECT', '默认节点', '直连'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/AdBlock.png',
     })
+    ruleProviders.set('ads', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/ads.mrs',
+      path: './ruleset/DustinWin/ads.mrs',
+    }) // ads
   } // ads
   if (ruleOptions.tracker) {
     config['proxy-groups'].push({
@@ -812,6 +762,13 @@ function main(config) {
       proxies: ['直连', '默认节点', 'REJECT'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Reject.png',
     })
+    ruleProviders.set('trackerlist', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/trackerlist.mrs',
+      path: './ruleset/DustinWin/trackerlist.mrs',
+    }) // trackerlist
   } // tracker
   if (ruleOptions.networktest) {
     config['proxy-groups'].push({
@@ -821,6 +778,13 @@ function main(config) {
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Speedtest.png',
     })
+    ruleProviders.set('anetworktestds', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/networktest.mrs',
+      path: './ruleset/DustinWin/networktest.mrs',
+    }) // networktest
   } // 网络测试
 
 
@@ -833,13 +797,6 @@ function main(config) {
       url: 'https://github.com/robots.txt',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/GitHub.png',
     })
-    ruleProviders.set('github', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/github.mrs',
-      path: './ruleset/MetaCubeX/github.mrs',
-    })
   } // github
   if (ruleOptions.microsoft) {
     config['proxy-groups'].push({
@@ -850,13 +807,13 @@ function main(config) {
       url: 'http://www.msftconnecttest.com/connecttest.txt',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Microsoft.png',
     })
-    ruleProviders.set('microsoft@!cn', {
+    ruleProviders.set('microsoft-cn', {
       ...ruleProviderCommon,
       behavior: 'domain',
       format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft@!cn.mrs',
-      path: './ruleset/MetaCubeX/microsoft@!cn.mrs',
-    })
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/microsoft-cn.mrs',
+      path: './ruleset/DustinWin/microsoft-cn.mrs',
+    }) // microsoft-cn
   } // microsoft
   if (ruleOptions.apple) {
     config['proxy-groups'].push({
@@ -867,13 +824,13 @@ function main(config) {
       url: 'http://www.apple.com/library/test/success.html',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
     })
-    ruleProviders.set('apple@!cn', {
+    ruleProviders.set('apple-cn', {
       ...ruleProviderCommon,
       behavior: 'domain',
       format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/apple@!cn.mrs',
-      path: './ruleset/MetaCubeX/apple@!cn.mrs',
-    })
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/apple-cn.mrs',
+      path: './ruleset/DustinWin/apple-cn.mrs',
+    }) // apple-cn
   } // apple
   if (ruleOptions.google) {
     config['proxy-groups'].push({
@@ -884,13 +841,13 @@ function main(config) {
       url: 'http://www.google.com/generate_204',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Google.png',
     })
-    ruleProviders.set('google', {
+    ruleProviders.set('google-cn', {
       ...ruleProviderCommon,
       behavior: 'domain',
       format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google@!cn.mrs',
-      path: './ruleset/MetaCubeX/google@!cn.mrs',
-    })
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/google-cn.mrs',
+      path: './ruleset/DustinWin/google-cn.mrs',
+    }) // google-cn
   } // google
 
 
@@ -903,64 +860,57 @@ function main(config) {
       url: 'https://r.r10s.jp/com/img/home/logo/touch.png',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/JP.png',
     })
-    ruleProviders.set('category-bank-jp', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-bank-jp.mrs',
-      path: './ruleset/MetaCubeX/category-bank-jp.mrs',
-    })
   } // japan
 
   // 写入domain分流规则
   rules.push(
-    ...(ruleOptions.ads ? ['GEOSITE,ads,广告过滤'] : []),
-    ...(ruleOptions.tracker ? ['GEOSITE,trackerlist,跟踪分析'] : []),
-    ...(ruleOptions.microsoft ? ['GEOSITE,microsoft-cn,国内微软'] : []),
-    ...(ruleOptions.apple ? ['GEOSITE,apple-cn,国内苹果'] : []),
-    ...(ruleOptions.google ? ['GEOSITE,google-cn,国内谷歌'] : []),
-    ...(ruleOptions.steam ? ['RULE-SET,steam@cn,国内网站'] : []),
-    ...(ruleOptions.games ? ['GEOSITE,games-cn,国内游戏'] : []),
+    ...(ruleOptions.ads ? ['RULE-SET,ads,广告过滤'] : []),
+    ...(ruleOptions.tracker ? ['RULE-SET,trackerlist,跟踪分析'] : []),
+    ...(ruleOptions.microsoft ? ['RULE-SET,microsoft-cn,国内微软'] : []),
+    ...(ruleOptions.apple ? ['RULE-SET,apple-cn,国内苹果'] : []),
+    ...(ruleOptions.google ? ['RULE-SET,google-cn,国内谷歌'] : []),
+    ...(ruleOptions.steam ? ['GEOSITE,steam@cn,国内网站'] : []),
+    ...(ruleOptions.games ? ['RULE-SET,games-cn,国内游戏'] : []),
 
-    ...(ruleOptions.ai ? ['GEOSITE,ai,国外ai'] : []),
-    ...(ruleOptions.youtube ? ['RULE-SET,youtube,YouTube'] : []),
-    ...(ruleOptions.biliintl ? ['RULE-SET,biliintl,哔哩哔哩东南亚'] : []),
-    ...(ruleOptions.bahamut ? ['RULE-SET,bahamut,巴哈姆特'] : []),
-    ...(ruleOptions.disney ? ['RULE-SET,disney,Disney+'] : []),
-    ...(ruleOptions.netflix ? ['RULE-SET,netflix,NETFLIX'] : []),
-    ...(ruleOptions.tiktok ? ['RULE-SET,tiktok,Tiktok'] : []),
-    ...(ruleOptions.hbo ? ['RULE-SET,hbo,HBO'] : []),
-    ...(ruleOptions.tvb ? ['RULE-SET,tvb,TVB'] : []),
-    ...(ruleOptions.primevideo ? ['RULE-SET,primevideo,Prime Video'] : []),
-    ...(ruleOptions.hulu ? ['RULE-SET,hulu,Hulu'] : []),
-    ...(ruleOptions.media ? ['GEOSITE,media,国外媒体'] : []),
-    ...(ruleOptions.pixiv ? ['RULE-SET,pixiv,Pixiv'] : []),
-    ...(ruleOptions.spotify ? ['RULE-SET,spotify,Spotify'] : []),
-    ...(ruleOptions.telegram ? ['RULE-SET,telegram,Telegram'] : []),
-    ...(ruleOptions.whatsapp ? ['RULE-SET,whatsapp,WhatsApp'] : []),
-    ...(ruleOptions.line ? ['RULE-SET,line,Line'] : []),
-    ...(ruleOptions.paypal ? ['RULE-SET,paypal,Paypal'] : []),
-    ...(ruleOptions.patreon ? ['RULE-SET,patreon,Patreon'] : []),
-    ...(ruleOptions.github ? ['RULE-SET,github,Github'] : []),
-    ...(ruleOptions.microsoft ? ['RULE-SET,microsoft@!cn,微软服务'] : []),
-    ...(ruleOptions.apple ? ['RULE-SET,apple@!cn,苹果服务'] : []),
-    ...(ruleOptions.google ? ['RULE-SET,google@!cn,谷歌服务'] : []),
-    ...(ruleOptions.steam ? ['RULE-SET,steam@!cn,Steam'] : []),
-    ...(ruleOptions.games ? ['RULE-SET,games@!cn,游戏服务'] : []),
-    ...(ruleOptions.japan ? ['RULE-SET,category-bank-jp,日本网站'] : []),
-    ...(ruleOptions.networktest ? ['GEOSITE,networktest,网络测试'] : []),
-    'GEOSITE,tld-proxy,其他外网',
-    'GEOSITE,proxy,其他外网',
-    'GEOSITE,cn,国内网站',
+    ...(ruleOptions.ai ? ['RULE-SET,ai,国外ai'] : []),
+    ...(ruleOptions.youtube ? ['GEOSITE,youtube,YouTube'] : []),
+    ...(ruleOptions.biliintl ? ['GEOSITE,biliintl,哔哩哔哩东南亚'] : []),
+    ...(ruleOptions.bahamut ? ['GEOSITE,bahamut,巴哈姆特'] : []),
+    ...(ruleOptions.disney ? ['GEOSITE,disney,Disney+'] : []),
+    ...(ruleOptions.netflix ? ['GEOSITE,netflix,NETFLIX'] : []),
+    ...(ruleOptions.tiktok ? ['GEOSITE,tiktok,Tiktok'] : []),
+    ...(ruleOptions.hbo ? ['GEOSITE,hbo,HBO'] : []),
+    ...(ruleOptions.tvb ? ['GEOSITE,tvb,TVB'] : []),
+    ...(ruleOptions.primevideo ? ['GEOSITE,primevideo,Prime Video'] : []),
+    ...(ruleOptions.hulu ? ['GEOSITE,hulu,Hulu'] : []),
+    ...(ruleOptions.media ? ['RULE-SET,media,国外媒体'] : []),
+    ...(ruleOptions.pixiv ? ['GEOSITE,pixiv,Pixiv'] : []),
+    ...(ruleOptions.spotify ? ['GEOSITE,spotify,Spotify'] : []),
+    ...(ruleOptions.telegram ? ['GEOSITE,telegram,Telegram'] : []),
+    ...(ruleOptions.whatsapp ? ['GEOSITE,whatsapp,WhatsApp'] : []),
+    ...(ruleOptions.line ? ['GEOSITE,line,Line'] : []),
+    ...(ruleOptions.paypal ? ['GEOSITE,paypal,Paypal'] : []),
+    ...(ruleOptions.patreon ? ['GEOSITE,patreon,Patreon'] : []),
+    ...(ruleOptions.github ? ['GEOSITE,github,Github'] : []),
+    ...(ruleOptions.microsoft ? ['GEOSITE,microsoft@!cn,微软服务'] : []),
+    ...(ruleOptions.apple ? ['GEOSITE,apple@!cn,苹果服务'] : []),
+    ...(ruleOptions.google ? ['GEOSITE,google@!cn,谷歌服务'] : []),
+    ...(ruleOptions.steam ? ['GEOSITE,steam@!cn,Steam'] : []),
+    ...(ruleOptions.games ? ['GEOSITE,games@!cn,游戏服务'] : []),
+    ...(ruleOptions.japan ? ['GEOSITE,category-bank-jp,日本网站'] : []),
+    ...(ruleOptions.networktest ? ['RULE-SET,networktest,网络测试'] : []),
+    'RULE-SET,tld-proxy,其他外网',
+    'RULE-SET,proxy,其他外网',
+    'RULE-SET,cn,国内网站',
   )
 
   // 写入ip分流规则
   rules.push(
-    'GEOIP,private,私有网络,no-resolve',
-    'GEOIP,cn,国内网站',
-    ...(ruleOptions.media ? ['GEOIP,media,国外媒体'] : []),
-    ...(ruleOptions.games ? ['GEOIP,games,游戏平台'] : []),
-    ...(ruleOptions.telegram ? ['GEOIP,telegram,Telegram,no-resolve'] : []),
+    'RULE-SET,privateip,私有网络,no-resolve',
+    'RULE-SET,cnip,国内网站',
+    ...(ruleOptions.media ? ['RULE-SET,mediaip,国外媒体'] : []),
+    ...(ruleOptions.games ? ['RULE-SET,gamesip,游戏平台'] : []),
+    ...(ruleOptions.telegram ? ['RULE-SET,telegram,Telegram,no-resolve'] : []),
     ...(ruleOptions.japan ? ['GEOIP,JP,日本网站,no-resolve'] : []),
     'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
     'MATCH,漏网之鱼'
