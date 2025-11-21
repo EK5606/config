@@ -777,10 +777,6 @@ function main(config) {
   } // google
 
   if (ruleOptions.japan) {
-    rules.push(
-      'RULE-SET,category-bank-jp,日本网站',
-      'GEOIP,jp,日本网站,no-resolve'
-    )
     ruleProviders.set('category-bank-jp', {
       ...ruleProviderCommon,
       behavior: 'domain',
@@ -799,8 +795,11 @@ function main(config) {
   } // japan
 
   // 写入domin分流规则
-
-
+  if (ruleOptions.japan) {
+    rules.push(
+      'RULE-SET,category-bank-jp,日本网站',
+    )
+  }
   rules.push(
     'GEOSITE,geolocation-!cn@cn,国内网站',
     'GEOSITE,geolocation-!cn,其他外网',
@@ -810,6 +809,9 @@ function main(config) {
   // 写入ip分流规则
   if(ruleOptions.telegram) {
     rules.push('GEOIP,telegram,Telegram')
+  }
+  if(ruleOptions.japan) {
+    rules.push('GEOIP,jp,日本网站,no-resolve')
   }
   rules.push(
     'GEOIP,lan,DIRECT',
