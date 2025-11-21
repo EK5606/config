@@ -52,8 +52,7 @@ const ruleOptions = {
  * 如果有需要前置的自定义规则，可以自行修改
  */
 const rules = [
-  'GEOSITE,private,DIRECT',
-  'GEOIP,private,DIRECT,no-resolve',
+  'GEOSITE,private,私有网络',
   'RULE-SET,Custom_Direct,国内网站',
 ]
 
@@ -786,6 +785,7 @@ function main(config) {
     rules.push('GEOIP,JP,日本网站,no-resolve')
   }
   rules.push(
+    'GEOIP,private,私有网络,no-resolve',
     'GEOIP,CN,国内网站',
     'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
     'MATCH,漏网之鱼'
@@ -821,6 +821,7 @@ function main(config) {
       url: 'http://wifi.vivo.com.cn/generate_204',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/China_Map.png',
     },
+    // hidden
     {
       ...groupBaseOption,
       name: '非标端口',
@@ -829,6 +830,16 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Bypass.png',
       hidden: true,
     },
+    {
+      ...groupBaseOption,
+      name: '私有网络',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/private.png',
+      hidden: true,
+    },
+
+    // hidden
     {
       ...groupBaseOption,
       name: '漏网之鱼',
