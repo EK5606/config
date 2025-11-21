@@ -967,7 +967,7 @@ function main(config) {
       name: '自定义直连',
       type: 'select',
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Stasis.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Stasic.png',
       hidden: true,
     },
     {
