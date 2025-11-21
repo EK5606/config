@@ -896,7 +896,7 @@ function main(config) {
     ...(ruleOptions.apple ? ['GEOSITE,apple@!cn,苹果服务'] : []),
     ...(ruleOptions.google ? ['GEOSITE,google@!cn,谷歌服务'] : []),
     ...(ruleOptions.steam ? ['GEOSITE,steam@!cn,Steam'] : []),
-    ...(ruleOptions.games ? ['GEOSITE,games@!cn,游戏服务'] : []),
+    ...(ruleOptions.games ? ['GEOSITE,category-games-!cn,游戏服务'] : []),
     ...(ruleOptions.japan ? ['GEOSITE,category-bank-jp,日本网站'] : []),
     ...(ruleOptions.networktest ? ['RULE-SET,networktest,网络测试'] : []),
     'RULE-SET,tld-proxy,其他外网',
