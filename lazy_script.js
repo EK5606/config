@@ -777,13 +777,6 @@ function main(config) {
   } // google
 
   if (ruleOptions.japan) {
-    ruleProviders.set('category-bank-jp', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-bank-jp.mrs',
-      path: './ruleset/MetaCubeX/category-bank-jp.mrs',
-    })
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '日本网站',
@@ -797,7 +790,7 @@ function main(config) {
   // 写入domin分流规则
   if (ruleOptions.japan) {
     rules.push(
-      'RULE-SET,category-bank-jp,日本网站',
+      'GEOSITE,category-bank-jp,日本网站',
     )
   }
   rules.push(
@@ -808,14 +801,14 @@ function main(config) {
 
   // 写入ip分流规则
   if(ruleOptions.telegram) {
-    rules.push('GEOIP,telegram,Telegram')
+    rules.push('GEOIP,telegram,Telegram,no-resolve')
   }
   if(ruleOptions.japan) {
-    rules.push('GEOIP,jp,日本网站,no-resolve')
+    rules.push('GEOIP,JP,日本网站,no-resolve')
   }
   rules.push(
     'GEOIP,lan,DIRECT',
-    'GEOIP,cn,国内网站',
+    'GEOIP,CN,国内网站',
     'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
     'MATCH,漏网之鱼'
   ) // 后置规则
