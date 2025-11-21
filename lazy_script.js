@@ -162,7 +162,10 @@ const dnsConfig = {
   'respect-rules': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
-  'fake-ip-filter': ['geosite:connectivity-check', 'rule-set:fakeip-filter,cn', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
+  'fake-ip-filter': [
+    'geosite:connectivity-check', 
+    'rule-set:fakeip-filter,cn,private',
+  ],
   // 'default-nameserver': [...defaultDNS],
   nameserver: [...foreignDNS],
   'proxy-server-nameserver': [...foreignDNS],
