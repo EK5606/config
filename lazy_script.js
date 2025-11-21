@@ -71,9 +71,6 @@ const rules = [
   'PROCESS-NAME,NodeBabyLinkOwjdxb.exe,DIRECT',
   'PROCESS-NAME,NodeBabyLinkRfile.exe,DIRECT',
   'PROCESS-NAME,NodeBabyLinkService.exe,DIRECT',
-  'DOMAIN-SUFFIX,iepose.com,DIRECT',
-  'DOMAIN-SUFFIX,ionewu.com,DIRECT',
-  // 'DOMAIN,ping.archlinux.org,DIRECT',
 ]
 
 /**
