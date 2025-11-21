@@ -342,7 +342,7 @@ function main(config) {
       'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/geosite.dat',
     geoip:
       'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/geoip.dat',
-    mmdb: 'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/Country.mmdb',
+    mmdb: 'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/geoip.metadb',
     asn: 'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/Country-ASN.mmdb',
   }
 
@@ -453,7 +453,7 @@ function main(config) {
     })
   } // ai
 
-  
+
   if (ruleOptions.youtube) {
     config['proxy-groups'].push({
       ...groupBaseOption,
