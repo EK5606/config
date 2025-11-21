@@ -162,7 +162,7 @@ const dnsConfig = {
   'respect-rules': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
-  'fake-ip-filter': ['geosite:connectivity-check', 'rule-set:Custom_Direct,cn', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
+  'fake-ip-filter': ['geosite:connectivity-check', 'rule-set:fakeip-filter,cn', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
   // 'default-nameserver': [...defaultDNS],
   nameserver: [...foreignDNS],
   'proxy-server-nameserver': [...foreignDNS],
@@ -172,7 +172,8 @@ const dnsConfig = {
    */
   'nameserver-policy': {
     'geosite:private': 'system',
-    'geosite:cn,steam@cn,category-games@cn,microsoft@cn,apple@cn': chinaDNS,
+    'geosite:steam@cn,category-games@cn,microsoft@cn,apple@cn': chinaDNS,
+    'rule-set:cn': chinaDNS,
   },
 }
 
@@ -221,6 +222,13 @@ ruleProviders.set('Custom_Direct', {
   url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Classical.yaml',
   path: './ruleset/Aethersailor/Custom_Direct.yaml',
 }) // Custom_Direct
+ruleProviders.set('fakeip-filter', {
+  ...ruleProviderCommon,
+  behavior: 'domain',
+  format: 'mrs',
+  url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/fakeip-filter.mrs',
+  path: './ruleset/DustinWin/fakeip-filter.mrs',
+}) // fakeip-filter
 ruleProviders.set('cn', {
   ...ruleProviderCommon,
   behavior: 'domain',
