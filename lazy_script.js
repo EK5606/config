@@ -467,7 +467,7 @@ function main(config) {
     return value.name
   })
   if (proxyGroupsRegionNamesSG.length >= 2) {
-  [proxyGroupsRegionNamesSG[0], proxyGroupsRegionNamesSG[2]] = [proxyGroupsRegionNamesSG[2], proxyGroupsRegionNamesSG[0]];
+  [proxyGroupsRegionNamesSG[0], proxyGroupsRegionNamesSG[4]] = [proxyGroupsRegionNamesSG[4], proxyGroupsRegionNamesSG[0]];
   } // 新加坡优先
 
   if (otherProxyGroups.length > 0) {
