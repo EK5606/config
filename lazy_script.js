@@ -55,22 +55,6 @@ const rules = [
   'GEOSITE,private,DIRECT',
   'GEOIP,private,DIRECT,no-resolve',
   'RULE-SET,Custom_Direct,国内网站',
-  'RULE-SET,applications,下载软件',
-  'PROCESS-NAME,SunloginClient,DIRECT',
-  'PROCESS-NAME,SunloginClient.exe,DIRECT',
-  'PROCESS-NAME,AnyDesk,DIRECT',
-  'PROCESS-NAME,AnyDesk.exe,DIRECT',
-  'PROCESS-NAME,节点小宝,DIRECT',
-  'PROCESS-NAME,nblink.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkBackup,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkClient,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkRfile,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkBackup.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkClient.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkDevice.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkOwjdxb.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkRfile.exe,DIRECT',
-  'PROCESS-NAME,NodeBabyLinkService.exe,DIRECT',
 ]
 
 /**
@@ -220,14 +204,9 @@ const groupBaseOption = {
 
 const ruleProviders = new Map()
 
-ruleProviders.set('applications', {
-  ...ruleProviderCommon,
-  behavior: 'classical',
-  format: 'text',
-  url: 'https://github.com/DustinWin/ruleset_geodata/raw/refs/heads/mihomo-ruleset/applications.list',
-  path: './ruleset/DustinWin/applications.list',
-}) // applications
-
+/**
+ * RULE-SET规则提供
+ */
 ruleProviders.set('Custom_Direct', {
   ...ruleProviderCommon,
   behavior: 'classical',
@@ -787,7 +766,7 @@ function main(config) {
     })
   } // japan
 
-  // 写入domin分流规则
+  // 写入domain分流规则
   if (ruleOptions.japan) {
     rules.push(
       'GEOSITE,category-bank-jp,日本网站',
@@ -797,7 +776,7 @@ function main(config) {
     'GEOSITE,geolocation-!cn@cn,国内网站',
     'GEOSITE,geolocation-!cn,其他外网',
     'GEOSITE,cn,国内网站',
-  ) // 后置规则
+  ) // 后置DOMAIN规则
 
   // 写入ip分流规则
   if(ruleOptions.telegram) {
@@ -807,11 +786,10 @@ function main(config) {
     rules.push('GEOIP,JP,日本网站,no-resolve')
   }
   rules.push(
-    'GEOIP,lan,DIRECT',
     'GEOIP,CN,国内网站',
     'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
     'MATCH,漏网之鱼'
-  ) // 后置规则
+  ) // 后置IP规则
 
 
   config['proxy-groups'].push(
