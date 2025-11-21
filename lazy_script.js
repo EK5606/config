@@ -487,7 +487,7 @@ function main(config) {
     type: 'reject',
     udp: false,
   })
-  
+
   if (ruleOptions.ai) {
     config['proxy-groups'].push({
       ...groupBaseOption,
@@ -878,7 +878,7 @@ function main(config) {
   rules.push(
     ...(ruleOptions.ads ? ['RULE-SET,ads,广告过滤'] : []),
     ...(ruleOptions.tracker ? ['RULE-SET,trackerlist,跟踪分析'] : []),
-    'RUEL-SET,applications,直连软件',
+    'RULE-SET,applications,直连软件',
     ...(ruleOptions.microsoft ? ['RULE-SET,microsoft-cn,国内微软'] : []),
     ...(ruleOptions.apple ? ['RULE-SET,apple-cn,国内苹果'] : []),
     ...(ruleOptions.google ? ['RULE-SET,google-cn,国内谷歌'] : []),
