@@ -962,7 +962,7 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/China_Map.png',
     },
     // hidden
-        {
+    {
       ...groupBaseOption,
       name: '自定义直连',
       type: 'select',
