@@ -999,7 +999,7 @@ function main(config) {
       name: '私有网络',
       type: 'select',
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/private.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/hidden/private.png',
       hidden: true,
     },
     {
@@ -1007,7 +1007,7 @@ function main(config) {
       name: '非标端口',
       type: 'select',
       proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/RJ45.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/RJ45.png',
       hidden: true,
     },
     {
