@@ -872,7 +872,7 @@ function main(config) {
     ...(ruleOptions.steam ? ['GEOSITE,steam@cn,国内网站'] : []),
     ...(ruleOptions.games ? ['RULE-SET,games-cn,国内游戏'] : []),
 
-    ...(ruleOptions.ai ? ['RULE-SET,ai,国外ai'] : []),
+    ...(ruleOptions.ai ? ['RULE-SET,ai,国外AI'] : []),
     ...(ruleOptions.youtube ? ['GEOSITE,youtube,YouTube'] : []),
     ...(ruleOptions.biliintl ? ['GEOSITE,biliintl,哔哩哔哩东南亚'] : []),
     ...(ruleOptions.bahamut ? ['GEOSITE,bahamut,巴哈姆特'] : []),
