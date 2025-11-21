@@ -239,14 +239,6 @@ ruleProviders.set('Custom_Direct', {
   path: './ruleset/Aethersailor/Custom_Direct.yaml',
 }) // Custom_Direct
 
-ruleProviders.set('Custom_Port_Direct', {
-  ...ruleProviderCommon,
-  behavior: 'classical',
-  format: 'yaml',
-  url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Port_Direct.yaml',
-  path: './ruleset/Aethersailor/Custom_Port_Direct.yaml',
-}) // Custom_Port_Direct
-
 
 // 程序入口
 function main(config) {
@@ -810,14 +802,28 @@ function main(config) {
     })
   } // japan
 
+  // 写入domin分流规则
+
+
   rules.push(
     'GEOSITE,geolocation-!cn@cn,国内网站',
     'GEOSITE,geolocation-!cn,其他外网',
     'GEOSITE,cn,国内网站',
+  ) // 后置规则
+
+  // 写入ip分流规则
+
+  
+
+
+  rules.push(
+    'GEOIP,lan,DIRECT',
     'GEOIP,cn,国内网站',
-    'RULE-SET,Custom_Port_Direct,非标端口',
+    'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
     'MATCH,漏网之鱼'
-  )
+  ) // 后置规则
+
+
   config['proxy-groups'].push(
     {
       ...groupBaseOption,
