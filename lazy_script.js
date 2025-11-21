@@ -1007,7 +1007,7 @@ function main(config) {
       name: '非标端口',
       type: 'select',
       proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Bypass.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/RJ45.png',
       hidden: true,
     },
     {
@@ -1023,7 +1023,7 @@ function main(config) {
       name: '绕过',
       type: 'select',
       proxies: ['PASS'],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Reject.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Bypass.png',
       hidden: true,
     },
     // hidden
