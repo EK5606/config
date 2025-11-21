@@ -34,6 +34,7 @@ const ruleOptions = {
   tvb: false, // TVB
   hulu: false, // Hulu
   primevideo: false, // 亚马逊prime video
+  media: true, // 国外媒体
   paypal: true, // paypal支付
   patreon: true, // patreon
   telegram: true, // Telegram通讯软件
@@ -42,7 +43,7 @@ const ruleOptions = {
   steam: true, // steam
   games: true, // 游戏策略组
   japan: true, // 日本网站策略组
-  speedtest: true, //测速网站
+  networktest: true, //网络测试
   tracker: false, // 网络分析和跟踪服务
   ads: true, // 常见的网络广告
 }
@@ -170,7 +171,7 @@ const dnsConfig = {
   'respect-rules': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
-  'fake-ip-filter': ['geosite:cn,private,connectivity-check', 'rule-set:Custom_Direct', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
+  'fake-ip-filter': ['geosite:cn,private', 'rule-set:Custom_Direct,connectivity-check', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
   // 'default-nameserver': [...defaultDNS],
   nameserver: [...foreignDNS],
   'proxy-server-nameserver': [...foreignDNS],
@@ -213,6 +214,13 @@ ruleProviders.set('Custom_Direct', {
   url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct_Classical.yaml',
   path: './ruleset/Aethersailor/Custom_Direct.yaml',
 }) // Custom_Direct
+ruleProviders.set('connectivity-check', {
+  ...ruleProviderCommon,
+  behavior: 'domain',
+  format: 'mrs',
+  url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/connectivity-check.mrs',
+  path: './ruleset/MetaCubeX/connectivity-check.mrs',
+})
 
 
 // 程序入口
@@ -400,6 +408,18 @@ function main(config) {
   if (proxyGroupsRegionNamesTW.length >= 2) {
   [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[6]] = [proxyGroupsRegionNamesTW[6], proxyGroupsRegionNamesTW[0]];
   } // 台湾优先
+  const proxyGroupsRegionNamesJP = regionProxyGroups.map((value) => {
+    return value.name
+  })
+  if (proxyGroupsRegionNamesJP.length >= 2) {
+  [proxyGroupsRegionNamesJP[0], proxyGroupsRegionNamesJP[2]] = [proxyGroupsRegionNamesJP[2], proxyGroupsRegionNamesJP[0]];
+  } // 日本优先
+  const proxyGroupsRegionNamesSG = regionProxyGroups.map((value) => {
+    return value.name
+  })
+  if (proxyGroupsRegionNamesSG.length >= 2) {
+  [proxyGroupsRegionNamesSG[0], proxyGroupsRegionNamesSG[2]] = [proxyGroupsRegionNamesSG[2], proxyGroupsRegionNamesSG[0]];
+  } // 新加坡优先
 
   if (otherProxyGroups.length > 0) {
     proxyGroupsRegionNames.push('其他节点')
@@ -423,135 +443,199 @@ function main(config) {
   })
 
   if (ruleOptions.ai) {
-    rules.push(
-      'DOMAIN-SUFFIX,grazie.ai,国外AI',
-      'DOMAIN-SUFFIX,grazie.aws.intellij.net,国外AI',
-      'GEOSITE,category-ai-!cn,国外AI',
-    )
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '国外AI',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesUS, '默认节点', '直连'],
       url: 'https://chat.openai.com/cdn-cgi/trace',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/ChatGPT.png',
     })
-
   } // ai
 
+  
   if (ruleOptions.youtube) {
-    rules.push('GEOSITE,youtube,YouTube')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'YouTube',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://www.youtube.com/s/desktop/494dd881/img/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/YouTube.png',
     })
+    ruleProviders.set('youtube', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/youtube.mrs',
+      path: './ruleset/MetaCubeX/youtube.mrs',
+    })
   } // youtube
   if (ruleOptions.biliintl) {
-    rules.push('GEOSITE,biliintl,哔哩哔哩东南亚')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '哔哩哔哩东南亚',
       type: 'select',
-      proxies: ['默认节点', '直连', ...proxyGroupsRegionNames],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://www.bilibili.tv/',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/BilibiliSEA.png',
     })
+    ruleProviders.set('biliintl', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/biliintl.mrs',
+      path: './ruleset/MetaCubeX/biliintl.mrs',
+    })
   } // biliintl
   if (ruleOptions.bahamut) {
-    rules.push('GEOSITE,bahamut,巴哈姆特')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '巴哈姆特',
       type: 'select',
-      proxies: [...proxyGroupsRegionNamesTW, '默认节点' ,'直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://ani.gamer.com.tw/ajax/getdeviceid.php',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Bahamut.png',
     })
+    ruleProviders.set('bahamut', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/bahamut.mrs',
+      path: './ruleset/MetaCubeX/bahamut.mrs',
+    })
   } // bahamut
   if (ruleOptions.disney) {
-    rules.push('GEOSITE,disney,Disney+')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Disney+',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://disney.api.edge.bamgrid.com/devices',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Disney+.png',
     })
+    ruleProviders.set('disney', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/disney.mrs',
+      path: './ruleset/MetaCubeX/disney.mrs',
+    })
   } // disney
   if (ruleOptions.netflix) {
-    rules.push('GEOSITE,netflix,NETFLIX')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'NETFLIX',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://api.fast.com/netflix/speedtest/v2?https=true',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Netflix.png',
     })
+    ruleProviders.set('netflix', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/netflix.mrs',
+      path: './ruleset/MetaCubeX/netflix.mrs',
+    })
   } // netflix
   if (ruleOptions.tiktok) {
-    rules.push('GEOSITE,tiktok,Tiktok')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Tiktok',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://www.tiktok.com/',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TikTok.png',
     })
+    ruleProviders.set('tiktok', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tiktok.mrs',
+      path: './ruleset/MetaCubeX/tiktok.mrs',
+    })
   } // tiktok
   if (ruleOptions.hbo) {
-    rules.push('GEOSITE,hbo,HBO')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'HBO',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://www.hbo.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/HBO.png',
     })
+    ruleProviders.set('hbo', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/hbo.mrs',
+      path: './ruleset/MetaCubeX/hbo.mrs',
+    })
   } // hbo
   if (ruleOptions.tvb) {
-    rules.push('GEOSITE,tvb,TVB')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'TVB',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://www.tvb.com/logo_b.svg',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/TVB.png',
     })
+    ruleProviders.set('tvb', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tvb.mrs',
+      path: './ruleset/MetaCubeX/tvb.mrs',
+    })
   } // tvb
   if (ruleOptions.primevideo) {
-    rules.push('GEOSITE,primevideo,Prime Video')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Prime Video',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://m.media-amazon.com/images/G/01/digital/video/web/logo-min-remaster.png',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Prime_Video.png',
     })
+    ruleProviders.set('primevideo', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/primevideo.mrs',
+      path: './ruleset/MetaCubeX/primevideo.mrs',
+    })
   } // primevideo
   if (ruleOptions.hulu) {
-    rules.push('GEOSITE,hulu,Hulu')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Hulu',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
       url: 'https://auth.hulu.com/v4/web/password/authenticate',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Hulu.png',
     })
+    ruleProviders.set('hulu', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/hulu.mrs',
+      path: './ruleset/MetaCubeX/hulu.mrs',
+    })
   } // hulu
+  if (ruleOptions.media) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '国外媒体',
+      type: 'select',
+      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Media_Global.png',
+    })
+  } // media
+
 
   if (ruleOptions.pixiv) {
-    rules.push('GEOSITE,pixiv,Pixiv')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Pixiv',
@@ -560,9 +644,16 @@ function main(config) {
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Pixiv.png',
     })
+    ruleProviders.set('pixiv', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/pixiv.mrs',
+      path: './ruleset/MetaCubeX/pixiv.mrs',
+    })
   } // pixiv
   if (ruleOptions.spotify) {
-    rules.push('GEOSITE,spotify,Spotify')
+
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Spotify',
@@ -571,7 +662,15 @@ function main(config) {
       url: 'http://spclient.wg.spotify.com/signup/public/v1/account',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Spotify.png',
     })
+    ruleProviders.set('spotify', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/spotify.mrs',
+      path: './ruleset/MetaCubeX/spotify.mrs',
+    })
   } // spotify
+
 
   if (ruleOptions.telegram) {
     config['proxy-groups'].push({
@@ -582,9 +681,15 @@ function main(config) {
       url: 'http://www.telegram.org/img/website_icon.svg',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Telegram.png',
     })
+    ruleProviders.set('telegram', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs',
+      path: './ruleset/MetaCubeX/telegram.mrs',
+    })
   } // telegram
   if (ruleOptions.whatsapp) {
-    rules.push('GEOSITE,whatsapp,WhatsApp')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'WhatsApp',
@@ -593,9 +698,15 @@ function main(config) {
       url: 'https://web.whatsapp.com/data/manifest.json',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Whatapp.png',
     })
+    ruleProviders.set('whatsapp', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/whatsapp.mrs',
+      path: './ruleset/MetaCubeX/whatsapp.mrs',
+    })
   } // whatsapp
   if (ruleOptions.line) {
-    rules.push('GEOSITE,line,Line')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Line',
@@ -604,11 +715,17 @@ function main(config) {
       url: 'https://line.me/page-data/app-data.json',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Line.png',
     })
+    ruleProviders.set('line', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/line.mrs',
+      path: './ruleset/MetaCubeX/line.mrs',
+    })
   } // line
 
   
   if (ruleOptions.paypal) {
-    rules.push('GEOSITE,paypal,Paypal')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Paypal',
@@ -617,10 +734,15 @@ function main(config) {
       url: 'https://www.paypal.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/PayPal.png',
     })
+    ruleProviders.set('paypal', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/paypal.mrs',
+      path: './ruleset/MetaCubeX/paypal.mrs',
+    })
   } // paypal
-
   if (ruleOptions.patreon) {
-    rules.push('GEOSITE,patreon,Patreon')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Patreon',
@@ -629,21 +751,16 @@ function main(config) {
       url: 'https://www.patreon.com/favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Patreon.png',
     })
+    ruleProviders.set('patreon', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/patreon.mrs',
+      path: './ruleset/MetaCubeX/patreon.mrs',
+    })
   } // patreon
 
   if (ruleOptions.steam) {
-    rules.push(
-      'GEOSITE,steam@cn,国内网站',
-      'RULE-SET,Steam_CDN,国内网站',
-      'GEOSITE,steam,Steam'
-    )
-    ruleProviders.set('Steam_CDN', {
-      ...ruleProviderCommon,
-      behavior: 'classical',
-      format: 'yaml',
-      url: 'https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Steam_CDN_Classical.yaml',
-      path: './ruleset/Aethersailor/Steam_CDN.yaml'
-    }) // Steam_CDN
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Steam',
@@ -652,62 +769,62 @@ function main(config) {
       url: 'https://steamcommunity.com//favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
     })
+    ruleProviders.set('steam@cn', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/steam@cn.mrs',
+      path: './ruleset/MetaCubeX/steam@cn.mrs',
+    })
+    ruleProviders.set('steam@!cn', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/steam@!cn.mrs',
+      path: './ruleset/MetaCubeX/steam@!cn.mrs',
+    })
   } // steam
   if (ruleOptions.games) {
-    rules.push(
-      'GEOSITE,category-games@cn,国内网站',
-      'GEOSITE,category-games,游戏专用'
-    )
     config['proxy-groups'].push({
       ...groupBaseOption,
-      name: '游戏专用',
+      name: '游戏服务',
       type: 'select',
       proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Game.png',
     })
   } // games
 
-  if (ruleOptions.speedtest) {
-    rules.push('GEOSITE,category-speedtest,测速网站')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '测速网站',
-      type: 'select',
-      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Speedtest.png',
-    })
-  } // Speedtest
-  if (ruleOptions.tracker) {
-    rules.push('GEOSITE,tracker,跟踪分析')
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '跟踪分析',
-      type: 'select',
-      proxies: ['REJECT', '直连', '默认节点'],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Reject.png',
-    })
-  } // tracker
+  
   if (ruleOptions.ads) {
-    rules.push('GEOSITE,category-ads-all,广告过滤')
-    rules.push('RULE-SET,adblockmihomo,广告过滤')
-    ruleProviders.set('adblockmihomo', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://github.com/217heidai/adblockfilters/raw/refs/heads/main/rules/adblockmihomo.mrs',
-      path: './ruleset/adblockfilters/adblockmihomo.mrs',
-    })
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '广告过滤',
       type: 'select',
-      proxies: ['REJECT', '直连', '默认节点'],
+      proxies: ['REJECT', '默认节点', '直连'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/AdBlock.png',
     })
   } // ads
+  if (ruleOptions.tracker) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '跟踪分析',
+      type: 'select',
+      proxies: ['直连', '默认节点', 'REJECT'],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Reject.png',
+    })
+  } // tracker
+  if (ruleOptions.networktest) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '网络测试',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Speedtest.png',
+    })
+  } // 网络测试
+
 
   if (ruleOptions.github) {
-    rules.push('GEOSITE,github,Github')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Github',
@@ -716,9 +833,15 @@ function main(config) {
       url: 'https://github.com/robots.txt',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/GitHub.png',
     })
+    ruleProviders.set('github', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/github.mrs',
+      path: './ruleset/MetaCubeX/github.mrs',
+    })
   } // github
   if (ruleOptions.microsoft) {
-    rules.push('GEOSITE,microsoft@cn,国内网站', 'GEOSITE,microsoft,微软服务')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '微软服务',
@@ -727,9 +850,15 @@ function main(config) {
       url: 'http://www.msftconnecttest.com/connecttest.txt',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Microsoft.png',
     })
+    ruleProviders.set('microsoft@!cn', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft@!cn.mrs',
+      path: './ruleset/MetaCubeX/microsoft@!cn.mrs',
+    })
   } // microsoft
   if (ruleOptions.apple) {
-    rules.push('GEOSITE,apple,苹果服务')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '苹果服务',
@@ -738,12 +867,15 @@ function main(config) {
       url: 'http://www.apple.com/library/test/success.html',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
     })
+    ruleProviders.set('apple@!cn', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/apple@!cn.mrs',
+      path: './ruleset/MetaCubeX/apple@!cn.mrs',
+    })
   } // apple
   if (ruleOptions.google) {
-    rules.push(
-      'GEOSITE,google@cn,国内网站',
-      'GEOSITE,google,谷歌服务',
-    )
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '谷歌服务',
@@ -752,45 +884,87 @@ function main(config) {
       url: 'http://www.google.com/generate_204',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Google.png',
     })
+    ruleProviders.set('google', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google@!cn.mrs',
+      path: './ruleset/MetaCubeX/google@!cn.mrs',
+    })
   } // google
+
 
   if (ruleOptions.japan) {
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '日本网站',
       type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      proxies: [...proxyGroupsRegionNamesJP, '默认节点', '直连'],
       url: 'https://r.r10s.jp/com/img/home/logo/touch.png',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/JP.png',
+    })
+    ruleProviders.set('category-bank-jp', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-bank-jp.mrs',
+      path: './ruleset/MetaCubeX/category-bank-jp.mrs',
     })
   } // japan
 
   // 写入domain分流规则
-  if (ruleOptions.japan) {
-    rules.push(
-      'GEOSITE,category-bank-jp,日本网站',
-    )
-  }
   rules.push(
-    'GEOSITE,geolocation-!cn@cn,国内网站',
-    'GEOSITE,geolocation-!cn,其他外网',
+    ...(ruleOptions.ads ? ['GEOSITE,ads,广告过滤'] : []),
+    ...(ruleOptions.tracker ? ['GEOSITE,trackerlist,跟踪分析'] : []),
+    ...(ruleOptions.microsoft ? ['GEOSITE,microsoft-cn,国内微软'] : []),
+    ...(ruleOptions.apple ? ['GEOSITE,apple-cn,国内苹果'] : []),
+    ...(ruleOptions.google ? ['GEOSITE,google-cn,国内谷歌'] : []),
+    ...(ruleOptions.steam ? ['RULE-SET,steam@cn,国内网站'] : []),
+    ...(ruleOptions.games ? ['GEOSITE,games-cn,国内游戏'] : []),
+
+    ...(ruleOptions.ai ? ['GEOSITE,ai,国外ai'] : []),
+    ...(ruleOptions.youtube ? ['RULE-SET,youtube,YouTube'] : []),
+    ...(ruleOptions.biliintl ? ['RULE-SET,biliintl,哔哩哔哩东南亚'] : []),
+    ...(ruleOptions.bahamut ? ['RULE-SET,bahamut,巴哈姆特'] : []),
+    ...(ruleOptions.disney ? ['RULE-SET,disney,Disney+'] : []),
+    ...(ruleOptions.netflix ? ['RULE-SET,netflix,NETFLIX'] : []),
+    ...(ruleOptions.tiktok ? ['RULE-SET,tiktok,Tiktok'] : []),
+    ...(ruleOptions.hbo ? ['RULE-SET,hbo,HBO'] : []),
+    ...(ruleOptions.tvb ? ['RULE-SET,tvb,TVB'] : []),
+    ...(ruleOptions.primevideo ? ['RULE-SET,primevideo,Prime Video'] : []),
+    ...(ruleOptions.hulu ? ['RULE-SET,hulu,Hulu'] : []),
+    ...(ruleOptions.media ? ['GEOSITE,media,国外媒体'] : []),
+    ...(ruleOptions.pixiv ? ['RULE-SET,pixiv,Pixiv'] : []),
+    ...(ruleOptions.spotify ? ['RULE-SET,spotify,Spotify'] : []),
+    ...(ruleOptions.telegram ? ['RULE-SET,telegram,Telegram'] : []),
+    ...(ruleOptions.whatsapp ? ['RULE-SET,whatsapp,WhatsApp'] : []),
+    ...(ruleOptions.line ? ['RULE-SET,line,Line'] : []),
+    ...(ruleOptions.paypal ? ['RULE-SET,paypal,Paypal'] : []),
+    ...(ruleOptions.patreon ? ['RULE-SET,patreon,Patreon'] : []),
+    ...(ruleOptions.github ? ['RULE-SET,github,Github'] : []),
+    ...(ruleOptions.microsoft ? ['RULE-SET,microsoft@!cn,微软服务'] : []),
+    ...(ruleOptions.apple ? ['RULE-SET,apple@!cn,苹果服务'] : []),
+    ...(ruleOptions.google ? ['RULE-SET,google@!cn,谷歌服务'] : []),
+    ...(ruleOptions.steam ? ['RULE-SET,steam@!cn,Steam'] : []),
+    ...(ruleOptions.games ? ['RULE-SET,games@!cn,游戏服务'] : []),
+    ...(ruleOptions.japan ? ['RULE-SET,category-bank-jp,日本网站'] : []),
+    ...(ruleOptions.networktest ? ['GEOSITE,networktest,网络测试'] : []),
+    'GEOSITE,tld-proxy,其他外网',
+    'GEOSITE,proxy,其他外网',
     'GEOSITE,cn,国内网站',
-  ) // 后置DOMAIN规则
+  )
 
   // 写入ip分流规则
-  if(ruleOptions.telegram) {
-    rules.push('GEOIP,telegram,Telegram,no-resolve')
-  }
-  if(ruleOptions.japan) {
-    rules.push('GEOIP,JP,日本网站,no-resolve')
-  }
   rules.push(
     'GEOIP,private,私有网络,no-resolve',
-    'GEOIP,CN,国内网站',
+    'GEOIP,cn,国内网站',
+    ...(ruleOptions.media ? ['GEOIP,media,国外媒体'] : []),
+    ...(ruleOptions.games ? ['GEOIP,games,游戏平台'] : []),
+    ...(ruleOptions.telegram ? ['GEOIP,telegram,Telegram,no-resolve'] : []),
+    ...(ruleOptions.japan ? ['GEOIP,JP,日本网站,no-resolve'] : []),
     'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
     'MATCH,漏网之鱼'
-  ) // 后置IP规则
-
+  )
 
   config['proxy-groups'].push(
     {
@@ -824,10 +998,34 @@ function main(config) {
     // hidden
     {
       ...groupBaseOption,
-      name: '非标端口',
+      name: '国内微软',
       type: 'select',
-      proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Bypass.png',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Microsoft.png',
+      hidden: true,
+    },
+    {
+      ...groupBaseOption,
+      name: '国内苹果',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
+      hidden: true,
+    },
+    {
+      ...groupBaseOption,
+      name: '国内谷歌',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Google.png',
+      hidden: true,
+    },
+    {
+      ...groupBaseOption,
+      name: '国内游戏',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Game.png',
       hidden: true,
     },
     {
@@ -838,7 +1036,14 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/private.png',
       hidden: true,
     },
-
+    {
+      ...groupBaseOption,
+      name: '非标端口',
+      type: 'select',
+      proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Bypass.png',
+      hidden: true,
+    },
     // hidden
     {
       ...groupBaseOption,
