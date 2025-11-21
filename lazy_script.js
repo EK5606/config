@@ -202,7 +202,7 @@ const ruleProviders = new Map()
  */
 const rules = [
   'RULE-SET,private,私有网络',
-  'RULE-SET,Custom_Direct,国内网站',
+  'RULE-SET,Custom_Direct,自定义直连',
 ]
 
 /**
@@ -962,6 +962,14 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/China_Map.png',
     },
     // hidden
+        {
+      ...groupBaseOption,
+      name: '自定义直连',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Stasis.png',
+      hidden: true,
+    },
     {
       ...groupBaseOption,
       name: '国内微软',
