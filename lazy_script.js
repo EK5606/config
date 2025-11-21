@@ -339,11 +339,11 @@ function main(config) {
 
   config['geox-url'] = {
     geosite:
-      'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/geosite.dat',
+      'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat',
     geoip:
-      'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/geoip.dat',
-    mmdb: 'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/geoip.metadb',
-    asn: 'https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@mihomo-geodata/Country-ASN.mmdb',
+      'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat',
+    mmdb: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb',
+    asn: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb',
   }
 
   /**
