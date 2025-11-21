@@ -878,7 +878,7 @@ function main(config) {
   rules.push(
     ...(ruleOptions.ads ? ['RULE-SET,ads,广告过滤'] : []),
     ...(ruleOptions.tracker ? ['RULE-SET,trackerlist,跟踪分析'] : []),
-    'RULE-SET,applications,直连软件',
+    'RULE-SET,applications,下载软件',
     ...(ruleOptions.microsoft ? ['RULE-SET,microsoft-cn,国内微软'] : []),
     ...(ruleOptions.apple ? ['RULE-SET,apple-cn,国内苹果'] : []),
     ...(ruleOptions.google ? ['RULE-SET,google-cn,国内谷歌'] : []),
@@ -959,14 +959,6 @@ function main(config) {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/China_Map.png',
     },
     // hidden
-    {
-      ...groupBaseOption,
-      name: '直连软件',
-      type: 'select',
-      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Static.png',
-      hidden: true,
-    },
     {
       ...groupBaseOption,
       name: '国内微软',
