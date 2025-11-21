@@ -964,14 +964,6 @@ function main(config) {
     // hidden
     {
       ...groupBaseOption,
-      name: '自定义直连',
-      type: 'select',
-      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Stasic.png',
-      hidden: true,
-    },
-    {
-      ...groupBaseOption,
       name: '国内微软',
       type: 'select',
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
@@ -1000,6 +992,14 @@ function main(config) {
       type: 'select',
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Game.png',
+      hidden: true,
+    },
+    {
+      ...groupBaseOption,
+      name: '自定义直连',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Static.png',
       hidden: true,
     },
     {
