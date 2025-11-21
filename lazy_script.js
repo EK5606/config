@@ -190,7 +190,7 @@ const dnsConfig = {
   'respect-rules': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
-  'fake-ip-filter': ['geosite:cn, private', 'rule-set:Custom_Port_Direct,Custom_Direct', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
+  'fake-ip-filter': ['geosite:cn,private,connectivity-check', 'rule-set:Custom_Direct', '*', '+.lan', '+.local', '+.market.xiaomi.com', 'ping.archlinux.org'],
   // 'default-nameserver': [...defaultDNS],
   nameserver: [...foreignDNS],
   'proxy-server-nameserver': [...foreignDNS],
@@ -811,8 +811,11 @@ function main(config) {
   } // japan
 
   rules.push(
-    'GEOSITE,gfw,其他外网',
-    'GEOSITE,cn,国内网站',
+    'GEOSITE,geolocation-!cn@cn,国内网站',
+    'GEOSITE,geolocation-!cn,其他外网',
+    'GEOSITE,geolocation-cn@!cn,其他外网',
+    'GEOSITE,geolocation-cn,国内网站',
+    'GEOSITE,tld-cn,国内网站',
     'GEOIP,cn,国内网站',
     'RULE-SET,Custom_Port_Direct,非标端口',
     'MATCH,漏网之鱼'
