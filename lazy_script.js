@@ -596,7 +596,6 @@ function main(config) {
   } // spotify
 
   if (ruleOptions.telegram) {
-    rules.push('GEOIP,telegram,Telegram')
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: 'Telegram',
@@ -809,10 +808,9 @@ function main(config) {
   ) // 后置规则
 
   // 写入ip分流规则
-
-  
-
-
+  if(ruleOptions.telegram) {
+    rules.push('GEOIP,telegram,Telegram')
+  }
   rules.push(
     'GEOIP,lan,DIRECT',
     'GEOIP,cn,国内网站',
