@@ -894,7 +894,7 @@ function main(config) {
     ...(ruleOptions.microsoft ? ['RULE-SET,microsoft-cn,国内微软'] : []),
     ...(ruleOptions.google ? ['RULE-SET,google-cn,国内谷歌'] : []),
     ...(ruleOptions.apple ? ['RULE-SET,apple-cn,国内苹果'] : []),
-    ...(ruleOptions.steam ? ['GEOSITE,steam@cn,国内游戏'] : []),
+    ...(ruleOptions.steam ? ['GEOSITE,steam@cn,Steam'] : []),
     ...(ruleOptions.games ? ['RULE-SET,games-cn,国内游戏'] : []),
 
     ...(ruleOptions.ai ? ['RULE-SET,ai,国外AI'] : []),
