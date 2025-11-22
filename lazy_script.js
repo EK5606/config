@@ -835,7 +835,7 @@ function main(config) {
       name: '跟踪分析',
       type: 'select',
       proxies: ['直连', '丢弃', '默认节点'],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Sever.png',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Server.png',
     })
     ruleProviders.set('trackerlist', {
       ...ruleProviderCommon,
