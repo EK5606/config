@@ -159,15 +159,19 @@ const dnsConfig = {
   'prefer-h3': true,
   'use-hosts': false,
   'use-system-hosts': true,
-  'respect-rules': false,
+  'respect-rules': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
   'fake-ip-filter': [
     'geosite:connectivity-check', 
     'rule-set:fakeip-filter,cn,private',
   ],
-  'default-nameserver': [...defaultDNS],
+  // 'default-nameserver': [...defaultDNS],
   nameserver: ['https://doh.pub/dns-query', 'https://223.5.5.5/dns-query'],
+  fallback: chinaDNS,
+  'fallback-filter': {
+    geoip: true,
+  },
   'proxy-server-nameserver': ['https://doh.pub/dns-query', 'https://223.5.5.5/dns-query'],
   /**
    * 这里对域名解析进行分流
