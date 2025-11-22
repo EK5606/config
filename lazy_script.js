@@ -148,7 +148,7 @@ const defaultDNS = ['tls://223.5.5.5']
 
 const chinaDNS = ['119.29.29.29', '223.5.5.5']
 
-const foreignDNS = ['https://doh.pub/dns-query', 'https://223.5.5.5/dns-query']
+const foreignDNS = ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'];
 /**
  * DNS相关配置
  */
@@ -166,16 +166,12 @@ const dnsConfig = {
     'geosite:connectivity-check', 
     'rule-set:fakeip-filter,cn,private',
   ],
-  // 'default-nameserver': [...defaultDNS],
-  nameserver: ['https://doh.pub/dns-query', 'https://223.5.5.5/dns-query'],
-  fallback: chinaDNS,
-  'fallback-filter': {
-    geoip: true,
-  },
-  'proxy-server-nameserver': ['https://doh.pub/dns-query', 'https://223.5.5.5/dns-query'],
+  'default-nameserver': [...defaultDNS],
+  nameserver: [foreignDNS],
+  'proxy-server-nameserver': [foreignDNS],
   'nameserver-policy': {
     'rule-set:private': 'system',
-    'rule-set:cn': ['https://119.29.29.29/dns-query#直连', 'https://223.5.5.5/dns-query#直连'],
+    'rule-set:cn': [chinaDNS],
   },
 }
 
