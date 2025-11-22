@@ -143,11 +143,6 @@ const regionOptions = {
  * defaultDNS是用来解析DNS的，必须为IP
  * DNS最好不要超过两个，从业界某知名APP的文档里学的
  */
-const defaultDNS = ['tls://223.5.5.5']
-
-const chinaDNS = ['119.29.29.29', '223.5.5.5']
-
-const foreignDNS = ['https://120.53.53.53/dns-query', 'https://223.5.5.5/dns-query']
 
 /**
  * DNS相关配置
@@ -158,8 +153,8 @@ const dnsConfig = {
   ipv6: true,
   'prefer-h3': true,
   'use-hosts': false,
-  'use-system-hosts': false,
-  'respect-rules': true,
+  'use-system-hosts': true,
+  'respect-rules': false,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/16',
   'fake-ip-filter': [
@@ -167,16 +162,16 @@ const dnsConfig = {
     'rule-set:fakeip-filter,cn,private',
   ],
   // 'default-nameserver': [...defaultDNS],
-  nameserver: [...foreignDNS],
-  'proxy-server-nameserver': [...foreignDNS],
+  nameserver: ['tls://8.8.8.8#默认代理'],
+  'proxy-server-nameserver': ['https://120.53.53.53/dns-query', 'https://223.5.5.5/dns-query'],
   /**
    * 这里对域名解析进行分流
    * 由于默认dns是国外的了，只需要把国内ip和域名分流到国内dns
    */
   'nameserver-policy': {
     'rule-set:private': 'system',
-    // 'geosite:steam@cn,category-games@cn,microsoft@cn,apple@cn': chinaDNS,
-    'rule-set:cn': chinaDNS,
+    // 'geosite:steam@cn,category-games@cn,microsoft@cn,apple@cn': ['119.29.29.29', '223.5.5.5'],
+    'rule-set:cn': ['https://119.29.29.29/dns-query#直连', 'https://223.5.5.5/dns-query#直连'],
   },
 }
 
