@@ -144,7 +144,7 @@ const regionOptions = {
  * defaultDNS是用来解析DNS的，必须为IP
  * DNS最好不要超过两个，从业界某知名APP的文档里学的
  */
-const defaultDNS = ['tls://223.5.5.5', 'https://doh.pub/dns-query']
+const defaultDNS = ['tls://223.5.5.5']
 
 const chinaDNS = ['119.29.29.29', '223.5.5.5']
 
