@@ -45,7 +45,7 @@ const ruleOptions = {
   japan: false, // 日本网站策略组
   applications: true, // 直连软件
   networktest: true, //网络测试
-  tracker: false, // 网络分析和跟踪服务
+  tracker: true, // 网络分析和跟踪服务
   ads: true, // 常见的网络广告
 }
 
