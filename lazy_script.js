@@ -166,7 +166,7 @@ const dnsConfig = {
     'geosite:connectivity-check', 
     'rule-set:fakeip-filter,cn,private',
   ],
-  'default-nameserver': ['tls://223.5.5.5', 'https://doh.pub/dns-query'],
+  'default-nameserver': [...defaultDNS],
   nameserver: ['https://doh.pub/dns-query', 'https://223.5.5.5/dns-query'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query', 'https://223.5.5.5/dns-query'],
   /**
