@@ -42,7 +42,8 @@ const ruleOptions = {
   whatsapp: false, // Whatsapp
   steam: true, // steam
   games: true, // 游戏策略组
-  japan: true, // 日本网站策略组
+  japan: false, // 日本网站策略组
+  applications: true, // 直连软件
   networktest: true, //网络测试
   tracker: false, // 网络分析和跟踪服务
   ads: true, // 常见的网络广告
@@ -170,7 +171,6 @@ const dnsConfig = {
    */
   'nameserver-policy': {
     'rule-set:private': 'system',
-    // 'geosite:steam@cn,category-games@cn,microsoft@cn,apple@cn': ['119.29.29.29', '223.5.5.5'],
     'rule-set:cn': ['https://119.29.29.29/dns-query#直连', 'https://223.5.5.5/dns-query#直连'],
   },
 }
@@ -390,16 +390,7 @@ function main(config) {
       '198.18.0.0/15',
     ],
   }
-
-  config['geox-url'] = {
-    geosite:
-      'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat',
-    geoip:
-      'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat',
-    mmdb: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb',
-    asn: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb',
-  }
-
+  
   /**
    * 总开关关闭时不处理策略组
    */
@@ -513,7 +504,6 @@ function main(config) {
       path: './ruleset/DustinWin/ai.mrs',
     }) // ai
   } // ai
-
 
   if (ruleOptions.youtube) {
     config['proxy-groups'].push({
@@ -757,57 +747,6 @@ function main(config) {
     }) // gamesip
   } // games
 
-  
-  if (ruleOptions.ads) {
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '广告过滤',
-      type: 'select',
-      proxies: ['丢弃', '默认节点', '直连'],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/AdBlock.png',
-    })
-    ruleProviders.set('ads', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/ads.mrs',
-      path: './ruleset/DustinWin/ads.mrs',
-    }) // ads
-  } // ads
-  if (ruleOptions.tracker) {
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '跟踪分析',
-      type: 'select',
-      proxies: ['直连', '默认节点', 'REJECT'],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Sever.png',
-    })
-    ruleProviders.set('trackerlist', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/trackerlist.mrs',
-      path: './ruleset/DustinWin/trackerlist.mrs',
-    }) // trackerlist
-  } // tracker
-  if (ruleOptions.networktest) {
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '网络测试',
-      type: 'select',
-      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Speedtest.png',
-    })
-    ruleProviders.set('networktest', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/networktest.mrs',
-      path: './ruleset/DustinWin/networktest.mrs',
-    }) // networktest
-  } // 网络测试
-
-
   if (ruleOptions.github) {
     config['proxy-groups'].push({
       ...groupBaseOption,
@@ -835,23 +774,6 @@ function main(config) {
       path: './ruleset/DustinWin/microsoft-cn.mrs',
     }) // microsoft-cn
   } // microsoft
-  if (ruleOptions.apple) {
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '苹果服务',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      url: 'http://www.apple.com/library/test/success.html',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
-    })
-    ruleProviders.set('apple-cn', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/apple-cn.mrs',
-      path: './ruleset/DustinWin/apple-cn.mrs',
-    }) // apple-cn
-  } // apple
   if (ruleOptions.google) {
     config['proxy-groups'].push({
       ...groupBaseOption,
@@ -869,7 +791,88 @@ function main(config) {
       path: './ruleset/DustinWin/google-cn.mrs',
     }) // google-cn
   } // google
+  if (ruleOptions.apple) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '苹果服务',
+      type: 'select',
+      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
+      url: 'http://www.apple.com/library/test/success.html',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Apple.png',
+    })
+    ruleProviders.set('apple-cn', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/apple-cn.mrs',
+      path: './ruleset/DustinWin/apple-cn.mrs',
+    }) // apple-cn
+  } // apple
 
+    if (ruleOptions.ads) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '广告过滤',
+      type: 'select',
+      proxies: ['丢弃', '直连', '默认节点'],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/AdBlock.png',
+    })
+    ruleProviders.set('ads', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/ads.mrs',
+      path: './ruleset/DustinWin/ads.mrs',
+    }) // ads
+  } // ads
+  if (ruleOptions.tracker) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '跟踪分析',
+      type: 'select',
+      proxies: ['直连', '丢弃', '默认节点'],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Sever.png',
+    })
+    ruleProviders.set('trackerlist', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/trackerlist.mrs',
+      path: './ruleset/DustinWin/trackerlist.mrs',
+    }) // trackerlist
+  } // tracker
+  if (ruleOptions.applications) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '直连软件',
+      type: 'select',
+      proxies: ['直连','默认节点',...proxyGroupsRegionNames,],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Download.png',
+    })
+    ruleProviders.set('applications', {
+      ...ruleProviderCommon,
+      behavior: 'classical',
+      format: 'text',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/applications.list',
+      path: './ruleset/DustinWin/applications.list',
+    }) // applications
+  } // 直连软件
+  if (ruleOptions.networktest) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '网络测试',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Speedtest.png',
+    })
+    ruleProviders.set('networktest', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/networktest.mrs',
+      path: './ruleset/DustinWin/networktest.mrs',
+    }) // networktest
+  } // 网络测试
 
   if (ruleOptions.japan) {
     config['proxy-groups'].push({
@@ -886,11 +889,12 @@ function main(config) {
   rules.push(
     ...(ruleOptions.ads ? ['RULE-SET,ads,广告过滤'] : []),
     ...(ruleOptions.tracker ? ['RULE-SET,trackerlist,跟踪分析'] : []),
-    'RULE-SET,applications,下载软件',
+    ...(ruleOptions.applications ? ['RULE-SET,applications,直连软件'] : []),
+
     ...(ruleOptions.microsoft ? ['RULE-SET,microsoft-cn,国内微软'] : []),
-    ...(ruleOptions.apple ? ['RULE-SET,apple-cn,国内苹果'] : []),
     ...(ruleOptions.google ? ['RULE-SET,google-cn,国内谷歌'] : []),
-    ...(ruleOptions.steam ? ['GEOSITE,steam@cn,国内网站'] : []),
+    ...(ruleOptions.apple ? ['RULE-SET,apple-cn,国内苹果'] : []),
+    ...(ruleOptions.steam ? ['GEOSITE,steam@cn,国内游戏'] : []),
     ...(ruleOptions.games ? ['RULE-SET,games-cn,国内游戏'] : []),
 
     ...(ruleOptions.ai ? ['RULE-SET,ai,国外AI'] : []),
@@ -914,8 +918,8 @@ function main(config) {
     ...(ruleOptions.patreon ? ['GEOSITE,patreon,Patreon'] : []),
     ...(ruleOptions.github ? ['GEOSITE,github,Github'] : []),
     ...(ruleOptions.microsoft ? ['GEOSITE,microsoft@!cn,微软服务'] : []),
-    ...(ruleOptions.apple ? ['GEOSITE,apple@!cn,苹果服务'] : []),
     ...(ruleOptions.google ? ['GEOSITE,google@!cn,谷歌服务'] : []),
+    ...(ruleOptions.apple ? ['GEOSITE,apple@!cn,苹果服务'] : []),
     ...(ruleOptions.steam ? ['GEOSITE,steam@!cn,Steam'] : []),
     ...(ruleOptions.games ? ['GEOSITE,category-games@!cn,游戏服务'] : []),
     ...(ruleOptions.japan ? ['GEOSITE,category-bank-jp,日本网站'] : []),
@@ -938,19 +942,6 @@ function main(config) {
   )
 
   config['proxy-groups'].push(
-    {
-      ...groupBaseOption,
-      name: '下载软件',
-      type: 'select',
-      proxies: [
-        '直连',
-        '丢弃',
-        '默认节点',
-        '国内网站',
-        ...proxyGroupsRegionNames,
-      ],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Download.png',
-    },
     {
       ...groupBaseOption,
       name: '其他外网',
@@ -1001,18 +992,18 @@ function main(config) {
     },
     {
       ...groupBaseOption,
-      name: '自定义直连',
-      type: 'select',
-      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Static.png',
-      hidden: true,
-    },
-    {
-      ...groupBaseOption,
       name: '私有网络',
       type: 'select',
       proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/hidden/private.png',
+      hidden: true,
+    },
+    {
+      ...groupBaseOption,
+      name: '自定义直连',
+      type: 'select',
+      proxies: ['直连', '默认节点', ...proxyGroupsRegionNames],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Static.png',
       hidden: true,
     },
     {
