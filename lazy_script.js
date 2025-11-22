@@ -173,10 +173,6 @@ const dnsConfig = {
     geoip: true,
   },
   'proxy-server-nameserver': ['https://doh.pub/dns-query', 'https://223.5.5.5/dns-query'],
-  /**
-   * 这里对域名解析进行分流
-   * 由于默认dns是国外的了，只需要把国内ip和域名分流到国内dns
-   */
   'nameserver-policy': {
     'rule-set:private': 'system',
     'rule-set:cn': ['https://119.29.29.29/dns-query#直连', 'https://223.5.5.5/dns-query#直连'],
