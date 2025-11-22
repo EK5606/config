@@ -768,7 +768,7 @@ function main(config) {
       ...groupBaseOption,
       name: '广告过滤',
       type: 'select',
-      proxies: ['REJECT', '默认节点', '直连'],
+      proxies: ['丢弃', '默认节点', '直连'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/AdBlock.png',
     })
     ruleProviders.set('ads', {
@@ -949,7 +949,7 @@ function main(config) {
       type: 'select',
       proxies: [
         '直连',
-        '拦截',
+        '丢弃',
         '默认节点',
         '国内网站',
         ...proxyGroupsRegionNames,
@@ -1030,7 +1030,7 @@ function main(config) {
     },
     {
       ...groupBaseOption,
-      name: '拦截',
+      name: '丢弃',
       type: 'select',
       proxies: ['REJECT'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Reject.png',
