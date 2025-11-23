@@ -888,7 +888,7 @@ function main(config) {
   // 写入domain分流规则
   rules.push(
     ...(ruleOptions.ads ? ['RULE-SET,ads,广告过滤'] : []),
-    ...(ruleOptions.tracker ? ['RULE-SET,trackerlist,跟踪分析'] : []),
+    ...(ruleOptions.tracker ? ['RULE-SET,trackerslist,跟踪分析'] : []),
     ...(ruleOptions.applications ? ['RULE-SET,applications,直连软件'] : []),
 
     ...(ruleOptions.microsoft ? ['RULE-SET,microsoft-cn,国内微软'] : []),
