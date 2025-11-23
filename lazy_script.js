@@ -809,7 +809,7 @@ function main(config) {
     }) // apple-cn
   } // apple
 
-    if (ruleOptions.ads) {
+  if (ruleOptions.ads) {
     config['proxy-groups'].push({
       ...groupBaseOption,
       name: '广告过滤',
@@ -833,13 +833,13 @@ function main(config) {
       proxies: ['直连', '丢弃', '默认节点'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/NodeGroup/Server.png',
     })
-    ruleProviders.set('trackerlist', {
+    ruleProviders.set('trackerslist', {
       ...ruleProviderCommon,
       behavior: 'domain',
       format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/trackerlist.mrs',
-      path: './ruleset/DustinWin/trackerlist.mrs',
-    }) // trackerlist
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/trackerslist.mrs',
+      path: './ruleset/DustinWin/trackerslist.mrs',
+    }) // trackerslist
   } // tracker
   if (ruleOptions.applications) {
     config['proxy-groups'].push({
