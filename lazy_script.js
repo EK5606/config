@@ -1027,7 +1027,7 @@ function main(config) {
       ...groupBaseOption,
       name: '非标端口',
       type: 'select',
-      proxies: ['默认节点', '国内网站', ...proxyGroupsRegionNames],
+      proxies: [...proxyGroupsRegionNamesHK, '默认节点', '国内网站'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/hidden/RJ45.png',
       hidden: true,
     },
