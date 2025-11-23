@@ -17,36 +17,46 @@ const enable = true
  * false = 禁用
  */
 const ruleOptions = {
-  apple: true, // 苹果服务
-  microsoft: true, // 微软服务
-  github: true, // Github服务
-  google: true, // Google服务
+  
+  ads: true, // 常见的网络广告
+  tracker: true, // 网络分析和跟踪服务
+  applications: true, // 直连软件
+  
   ai: true, // 国外AI和GPT
-  spotify: false, // Spotify
+  
   youtube: true, // YouTube
   bahamut: true, // 巴哈姆特/动画疯
   netflix: false, // Netflix网飞
   tiktok: false, // 国际版抖音
   disney: false, // 迪士尼
-  pixiv: false, // Pixiv
   hbo: false, // HBO
   biliintl: true, // 哔哩哔哩东南亚
   tvb: false, // TVB
   hulu: false, // Hulu
   primevideo: false, // 亚马逊prime video
   media: true, // 国外媒体
-  paypal: true, // paypal支付
-  patreon: true, // patreon
+
+  spotify: false, // Spotify
+  pixiv: false, // Pixiv
+  
   telegram: true, // Telegram通讯软件
   line: false, // Line通讯软件
   whatsapp: false, // Whatsapp
+
+  paypal: true, // paypal支付
+  patreon: true, // patreon
+  
   steam: true, // steam
   games: true, // 游戏策略组
+  github: true, // Github服务
+  microsoft: true, // 微软服务
+  google: true, // Google服务
+  apple: true, // 苹果服务
+  
   japan: false, // 日本网站策略组
-  applications: true, // 直连软件
+  
   networktest: true, //网络测试
-  tracker: true, // 网络分析和跟踪服务
-  ads: true, // 常见的网络广告
+  
 }
 
 /**
