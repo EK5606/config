@@ -314,7 +314,7 @@ function main(config) {
 
   config['tcp-concurrent'] = true
 
-  config['external-controller'] = '0.0.0.0:9090'
+  config['external-controller'] = '127.0.0.1:9090'
   config['external-ui'] = 'ui'
   config['external-ui-name'] = 'Zashboard'
   config['external-controller-cors'] = {
