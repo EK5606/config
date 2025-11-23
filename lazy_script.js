@@ -937,7 +937,7 @@ function main(config) {
     ...(ruleOptions.microsoft ? ['GEOSITE,microsoft@!cn,微软服务'] : []),
     ...(ruleOptions.google ? ['GEOSITE,google@!cn,谷歌服务'] : []),
     ...(ruleOptions.apple ? ['GEOSITE,apple@!cn,苹果服务'] : []),
-    ...(ruleOptions.steam ? ['GEOSITE,steam@!cn,Steam'] : []),
+    ...(ruleOptions.steam ? ['GEOSITE,steam,Steam'] : []),
     ...(ruleOptions.games ? ['RULE-SET,games,游戏服务'] : []),
     ...(ruleOptions.japan ? ['GEOSITE,category-bank-jp,日本网站'] : []),
     ...(ruleOptions.networktest ? ['RULE-SET,networktest,网络测试'] : []),
