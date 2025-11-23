@@ -620,7 +620,7 @@ function main(config) {
       ...groupBaseOption,
       name: '国外媒体',
       type: 'select',
-      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
+      proxies: [...proxyGroupsRegionNamesUS, '默认节点', '直连'],
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Media_Global.png',
     })
       ruleProviders.set('media', {
