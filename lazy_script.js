@@ -748,6 +748,13 @@ function main(config) {
       url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games-cn.mrs',
       path: './ruleset/DustinWin/games-cn.mrs',
     }) // games-cn
+    ruleProviders.set('games', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games.mrs',
+      path: './ruleset/DustinWin/games.mrs',
+    }) // games
     ruleProviders.set('gamesip', {
       ...ruleProviderCommon,
       behavior: 'ipcidr',
