@@ -389,6 +389,8 @@ function main(config) {
   }
 
   config['tun'] = {
+    'auto-route' : true,
+    'auto-redirect' : true,
     'exclude-interface': [
       'NodeBabyLink',
     ],
