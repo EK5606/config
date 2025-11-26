@@ -953,7 +953,7 @@ function main(config) {
     'RULE-SET,privateip,私有网络,no-resolve',
     ...(ruleOptions.media ? ['RULE-SET,mediaip,国外媒体,no-resolve'] : []),
     ...(ruleOptions.games ? ['RULE-SET,gamesip,游戏服务,no-resolve'] : []),
-    ...(ruleOptions.telegram ? ['RULE-SET,telegram,Telegram,no-resolve'] : []),
+    ...(ruleOptions.telegram ? ['RULE-SET,telegramip,Telegram,no-resolve'] : []),
     ...(ruleOptions.japan ? ['GEOIP,JP,日本网站,no-resolve'] : []),
     'RULE-SET,cnip,国内网站',
     'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
