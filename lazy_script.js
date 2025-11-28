@@ -956,7 +956,7 @@ function main(config) {
     ...(ruleOptions.telegram ? ['RULE-SET,telegramip,Telegram,no-resolve'] : []),
     ...(ruleOptions.japan ? ['GEOIP,JP,日本网站,no-resolve'] : []),
     'RULE-SET,cnip,国内网站',
-    'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
+    // 'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
     'MATCH,漏网之鱼'
   )
 
