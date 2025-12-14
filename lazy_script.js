@@ -167,7 +167,7 @@ const dnsConfig = {
   listen: ':1053',
   ipv6: true,
   'prefer-h3': true,
-  'use-hosts': false,
+  'use-hosts': true,
   'use-system-hosts': true,
   'respect-rules': true,
   'enhanced-mode': 'fake-ip',
@@ -177,7 +177,7 @@ const dnsConfig = {
     'rule-set:fakeip-filter,cn,private',
   ],
   'default-nameserver': [...defaultDNS],
-  nameserver: [...foreignDNS],
+  'nameserver': [...foreignDNS],
   'proxy-server-nameserver': [...foreignDNS],
   'nameserver-policy': {
     'rule-set:private': 'system',
