@@ -211,6 +211,7 @@ const ruleProviders = new Map()
 const rules = [
   'RULE-SET,private,私有网络',
   'RULE-SET,Custom_Direct,自定义直连',
+  'DOMAIN-SUFFIX,yueyued.top,自定义直连'
 ]
 
 /**
