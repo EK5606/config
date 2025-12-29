@@ -736,6 +736,13 @@ function main(config) {
       url: 'https://steamcommunity.com//favicon.ico',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
     })
+    ruleProviders.set('steamip-cn', {
+      ...ruleProviderCommon,
+      behavior: 'ipcidr',
+      format: 'mrs',
+      url: 'https://github.com/Giveupmoon/Custom_OpenClash_Rules/raw/refs/heads/main/rule/Steam_CDN_IP.mrs',
+      path: './ruleset/Giveupmoon/steamip-cn.mrs'
+    }) // steamip-cn
   } // steam
   if (ruleOptions.games) {
     config['proxy-groups'].push({
@@ -953,6 +960,7 @@ function main(config) {
   // 写入ip分流规则
   rules.push(
     'RULE-SET,privateip,私有网络,no-resolve',
+    ...(ruleOptions.media ? ['RULE-SET,steamip-cn,国内游戏,no-resolve'] : []),
     ...(ruleOptions.media ? ['RULE-SET,mediaip,国外媒体,no-resolve'] : []),
     ...(ruleOptions.games ? ['RULE-SET,gamesip,游戏服务,no-resolve'] : []),
     ...(ruleOptions.telegram ? ['RULE-SET,telegramip,Telegram,no-resolve'] : []),
