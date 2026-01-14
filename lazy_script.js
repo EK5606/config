@@ -183,6 +183,7 @@ const dnsConfig = {
   'nameserver-policy': {
     'rule-set:private': 'system',
     'rule-set:cn': chinaDNS,
+    'rule-set:tld-proxy,proxy': foreignDNS,
   },
 }
 
