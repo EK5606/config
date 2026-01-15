@@ -158,7 +158,7 @@ const defaultDNS = ['tls://223.5.5.5']
 
 const chinaDNS = ['119.29.29.29', '223.5.5.5']
 
-const foreignDNS = ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'];
+const foreignDNS = ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
 /**
  * DNS相关配置
  */
@@ -545,7 +545,7 @@ function main(config) {
       ...groupBaseOption,
       name: '巴哈姆特',
       type: 'select',
-      proxies: [...proxyGroupsRegionNamesSG, '默认节点', '直连'],
+      proxies: [...proxyGroupsRegionNamesTW, '默认节点', '直连'],
       url: 'https://ani.gamer.com.tw/ajax/getdeviceid.php',
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Bahamut.png',
     })
@@ -728,54 +728,6 @@ function main(config) {
     })
   } // patreon
 
-  if (ruleOptions.steam) {
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: 'Steam',
-      type: 'select',
-      proxies: [...proxyGroupsRegionNames, '默认节点', '直连'],
-      url: 'https://steamcommunity.com//favicon.ico',
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
-    })
-    ruleProviders.set('steamip-cn', {
-      ...ruleProviderCommon,
-      behavior: 'ipcidr',
-      format: 'mrs',
-      url: 'https://github.com/Giveupmoon/Custom_OpenClash_Rules/raw/refs/heads/main/rule/Steam_CDN_IP.mrs',
-      path: './ruleset/Giveupmoon/steamip-cn.mrs'
-    }) // steamip-cn
-  } // steam
-  if (ruleOptions.games) {
-    config['proxy-groups'].push({
-      ...groupBaseOption,
-      name: '游戏服务',
-      type: 'select',
-      proxies: ['默认节点', ...proxyGroupsRegionNames, '直连'],
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Game.png',
-    })
-    ruleProviders.set('games-cn', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games-cn.mrs',
-      path: './ruleset/DustinWin/games-cn.mrs',
-    }) // games-cn
-    ruleProviders.set('games', {
-      ...ruleProviderCommon,
-      behavior: 'domain',
-      format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games.mrs',
-      path: './ruleset/DustinWin/games.mrs',
-    }) // games
-    ruleProviders.set('gamesip', {
-      ...ruleProviderCommon,
-      behavior: 'ipcidr',
-      format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/gamesip.mrs',
-      path: './ruleset/DustinWin/gamesip.mrs',
-    }) // gamesip
-  } // games
-
   if (ruleOptions.github) {
     config['proxy-groups'].push({
       ...groupBaseOption,
@@ -837,6 +789,54 @@ function main(config) {
       path: './ruleset/DustinWin/apple-cn.mrs',
     }) // apple-cn
   } // apple
+
+  if (ruleOptions.steam) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: 'Steam',
+      type: 'select',
+      proxies: [...proxyGroupsRegionNames, '默认节点', '直连'],
+      url: 'https://steamcommunity.com//favicon.ico',
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Steam.png',
+    })
+    ruleProviders.set('steamip-cn', {
+      ...ruleProviderCommon,
+      behavior: 'ipcidr',
+      format: 'mrs',
+      url: 'https://github.com/Giveupmoon/Custom_OpenClash_Rules/raw/refs/heads/main/rule/Steam_CDN_IP.mrs',
+      path: './ruleset/Giveupmoon/steamip-cn.mrs'
+    }) // steamip-cn
+  } // steam
+  if (ruleOptions.games) {
+    config['proxy-groups'].push({
+      ...groupBaseOption,
+      name: '游戏服务',
+      type: 'select',
+      proxies: [...proxyGroupsRegionNames, '默认节点', '直连'],
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Game.png',
+    })
+    ruleProviders.set('games-cn', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games-cn.mrs',
+      path: './ruleset/DustinWin/games-cn.mrs',
+    }) // games-cn
+    ruleProviders.set('games', {
+      ...ruleProviderCommon,
+      behavior: 'domain',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games.mrs',
+      path: './ruleset/DustinWin/games.mrs',
+    }) // games
+    ruleProviders.set('gamesip', {
+      ...ruleProviderCommon,
+      behavior: 'ipcidr',
+      format: 'mrs',
+      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/gamesip.mrs',
+      path: './ruleset/DustinWin/gamesip.mrs',
+    }) // gamesip
+  } // games
 
   if (ruleOptions.ads) {
     config['proxy-groups'].push({
