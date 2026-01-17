@@ -158,7 +158,7 @@ const defaultDNS = ['tls://223.5.5.5']
 
 const chinaDNS = ['119.29.29.29', '223.5.5.5']
 
-const foreignDNS = ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
+const foreignDNS = ['1.1.1.1']
 /**
  * DNS相关配置
  */
@@ -177,8 +177,8 @@ const dnsConfig = {
     'rule-set:fakeip-filter,cn,private',
   ],
   'default-nameserver': defaultDNS,
-  'nameserver': ['1.1.1.1'],
-  'proxy-server-nameserver': ['119.29.29.29'],
+  'nameserver': foreignDNS,
+  'proxy-server-nameserver': chinaDNS,
   'nameserver-policy': {
     'rule-set:private': 'system',
     'rule-set:cn': 'system',
