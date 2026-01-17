@@ -177,11 +177,11 @@ const dnsConfig = {
     'rule-set:fakeip-filter,cn,private',
   ],
   'default-nameserver': defaultDNS,
-  'nameserver': '1.1.1.1',
-  'proxy-server-nameserver': '119.29.29.29',
+  'nameserver': ['1.1.1.1'],
+  'proxy-server-nameserver': ['119.29.29.29'],
   'nameserver-policy': {
     'rule-set:private': 'system',
-    'rule-set:cn': chinaDNS,
+    'rule-set:cn': 'system',
   },
 }
 
