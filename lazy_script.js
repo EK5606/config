@@ -180,7 +180,6 @@ const dnsConfig = {
   'nameserver': foreignDNS,
   'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
   'nameserver-policy': {
-    '+.internal.crop.com': '10.0.0.1',
     'rule-set:cn': chinaDNS ,
     'rule-set:private': 'system',
   },
