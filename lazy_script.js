@@ -169,7 +169,7 @@ const dnsConfig = {
   'prefer-h3': true,
   'use-hosts': true,
   'use-system-hosts': true,
-  'respect-rules': false,
+  'respect-rules': true,
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/15',
   'fake-ip-filter': [
