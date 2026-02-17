@@ -176,11 +176,11 @@ const dnsConfig = {
     'geosite:connectivity-check', 
     'rule-set:fakeip-filter,cn,private',
   ],
-  'default-nameserver': defaultDNS,
-  'nameserver': foreignDNS,
+  'default-nameserver': ['114.114.114.114'],
+  'nameserver': ['1.1.1.1'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
   'nameserver-policy': {
-    'rule-set:cn': chinaDNS ,
+    'rule-set:cn': '223.5.5.5' ,
     'rule-set:private': 'system',
   },
 }
