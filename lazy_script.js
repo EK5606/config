@@ -166,7 +166,7 @@ const dnsConfig = {
   enable: true,
   listen: ':1053',
   ipv6: false,
-  'prefer-h3': true,
+  'prefer-h3': false,
   'use-hosts': true,
   'use-system-hosts': true,
   'respect-rules': true,
