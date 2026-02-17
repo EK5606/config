@@ -154,7 +154,7 @@ const regionOptions = {
  * defaultDNS是用来解析DNS的，必须为IP
  * DNS最好不要超过两个，从业界某知名APP的文档里学的
  */
-const defaultDNS = ['tls://223.5.5.5']
+const defaultDNS = ['114.114.114.114']
 
 const chinaDNS = ['119.29.29.29', '223.5.5.5']
 
@@ -165,23 +165,25 @@ const foreignDNS = ['1.1.1.1']
 const dnsConfig = {
   enable: true,
   listen: ':1053',
-  ipv6: true,
+  ipv6: false,
   'prefer-h3': true,
   'use-hosts': true,
   'use-system-hosts': true,
   'respect-rules': false,
   'enhanced-mode': 'fake-ip',
-  'fake-ip-range': '198.18.0.1/16',
+  'fake-ip-range': '198.18.0.1/15',
   'fake-ip-filter': [
+    '*',
     'geosite:connectivity-check', 
     'rule-set:fakeip-filter,cn,private',
   ],
   'default-nameserver': defaultDNS,
   'nameserver': foreignDNS,
-  'proxy-server-nameserver': chinaDNS,
+  'proxy-server-nameserver': 'https//doh.pub/dns-query#DIRECT',
   'nameserver-policy': {
+    '+.internal.crop.com': '10.0.0.1'
     'rule-set:private': 'system',
-    'rule-set:cn': 'system',
+    'rule-set:cn': chinaDNS ,
   },
 }
 
