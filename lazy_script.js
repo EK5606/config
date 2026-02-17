@@ -176,8 +176,8 @@ const dnsConfig = {
     'geosite:connectivity-check', 
     'rule-set:fakeip-filter,cn,private',
   ],
-  'default-nameserver': ['114.114.114.114'],
-  'nameserver': ['1.1.1.1'],
+  'default-nameserver': ['114.114.114.114', '233.5.5.5'],
+  'nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
   'nameserver-policy': {
     'rule-set:cn': '223.5.5.5' ,
