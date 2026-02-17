@@ -173,7 +173,6 @@ const dnsConfig = {
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/15',
   'fake-ip-filter': [
-    '*',
     'geosite:connectivity-check', 
     'rule-set:fakeip-filter,cn,private',
   ],
