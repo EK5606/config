@@ -99,12 +99,6 @@ const regionOptions = {
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Singapore.png',
     },
     {
-      name: 'CN中国大陆',
-      regex: /中国|🇨🇳|cn|china/i,
-      ratioLimit: 2,
-      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/China.png',
-    },
-    {
       name: 'TW台湾省',
       regex: /台湾|🇹🇼|tw|taiwan|tai wan/i,
       ratioLimit: 2,
@@ -145,6 +139,12 @@ const regionOptions = {
       regex: /澳大利亚|🇦🇺|au|australia|sydney/i,
       ratioLimit: 2,
       icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/Australia.png',
+    },
+    {
+      name: 'CN中国大陆',
+      regex: /中国|🇨🇳|cn|china/i,
+      ratioLimit: 2,
+      icon: 'https://raw.githubusercontent.com/EK5606/config/master/Icons/Country/China.png',
     },
   ],
 }
@@ -464,7 +464,7 @@ function main(config) {
     return value.name
   })
   if (proxyGroupsRegionNamesTW.length >= 2) {
-  [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[6]] = [proxyGroupsRegionNamesTW[6], proxyGroupsRegionNamesTW[0]];
+  [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[5]] = [proxyGroupsRegionNamesTW[5], proxyGroupsRegionNamesTW[0]];
   } // 台湾优先
   const proxyGroupsRegionNamesJP = regionProxyGroups.map((value) => {
     return value.name
