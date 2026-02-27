@@ -30,7 +30,7 @@ const ruleOptions = {
   tiktok: false, // 国际版抖音
   disney: false, // 迪士尼
   hbo: false, // HBO
-  biliintl: true, // 哔哩哔哩东南亚
+  biliintl: false, // 哔哩哔哩东南亚
   tvb: false, // TVB
   hulu: false, // Hulu
   primevideo: false, // 亚马逊prime video
