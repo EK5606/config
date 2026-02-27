@@ -181,7 +181,7 @@ const dnsConfig = {
   'nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
   'nameserver-policy': {
-    "*": 'system'
+    "*": 'system',
     'rule-set:private': 'system',
     'rule-set:proxy': ['https://dns.google/dns-query#默认节点'] ,
   },
