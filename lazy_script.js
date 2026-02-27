@@ -174,16 +174,21 @@ const dnsConfig = {
   'fake-ip-range': '198.18.0.1/15',
   'fake-ip-range6': 'fc00::1/64',
   'fake-ip-filter': [
-    'geosite:connectivity-check', 
+    '*',
     'rule-set:fakeip-filter,cn,private',
+    'geosite:connectivity-check', 
   ],
-  // 'default-nameserver': ['114.114.114.114', '233.5.5.5'],
-  'nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
+  // 'default-nameserver': ['233.5.5.5'],
+  'default-nameserver': ['114.114.114.114'],
+  // 'nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
+  'nameserver': ['1.1.1.1'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
   'nameserver-policy': {
-    "*": 'system',
+    '*.internal.crop.com': ['10.0.0.1'],
+    'rule-set:cn': ['119.29.29.29'],
+    // 'rule-set:proxy': ['https://dns.google/dns-query#默认节点'] ,
     'rule-set:private': 'system',
-    'rule-set:proxy': ['https://dns.google/dns-query#默认节点'] ,
+    '*': 'system',
   },
 }
 
