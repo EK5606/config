@@ -951,7 +951,7 @@ function main(config) {
     ...(ruleOptions.games ? ['RULE-SET,games,游戏服务'] : []),
     ...(ruleOptions.japan ? ['GEOSITE,category-bank-jp,日本网站'] : []),
     ...(ruleOptions.networktest ? ['RULE-SET,networktest,网络测试'] : []),
-    'DOMAIN-SUFFIX,ghostship.dk,TW台湾省',
+    'DOMAIN-SUFFIX,twkan.com,TW台湾省',
     'RULE-SET,tld-proxy,其他外网',
     'RULE-SET,proxy,其他外网',
     'RULE-SET,cn,国内网站',
