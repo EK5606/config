@@ -834,14 +834,7 @@ function main(config) {
       url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/games.mrs',
       path: './ruleset/DustinWin/games.mrs',
     }) // games
-    ruleProviders.set('gamesip', {
-      ...ruleProviderCommon,
-      behavior: 'ipcidr',
-      format: 'mrs',
-      url: 'https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/gamesip.mrs',
-      path: './ruleset/DustinWin/gamesip.mrs',
-    }) // gamesip
-  } // games
+      } // games
 
   if (ruleOptions.ads) {
     config['proxy-groups'].push({
@@ -970,7 +963,6 @@ function main(config) {
     ...(ruleOptions.media ? ['RULE-SET,steamip-cn,国内游戏,no-resolve'] : []),
     'RULE-SET,cnip,国内网站',
     ...(ruleOptions.media ? ['RULE-SET,mediaip,国外媒体,no-resolve'] : []),
-    ...(ruleOptions.games ? ['RULE-SET,gamesip,游戏服务,no-resolve'] : []),
     ...(ruleOptions.telegram ? ['RULE-SET,telegramip,Telegram,no-resolve'] : []),
     ...(ruleOptions.japan ? ['GEOIP,JP,日本网站,no-resolve'] : []),
     // 'NOT,((DST-PORT,80/443/8080/8888)),非标端口',
