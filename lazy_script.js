@@ -217,34 +217,34 @@ const ruleProviders = new Map()
  */
 const rules = [
   'RULE-SET,private,私有网络',
-  'PROCESS-NAME-REGEX,(?i).*Oray.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*Sunlogin.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*AweSun.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*NodeBaby.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*Node Baby.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*nblink.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*owjdxb.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*vpn.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*vnc.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*tvnserver.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*节点小宝.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*AnyDesk.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*ToDesk.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*RustDesk.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*TeamViewer.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*Zerotier.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*Tailscaled.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*phddns.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*ngrok.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*frpc.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*frps.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*natapp.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*cloudflared.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*xmqtunnel.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*Navicat.*,自定义直连'
-  'PROCESS-NAME-REGEX,(?i).*RvControlSvc.*,自定义直连'
-  'RULE-SET,Custom_Direct,自定义直连'
-  'DOMAIN-SUFFIX,yueyued.top,自定义直连'
+  'PROCESS-NAME-REGEX,(?i).*Oray.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*Sunlogin.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*AweSun.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*NodeBaby.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*Node Baby.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*nblink.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*owjdxb.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*vpn.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*vnc.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*tvnserver.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*节点小宝.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*AnyDesk.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*ToDesk.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*RustDesk.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*TeamViewer.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*Zerotier.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*Tailscaled.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*phddns.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*ngrok.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*frpc.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*frps.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*natapp.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*cloudflared.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*xmqtunnel.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*Navicat.*,自定义直连',
+  'PROCESS-NAME-REGEX,(?i).*RvControlSvc.*,自定义直连',
+  'RULE-SET,Custom_Direct,自定义直连',
+  'DOMAIN-SUFFIX,yueyued.top,自定义直连',
 ]
 
 /**
