@@ -176,10 +176,10 @@ const dnsConfig = {
   'fake-ip-filter': [
     '*',
     'rule-set:fakeip-filter,cn,private',
-    'geosite:connectivity-check', 
+    'geosite:category-ntp,connectivity-check', 
   ],
-  // 'default-nameserver': ['233.5.5.5'],
-  'default-nameserver': ['114.114.114.114'],
+  'default-nameserver': ['233.5.5.5'],
+  // 'default-nameserver': ['114.114.114.114'],
   // 'nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
   'nameserver': ['1.1.1.1'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
