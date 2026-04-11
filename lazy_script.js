@@ -181,8 +181,8 @@ const dnsConfig = {
   ],
   'default-nameserver': ['233.5.5.5','114.114.114.114'],
   // 'default-nameserver': ['114.114.114.114'],
-  // 'nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
-  'nameserver': ['1.1.1.1'],
+  'nameserver': ['quic://dns.alidns.com:853', 'https://doh.pub/dns-query'],
+  // 'nameserver': ['1.1.1.1'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
   'nameserver-policy': {
     '*.internal.crop.com': ['10.0.0.1'],
