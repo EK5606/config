@@ -176,20 +176,17 @@ const dnsConfig = {
   'fake-ip-filter-mode': 'blacklist',
   'fake-ip-filter': [
     '*',
-    'rule-set:fakeip-filter,cn,private',
+    'rule-set:fakeip-filter,cn,private,trackerslist',
     'geosite:category-ntp,connectivity-check', 
   ],
   'default-nameserver': ['233.5.5.5','114.114.114.114'],
-  // 'default-nameserver': ['114.114.114.114'],
-  'nameserver': ['quic://dns.alidns.com:853', 'https://doh.pub/dns-query'],
-  // 'nameserver': ['1.1.1.1'],
+  'nameserver': ['1.1.1.1'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
   'nameserver-policy': {
-    '*.internal.crop.com': ['10.0.0.1'],
-    'rule-set:cn': ['233.5.5.5','119.29.29.29'],
-    // 'rule-set:proxy': ['https://dns.google/dns-query#默认节点'] ,
-    'rule-set:private': 'system',
     '*': 'system',
+    '+.arpa': 'system',
+    '*.internal.crop.com': ['10.0.0.1'],
+    'rule-set:private,cn,microsoft-cn,apple-cn,google-cn,games-cn': ['233.5.5.5','119.29.29.29'],
   },
 }
 
