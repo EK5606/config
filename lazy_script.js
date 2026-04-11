@@ -173,13 +173,24 @@ const dnsConfig = {
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/15',
   'fake-ip-range6': 'fc00::1/64',
-  'fake-ip-filter-mode': 'whitelist',
+  //'fake-ip-filter-mode': 'blacklist',
+  'fake-ip-filter-mode': 'rule'
   // 'fake-ip-filter': [
   //  'rule-set:fakeip-filter,cn,private,trackerslist',
   //  'geosite:category-ntp,connectivity-check', 
   // ],
   'fake-ip-filter': [
-    'rule-set:tld-proxy,proxy,ai,games',
+    'RULE-SET,ads,fake-ip',
+  
+    'RULE-SET,fakeip-filter,real-ip',
+    'RULE-SET,trackerslist,real-ip',
+  
+    'RULE-SET,games,fake-ip',
+    'RULE-SET,ai,fake-ip',
+    'RULE-SET,tld-proxy,fake-ip',
+    'RULE-SET,proxy,fake-ip',
+    
+    'MATCH,real-ip'
   ],
   // 'default-nameserver': ['233.5.5.5','114.114.114.114'],
   // 'nameserver': ['1.1.1.1', '8.8.8.8'],
