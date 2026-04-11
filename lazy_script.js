@@ -173,6 +173,7 @@ const dnsConfig = {
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/15',
   'fake-ip-range6': 'fc00::1/64',
+  'fake-ip-filter-mode': 'blacklist',
   'fake-ip-filter': [
     '*',
     'rule-set:fakeip-filter,cn,private',
