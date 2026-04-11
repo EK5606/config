@@ -184,6 +184,7 @@ const dnsConfig = {
   
     'RULE-SET,fakeip-filter,real-ip',
     'RULE-SET,trackerslist,real-ip',
+    'GEOSITE,connectivity-check,real-ip'
   
     'RULE-SET,games,fake-ip',
     'RULE-SET,ai,fake-ip',
