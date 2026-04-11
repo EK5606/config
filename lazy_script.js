@@ -175,7 +175,6 @@ const dnsConfig = {
   'fake-ip-range6': 'fc00::1/64',
   'fake-ip-filter-mode': 'blacklist',
   'fake-ip-filter': [
-    '*',
     'rule-set:fakeip-filter,cn,private,trackerslist',
     'geosite:category-ntp,connectivity-check', 
   ],
