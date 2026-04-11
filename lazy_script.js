@@ -173,19 +173,31 @@ const dnsConfig = {
   'enhanced-mode': 'fake-ip',
   'fake-ip-range': '198.18.0.1/15',
   'fake-ip-range6': 'fc00::1/64',
-  'fake-ip-filter-mode': 'blacklist',
+  'fake-ip-filter-mode': 'whitelist',
+  // 'fake-ip-filter': [
+  //  'rule-set:fakeip-filter,cn,private,trackerslist',
+  //  'geosite:category-ntp,connectivity-check', 
+  // ],
   'fake-ip-filter': [
-    'rule-set:fakeip-filter,cn,private,trackerslist',
-    'geosite:category-ntp,connectivity-check', 
+    'rule-set:tld-proxy,proxy,ai,games',
   ],
-  'default-nameserver': ['233.5.5.5','114.114.114.114'],
-  'nameserver': ['1.1.1.1', '8.8.8.8'],
-  'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
+  // 'default-nameserver': ['233.5.5.5','114.114.114.114'],
+  // 'nameserver': ['1.1.1.1', '8.8.8.8'],
+  // 'proxy-server-nameserver': ['https://doh.pub/dns-query#DIRECT'],
+  // 'nameserver-policy': {
+  //   '*': 'system',
+  //   '+.arpa': 'system',
+  //   '*.internal.crop.com': ['10.0.0.1'],
+  //   'rule-set:private,cn': ['233.5.5.5','119.29.29.29'],
+  // },
+  'default-nameserver': ['233.5.5.5','119.29.29.29'],
+  'nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
+  'direct-nameserver': ['119.29.29.29', '223.5.5.5']
+  'proxy-server-nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
   'nameserver-policy': {
-    '*': 'system',
-    '+.arpa': 'system',
-    '*.internal.crop.com': ['10.0.0.1'],
-    'rule-set:private,cn': ['233.5.5.5','119.29.29.29'],
+    'rule-set:private': 'system',
+    'rule-set:cn,trackerslist,microsoft-cn,apple-cn,google-cn,games-cn': ['https://doh.pub/dns-query ', 'https://dns.alidns.com/dns-query'],
+    'rule-set:proxy,ai': ['https://doh.pub/dns-query ', 'https://dns.alidns.com/dns-query'],
   },
 }
 
