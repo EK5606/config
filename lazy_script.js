@@ -482,37 +482,31 @@ function main(config) {
     otherProxyGroups = otherProxyGroups.filter((x) => !proxies.includes(x))
   })
 
-  const proxyGroupsRegionNames = regionProxyGroups.map((value) => {
-    return value.name
-  }) // 香港优先
-  const proxyGroupsRegionNamesUS = regionProxyGroups.map((value) => {
-    return value.name
-  })
-  if (proxyGroupsRegionNamesUS.length >= 2) {
-  [proxyGroupsRegionNamesUS[0], proxyGroupsRegionNamesUS[1]] = [proxyGroupsRegionNamesUS[1], proxyGroupsRegionNamesUS[0]];
-  } // 美国优先
-  const proxyGroupsRegionNamesTW = regionProxyGroups.map((value) => {
-    return value.name
-  })
-  if (proxyGroupsRegionNamesTW.length >= 2) {
-  [proxyGroupsRegionNamesTW[0], proxyGroupsRegionNamesTW[5]] = [proxyGroupsRegionNamesTW[5], proxyGroupsRegionNamesTW[0]];
-  } // 台湾优先
-  const proxyGroupsRegionNamesJP = regionProxyGroups.map((value) => {
-    return value.name
-  })
-  if (proxyGroupsRegionNamesJP.length >= 2) {
-  [proxyGroupsRegionNamesJP[0], proxyGroupsRegionNamesJP[2]] = [proxyGroupsRegionNamesJP[2], proxyGroupsRegionNamesJP[0]];
-  } // 日本优先
-  const proxyGroupsRegionNamesSG = regionProxyGroups.map((value) => {
-    return value.name
-  })
-  if (proxyGroupsRegionNamesSG.length >= 2) {
-  [proxyGroupsRegionNamesSG[0], proxyGroupsRegionNamesSG[4]] = [proxyGroupsRegionNamesSG[4], proxyGroupsRegionNamesSG[0]];
-  } // 新加坡优先
+const getSortedRegions = (originalRegions, targetName) => {
+    let regions = [...originalRegions];
+    const index = regions.indexOf(targetName);
+    if (index > -1) {
+      // 如果找到了目标地区，将其移到数组最前端
+      regions.splice(index, 1);
+      regions.unshift(targetName);
+    }
+    return regions;
+  };
 
+  const proxyGroupsRegionNames = regionProxyGroups.map(v => v.name);
+
+  // 生成各个地区优先的列表，不再硬编码 [5][4] 等数字
+  const proxyGroupsRegionNamesHK = getSortedRegions(proxyGroupsRegionNames, 'HK香港');
+  const proxyGroupsRegionNamesUS = getSortedRegions(proxyGroupsRegionNames, 'US美国');
+  const proxyGroupsRegionNamesTW = getSortedRegions(proxyGroupsRegionNames, 'TW台湾省');
+  const proxyGroupsRegionNamesJP = getSortedRegions(proxyGroupsRegionNames, 'JP日本');
+  const proxyGroupsRegionNamesSG = getSortedRegions(proxyGroupsRegionNames, 'SG新加坡');
+
+  // 处理“其他节点”逻辑
   if (otherProxyGroups.length > 0) {
-    proxyGroupsRegionNames.push('其他节点')
-  } // 其他节点
+    proxyGroupsRegionNames.push('其他节点');
+  }
+  
 
   config['proxy-groups'] = [
     {
