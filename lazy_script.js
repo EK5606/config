@@ -181,10 +181,12 @@ const dnsConfig = {
   // ],
   'fake-ip-filter': [
     'RULE-SET,ads,fake-ip',
-  
+
+    'RULE-SET,private,real-ip',
     'RULE-SET,fakeip-filter,real-ip',
     'RULE-SET,trackerslist,real-ip',
     'GEOSITE,connectivity-check,real-ip',
+    'GEOSITE,category-ntp,real-ip',
   
     'RULE-SET,games,fake-ip',
     'RULE-SET,ai,fake-ip',
