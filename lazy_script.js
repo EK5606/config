@@ -192,7 +192,7 @@ const dnsConfig = {
   // },
   'default-nameserver': ['233.5.5.5','119.29.29.29'],
   'nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
-  'direct-nameserver': ['119.29.29.29', '223.5.5.5']
+  'direct-nameserver': ['119.29.29.29', '223.5.5.5'],
   'proxy-server-nameserver': ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
   'nameserver-policy': {
     'rule-set:private': 'system',
